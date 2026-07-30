@@ -36,12 +36,6 @@ The current milestone covers:
 
 This repository currently contains scaffolding only. Hazard behavior, Unity actions, graph extraction, graph search, waypoint following, and navigation are not implemented yet.
 
-## Team Roles
-
-- Yiqing: project management, research direction, milestones, interfaces, evaluation design, task tracking, and reporting.
-- Ewen: Unity simulation, parameterized fire, smoke, and earthquake effects, visual effects, physical scene changes, and Unity hazard metadata.
-- Tianrun: symbolic scene-graph design, ground-truth graph extraction, hazard-conditioned graph updates, graph search, waypoint following, route validation, and replanning.
-
 ## Relationship To AI2-THOR
 
 The original upstream AI2-THOR README is preserved at [docs/dso/ai2thor-original-readme.md](docs/dso/ai2thor-original-readme.md). Upstream AI2-THOR attribution and citation information remain in that preserved README, and the upstream license remains available in [LICENSE](LICENSE).
