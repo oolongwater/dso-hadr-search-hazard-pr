@@ -130,3 +130,48 @@ tmp/
 
 objaverse/
 unity/Assets/Resources/ai2thor-objaverse
+
+# DSO local Python environments and caches
+dso/.venv/
+dso/venv/
+dso/.mypy_cache/
+dso/.ruff_cache/
+dso/.pytest_cache/
+dso/.coverage
+dso/htmlcov/
+dso/**/__pycache__/
+
+# DSO generated outputs and local data
+dso/outputs/
+dso/results/
+dso/runs/
+dso/videos/
+dso/datasets/
+dso/checkpoints/
+outputs/
+results/
+runs/
+videos/
+datasets/
+checkpoints/
+
+# Local environment files, credentials, and secrets
+.env
+.env.*
+*.pem
+*.key
+*credential*
+*credentials*
+*secret*
+*secrets*
+
+# Private or confidential project documents
+*proposal*.pdf
+*review*.pdf
+private_reports/
+confidential/
+
+# Additional OS/editor temporary files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

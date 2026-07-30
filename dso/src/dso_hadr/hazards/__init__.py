@@ -1,0 +1,1 @@
+"""Hazard configuration package boundary."""
