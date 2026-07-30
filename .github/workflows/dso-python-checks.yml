@@ -1,0 +1,31 @@
+name: DSO Python Checks
+
+on:
+  push:
+    paths:
+      - "dso/**"
+      - ".github/workflows/dso-python-checks.yml"
+  pull_request:
+    paths:
+      - "dso/**"
+      - ".github/workflows/dso-python-checks.yml"
+
+jobs:
+  dso-python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dso
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install DSO package
+        run: python -m pip install -e ".[dev]"
+      - name: Ruff
+        run: python -m ruff check .
+      - name: Mypy
+        run: python -m mypy src tests
+      - name: Pytest
+        run: python -m pytest

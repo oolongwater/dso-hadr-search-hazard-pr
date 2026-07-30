@@ -1,0 +1,45 @@
+name: DSO Task
+description: Track one DSO project task
+title: "[Task]: "
+labels: ["task"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+  - type: input
+    id: workstream
+    attributes:
+      label: Workstream
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+  - type: textarea
+    id: test_or_demo_requirements
+    attributes:
+      label: Test or demo requirements
+  - type: textarea
+    id: definition_of_done
+    attributes:
+      label: Definition of done

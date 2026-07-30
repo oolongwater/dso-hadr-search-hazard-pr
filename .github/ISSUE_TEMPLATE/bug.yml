@@ -1,0 +1,41 @@
+name: DSO Bug
+description: Report a DSO project bug
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: Reproduction steps
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual behavior
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+  - type: textarea
+    id: configuration_and_seed
+    attributes:
+      label: Configuration and seed
+  - type: textarea
+    id: screenshots_or_recording
+    attributes:
+      label: Screenshots or recording
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
