@@ -1,0 +1,70 @@
+{
+  "dataset_id": "dso-procthor-levels-1-3-100-v1",
+  "generation": {
+    "floor_count_choices": [
+      1,
+      2,
+      3
+    ],
+    "floor_count_seed": 0,
+    "fullscreen": false,
+    "height": 300,
+    "headless": false,
+    "local_executable_path": "../../../../procthor/build/ai2thor/builds/schema2-procedural/thor-schema2-Linux64",
+    "output_directory": "../../../data/procthor/dso-procthor-levels-1-3-100-v1/scenes",
+    "quality": "Low",
+    "seed_start": 0,
+    "snap_to_grid": false,
+    "split": "train",
+    "width": 300,
+    "worker_count": 6
+  },
+  "scene_selection": {
+    "count": 100,
+    "filename_template": "scene_{index:04d}.json",
+    "first_index": 1
+  },
+  "source": {
+    "generator": "ProcTHOR",
+    "repository": "../../../../procthor",
+    "revision": "ec164a9b951213884841143fa69792370823d291"
+  },
+  "split": {
+    "visualization_test_count": 20,
+    "visualization_test_floor_counts": {
+      "1": 6,
+      "2": 7,
+      "3": 7
+    },
+    "visualization_test_scene_ids": [
+      "scene_0012",
+      "scene_0019",
+      "scene_0020",
+      "scene_0028",
+      "scene_0031",
+      "scene_0032",
+      "scene_0042",
+      "scene_0047",
+      "scene_0053",
+      "scene_0063",
+      "scene_0072",
+      "scene_0073",
+      "scene_0075",
+      "scene_0083",
+      "scene_0085",
+      "scene_0087",
+      "scene_0091",
+      "scene_0092",
+      "scene_0095",
+      "scene_0096"
+    ],
+    "visualization_test_seed": 0
+  },
+  "validation": {
+    "expected_house_schema_by_floor_count": {
+      "1": "1.0.0",
+      "2": "2.0.0",
+      "3": "2.0.0"
+    }
+  }
+}

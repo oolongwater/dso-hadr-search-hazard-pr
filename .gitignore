@@ -126,12 +126,16 @@ unity/Assets/Editor/Instant Screenshot/Documentation - Instant screenshot.pdf
 unity/Assets/Editor/Instant Screenshot/Documentation - Instant screenshot.pdf.meta
 
 *.log
+*.orig
 tmp/
 
 objaverse/
 unity/Assets/Resources/ai2thor-objaverse
 
 # DSO local Python environments and caches
+.pixi/
+/pixi.lock
+*.egg-info/
 dso/.venv/
 dso/venv/
 dso/.mypy_cache/
@@ -142,6 +146,8 @@ dso/htmlcov/
 dso/**/__pycache__/
 
 # DSO generated outputs and local data
+/data/
+/debug/
 dso/outputs/
 dso/results/
 dso/runs/
