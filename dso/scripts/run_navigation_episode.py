@@ -4,6 +4,7 @@ import json
 import math
 import sys
 from dataclasses import replace
+from itertools import pairwise
 from pathlib import Path
 
 from dso_hadr.config.nav_config import load_navigation_episode_config
@@ -36,7 +37,6 @@ from dso_hadr.utils.record_utils.navigation_episode import (
     record_observation,
     write_json,
 )
-
 
 config = load_navigation_episode_config(Path(sys.argv[1]))
 corpus_config = load_corpus_config(config.corpus_config_path)
@@ -121,9 +121,7 @@ with backend:
         )
         motion_points.extend(segment.points[1:])
     waypoints = remove_immediate_backtracks(tuple(motion_points))
-    motion_distance = sum(
-        math.dist(source, target) for source, target in zip(waypoints, waypoints[1:])
-    )
+    motion_distance = sum(math.dist(source, target) for source, target in pairwise(waypoints))
     write_json(
         output_directory / "plan.json",
         {

@@ -6,11 +6,14 @@ import json
 import math
 import random
 from dataclasses import dataclass
+from itertools import pairwise
 from pathlib import Path
 
 import numpy as np
 from ai2thor.server import Event  # type: ignore[import-not-found]
 
+from dso_hadr.simulator.ai2thor import ProcTHORSimulator
+from dso_hadr.simulator.control import move_ahead, rotate_left, rotate_right
 from dso_hadr.simulator.navigation_backend import NavigationBackend
 from dso_hadr.types.navigation import (
     NavigationAction,
@@ -20,11 +23,9 @@ from dso_hadr.types.navigation import (
     ShortestPath,
     as_point3,
 )
-from dso_hadr.simulator.ai2thor import ProcTHORSimulator
-from dso_hadr.simulator.control import move_ahead, rotate_left, rotate_right
 from dso_hadr.utils.coordinates import (
-    navigation_yaw_to_native,
     native_yaw_to_navigation,
+    navigation_yaw_to_native,
 )
 
 
@@ -46,7 +47,7 @@ def _point_document(point: Point3) -> dict[str, float]:
 
 
 def _path_length(points: tuple[Point3, ...]) -> float:
-    return sum(math.dist(source, target) for source, target in zip(points, points[1:]))
+    return sum(math.dist(source, target) for source, target in pairwise(points))
 
 
 class AI2THORNavigationBackend(NavigationBackend):
@@ -250,7 +251,7 @@ class AI2THORNavigationBackend(NavigationBackend):
         saved_event = self._current_event()
         saved_agent = saved_event.metadata["agent"]
         traversable = True
-        for source, target in zip(transition, transition[1:]):
+        for source, target in pairwise(transition):
             delta_x = target[0] - source[0]
             delta_z = target[2] - source[2]
             distance = math.hypot(delta_x, delta_z)

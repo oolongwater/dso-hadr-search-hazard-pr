@@ -9,8 +9,8 @@ from dso_hadr.graph.model import (
     TraversabilityMap,
     TraversabilitySource,
 )
-from dso_hadr.types.navigation import Pose
 from dso_hadr.planner.symbolic.dijkstra import dijkstra_search
+from dso_hadr.types.navigation import Pose
 
 
 def _region(region_id: str, x: float) -> RegionNode:

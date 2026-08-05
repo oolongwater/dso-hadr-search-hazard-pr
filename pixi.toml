@@ -12,9 +12,9 @@ typecheck = { cmd = "mypy src", cwd = "dso" }
 
 [dependencies]
 python = "3.11.*"
-mypy = ">=1.17,<2"
-pytest = ">=8.4,<9"
-ruff = ">=0.12,<0.13"
+mypy = "==2.3.0"
+pytest = "==9.1.1"
+ruff = "==0.16.1"
 
 [pypi-dependencies]
 dso-hadr = { path = "dso", editable = true }

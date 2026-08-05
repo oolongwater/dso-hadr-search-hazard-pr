@@ -1,5 +1,6 @@
 import inspect
 import math
+from itertools import pairwise
 
 import pytest
 
@@ -25,7 +26,7 @@ def _edge(
         node_a=node_a,
         node_b=node_b,
         path=points,
-        cost=sum(math.dist(start, goal) for start, goal in zip(points, points[1:])),
+        cost=sum(math.dist(start, goal) for start, goal in pairwise(points)),
     )
 
 

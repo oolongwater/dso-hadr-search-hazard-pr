@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import heapq
 import math
+from itertools import pairwise
 
 from dso_hadr.graph.model import TraversabilityEdge, TraversabilityMap
 from dso_hadr.types.navigation import Point3, ShortestPath, as_point3
@@ -97,7 +98,7 @@ def astar_search(
             if point != points[-1]:
                 points.append(point)
     simplified = remove_immediate_backtracks(tuple(points))
-    distance = sum(math.dist(source, target) for source, target in zip(simplified, simplified[1:]))
+    distance = sum(math.dist(source, target) for source, target in pairwise(simplified))
     return ShortestPath(points=simplified, geodesic_distance=distance)
 
 

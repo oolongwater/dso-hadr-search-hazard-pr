@@ -190,7 +190,7 @@ def extract_ground_truth_traversability(
         return tuple(reversed(route)), set(cost_so_far)
 
     anchor_nodes = tuple(nearest_node(anchor) for anchor in anchors)
-    for start_node, goal_node in zip(anchor_nodes, anchor_nodes[1:]):
+    for start_node, goal_node in itertools.pairwise(anchor_nodes):
         rejected: set[tuple[int, int]] = set()
         while True:
             route, reachable = candidate_route(start_node, goal_node)
@@ -226,7 +226,7 @@ def extract_ground_truth_traversability(
                 continue
             unknown = [
                 (source, target)
-                for source, target in zip(route, route[1:])
+                for source, target in itertools.pairwise(route)
                 if edge_key(source, target) not in accepted
             ]
             if not unknown:
@@ -252,7 +252,7 @@ def extract_ground_truth_traversability(
                     )
                     * max_transition_slope_ratio
                     + transition_height_tolerance
-                    for point_a, point_b in zip(path.points, path.points[1:])
+                    for point_a, point_b in itertools.pairwise(path.points)
                 ):
                     path = None
                 key = edge_key(source, target)

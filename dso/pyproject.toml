@@ -32,6 +32,10 @@ line-length = 100
 target-version = "py311"
 src = ["src", "tests"]
 
+[tool.ruff.lint]
+# Concrete context-manager return types avoid imports from typing.
+ignore = ["PYI034"]
+
 [tool.mypy]
 python_version = "3.11"
 strict = true
