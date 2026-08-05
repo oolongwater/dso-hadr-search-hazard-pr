@@ -19,6 +19,8 @@ Do not create a separate pip, Conda, or uv environment for this workspace.
 
 See [the ProcTHOR scene corpus contract](docs/dso/procthor-scene-corpus.md) for
 the configuration, content lock, and current limitations.
+See [the navigation stack](docs/dso/navigation-stack.md) for the implemented
+scene extraction, planning, execution, and recording pipeline.
 
 ## Workstreams
 
@@ -39,10 +41,12 @@ The current milestone covers:
 7. Graph search, waypoint following, route validation, and replanning.
 
 This repository now contains the ProcTHOR corpus configuration, content
-manifest, validation tooling, and a minimal AI2-THOR scene/recording interface
-for externally supplied actions. Hazard behavior, action selection, graph
-extraction, waypoint following, route validation, replanning, and
-place-recognition evaluation are not implemented in this repository yet.
+manifest, validation tooling, and a non-hazard navigation baseline. The
+baseline extracts a symbolic scene graph and ground-truth traversability map,
+runs symbolic Dijkstra and metric A* planning, follows the route in AI2-THOR,
+and records aligned RGB-D observations and poses. Hazard behavior,
+hazard-conditioned graph updates, route validation, replanning, and
+place-recognition evaluation are not implemented yet.
 
 ## Relationship To AI2-THOR
 

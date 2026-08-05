@@ -3,11 +3,15 @@
 This workspace contains DSO-specific Python package boundaries, tests,
 configuration, scripts, and examples.
 
-The current stage adds a configurable, content-locked 100-scene ProcTHOR
-corpus and a minimal AI2-THOR interface. The interface loads a scene, applies
-its saved agent pose, executes externally supplied actions, and records RGB,
-pose, action, success, scene ID, and step ID. It does not choose actions or
-implement planning, waypoint following, localization, or hazards.
+The current stage provides a configurable, content-locked 100-scene ProcTHOR
+corpus and a non-hazard navigation baseline. The pipeline extracts a symbolic
+scene graph and ground-truth traversability map, plans with symbolic Dijkstra
+and metric A*, follows the route through the AI2-THOR interface, and records
+aligned RGB-D observations and poses. It does not implement localization,
+hazards, route validation, or replanning.
+
+See [the navigation stack](../docs/dso/navigation-stack.md) for the data flow,
+component boundaries, configuration, and recorded artifacts.
 
 ## Lightweight Checks
 

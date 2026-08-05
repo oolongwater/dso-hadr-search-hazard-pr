@@ -73,7 +73,8 @@ Generator revision, house seed range, floor-selection seed, floor choices, and
 Unity executable path are recorded in the corpus config. The exact generated
 bytes remain the corpus identity and are locked by the manifest hashes.
 
-This stage selects the 20 visualization/test houses and provides only the
-simulator lifecycle and step-recording boundary. It does not select actions,
-follow paths, or run localization. Evaluation through hadr_place_recognition
-begins only after externally supplied movement trajectories are available.
+The corpus stage selected the 20 visualization/test houses and established the
+simulator lifecycle and primitive step-recording boundary. The later
+[navigation baseline](navigation-stack.md) now selects configured routes,
+plans, follows paths, and records RGB-D trajectories. Localization evaluation
+through hadr_place_recognition remains a separate stage.

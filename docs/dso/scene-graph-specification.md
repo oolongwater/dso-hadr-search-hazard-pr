@@ -1,6 +1,10 @@
 # Scene Graph Specification
 
-This document records candidate scientific and software design choices for the symbolic scene graph. It does not finalize the graph structure. Final decisions are TBD and should be jointly reviewed by Yiqing, Tianrun, and Ewen.
+This document records candidate scientific and software design choices for the
+hazard-aware symbolic scene graph. It does not finalize that graph structure.
+Final decisions are TBD and should be jointly reviewed by Yiqing, Tianrun, and
+Ewen. The implemented non-hazard baseline is documented separately in
+[the navigation stack](navigation-stack.md).
 
 ## Purpose Of The Graph
 
