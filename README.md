@@ -6,15 +6,21 @@ The motivating problem is search and navigation in household disaster-response s
 
 ## Development setup
 
+Pixi is the environment and task runner for DSO-specific Python work. From the
+repository root:
 
-The development setup is currently being established by the implementation
-team.
+~~~bash
+pixi run test
+pixi run format
+pixi run typecheck
+~~~
 
-- **Python, AI2-THOR, graph, and navigation setup:** Tianrun
-- **Unity development and custom simulator build setup:** Ewen
+Do not create a separate pip, Conda, or uv environment for this workspace.
 
-TODO: Tianrun and Ewen should update this section with the tested setup commands,
-required versions, and verification steps once their workflows are working.
+See [the ProcTHOR scene corpus contract](docs/dso/procthor-scene-corpus.md) for
+the configuration, content lock, and current limitations.
+See [the navigation stack](docs/dso/navigation-stack.md) for the implemented
+scene extraction, planning, execution, and recording pipeline.
 
 ## Workstreams
 
@@ -34,7 +40,13 @@ The current milestone covers:
 6. Valid random start-goal sampling.
 7. Graph search, waypoint following, route validation, and replanning.
 
-This repository currently contains scaffolding only. Hazard behavior, Unity actions, graph extraction, graph search, waypoint following, and navigation are not implemented yet.
+This repository now contains the ProcTHOR corpus configuration, content
+manifest, validation tooling, and a non-hazard navigation baseline. The
+baseline extracts a symbolic scene graph and ground-truth traversability map,
+runs symbolic Dijkstra and metric A* planning, follows the route in AI2-THOR,
+and records aligned RGB-D observations and poses. Hazard behavior,
+hazard-conditioned graph updates, route validation, replanning, and
+place-recognition evaluation are not implemented yet.
 
 ## Relationship To AI2-THOR
 

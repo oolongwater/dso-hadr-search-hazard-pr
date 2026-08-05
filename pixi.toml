@@ -1,0 +1,28 @@
+[workspace]
+authors = ["DSO HADR contributors"]
+channels = ["conda-forge"]
+name = "dso-hadr-search"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+test = { cmd = "python -m pytest", cwd = "dso" }
+format = { cmd = "ruff format --check src tests scripts && ruff check src tests scripts", cwd = "dso" }
+typecheck = { cmd = "mypy src", cwd = "dso" }
+
+[dependencies]
+python = "3.11.*"
+mypy = "==2.3.0"
+pytest = "==9.1.1"
+ruff = "==0.16.1"
+
+[pypi-dependencies]
+dso-hadr = { path = "dso", editable = true }
+ai2thor = { path = ".", editable = true }
+attrs = "<26"
+numpy = "==1.26.4"
+pandas = "<3"
+shapely = "<3"
+moviepy = "==1.0.3"
+jinja2 = "==3.0.3"
+markupsafe = "==2.0.1"

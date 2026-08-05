@@ -1,6 +1,9 @@
 # Navigation Episode Format Template
 
-This document is a design template and does not finalize serialization.
+This document is a design template for the future hazard-aware benchmark
+episode and does not finalize that serialization. The current non-hazard
+navigation runner and its concrete artifacts are documented in
+[the navigation stack](navigation-stack.md).
 
 ## Candidate Fields
 
