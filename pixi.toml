@@ -19,7 +19,6 @@ ruff = ">=0.12,<0.13"
 [pypi-dependencies]
 dso-hadr = { path = "dso", editable = true }
 ai2thor = { path = ".", editable = true }
-procthor = { path = "../procthor", editable = true }
 attrs = "<26"
 numpy = "==1.26.4"
 pandas = "<3"
