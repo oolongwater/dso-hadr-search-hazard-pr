@@ -1,1 +1,1 @@
-"""Scene-graph package boundary."""
+"""Scene-graph types and data structures."""

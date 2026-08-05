@@ -276,22 +276,22 @@
     {
       "filename": "scene_0028.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u2-u1",
-      "object_count": 89,
+      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
+      "object_count": 76,
       "room_count": 9,
       "scene_id": "scene_0028",
       "schema": "2.0.0",
-      "sha256": "e94465d0917cac67acf3e936f94a3cd175bb4c9ecb746f13fe4ca08b74faa7e1"
+      "sha256": "f8096ef2d0b891f57fa3c65ebf2db359130a57815b1dae188663e8dcc585b56b"
     },
     {
       "filename": "scene_0029.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 39,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb1-u1",
+      "object_count": 50,
+      "room_count": 6,
       "scene_id": "scene_0029",
       "schema": "2.0.0",
-      "sha256": "2995b77660b5cd80657abddd31345bac94785c71b7e012bb1eed47b629b48d2e"
+      "sha256": "1522fa58e780df17ab429b681952885d16255eb9e4227bb4f5017d669b642802"
     },
     {
       "filename": "scene_0030.json",
@@ -796,12 +796,12 @@
     {
       "filename": "scene_0080.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u2-u1",
-      "object_count": 71,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 92,
+      "room_count": 10,
       "scene_id": "scene_0080",
       "schema": "2.0.0",
-      "sha256": "83469b7c70ec547c487cbeb0bf23f63dfdb24f59d1a8e567c5be3157011ed848"
+      "sha256": "451caa5f8f1cdc2d8eda8868565596524a8269fce2394f489110059cc2a92de2"
     },
     {
       "filename": "scene_0081.json",

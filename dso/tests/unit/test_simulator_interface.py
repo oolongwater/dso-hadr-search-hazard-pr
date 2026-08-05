@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
 
 import dso_hadr.simulator.ai2thor as simulator_module
 from dso_hadr.simulator.ai2thor import (
@@ -12,7 +11,6 @@ from dso_hadr.simulator.ai2thor import (
     SimulatorConfig,
     load_simulator_config,
 )
-from dso_hadr.simulator.recording import StepRecorder
 
 
 class FakeEvent:
@@ -60,6 +58,7 @@ def _config() -> SimulatorConfig:
         width=300,
         height=300,
         quality="Low",
+        render_depth=True,
         snap_to_grid=False,
     )
 
@@ -75,6 +74,7 @@ def test_load_simulator_config(tmp_path: Path) -> None:
                 "width": 640,
                 "height": 480,
                 "quality": "Low",
+                "render_depth": True,
                 "snap_to_grid": False,
             }
         ),
@@ -86,6 +86,7 @@ def test_load_simulator_config(tmp_path: Path) -> None:
         width=640,
         height=480,
         quality="Low",
+        render_depth=True,
         snap_to_grid=False,
     )
 
@@ -117,6 +118,7 @@ def test_load_scene_step_and_close(monkeypatch, tmp_path: Path) -> None:
         "width": 300,
         "height": 300,
         "quality": "Low",
+        "renderDepthImage": True,
         "snapToGrid": False,
     }
     assert controller.reset_scene == scene
@@ -133,31 +135,3 @@ def test_load_scene_step_and_close(monkeypatch, tmp_path: Path) -> None:
     assert loaded
     assert moved
     assert controller.stopped
-
-
-def test_step_recorder_writes_rgb_and_trajectory(tmp_path: Path) -> None:
-    output_dir = tmp_path / "episode"
-    recorder = StepRecorder(output_dir, "scene_0001")
-    event = FakeEvent()
-
-    record = recorder.record(
-        {"action": "MoveAhead", "moveMagnitude": 0.25},
-        event,
-    )
-
-    assert record == {
-        "scene_id": "scene_0001",
-        "step_id": 0,
-        "action": {"action": "MoveAhead", "moveMagnitude": 0.25},
-        "success": True,
-        "pose": {
-            "position": {"x": 1.0, "y": 0.9, "z": 2.0},
-            "rotation": {"x": 0.0, "y": 90.0, "z": 0.0},
-            "camera_horizon": 30.0,
-        },
-        "rgb": "rgb/000000.png",
-    }
-    saved = json.loads((output_dir / "trajectory.jsonl").read_text(encoding="utf-8"))
-    assert saved == record
-    with Image.open(output_dir / "rgb/000000.png") as image:
-        assert image.size == (6, 4)

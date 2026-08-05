@@ -27,3 +27,11 @@ from dso_hadr.simulator.control import (
 )
 def test_control_action(factory, value: float, expected: dict[str, object]) -> None:
     assert factory(value) == expected
+
+
+def test_move_ahead_can_include_a_planned_target_height() -> None:
+    assert move_ahead(0.5, target_y=3.9) == {
+        "action": "MoveAhead",
+        "moveMagnitude": 0.5,
+        "targetY": 3.9,
+    }

@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 
-def move_ahead(magnitude: float) -> dict[str, object]:
-    return {"action": "MoveAhead", "moveMagnitude": magnitude}
+def move_ahead(magnitude: float, target_y: float | None = None) -> dict[str, object]:
+    action: dict[str, object] = {"action": "MoveAhead", "moveMagnitude": magnitude}
+    if target_y is not None:
+        action["targetY"] = target_y
+    return action
 
 
 def move_back(magnitude: float) -> dict[str, object]:

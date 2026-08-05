@@ -16,6 +16,7 @@ class SimulatorConfig:
     width: int
     height: int
     quality: str
+    render_depth: bool
     snap_to_grid: bool
 
 
@@ -31,6 +32,7 @@ def load_simulator_config(path: Path) -> SimulatorConfig:
         width=document["width"],
         height=document["height"],
         quality=document["quality"],
+        render_depth=document["render_depth"],
         snap_to_grid=document["snap_to_grid"],
     )
 
@@ -45,6 +47,7 @@ class ProcTHORSimulator:
             width=config.width,
             height=config.height,
             quality=config.quality,
+            renderDepthImage=config.render_depth,
             snapToGrid=config.snap_to_grid,
         )
 
