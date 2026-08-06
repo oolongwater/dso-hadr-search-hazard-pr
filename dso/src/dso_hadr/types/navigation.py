@@ -41,6 +41,18 @@ class Pose:
         return [self.x, self.y, self.z, self.yaw]
 
 
+@dataclass(frozen=True)
+class NavMesh:
+    """Agent-specific runtime navmesh exported by the simulator."""
+
+    agent_type_id: int
+    vertices: tuple[Point3, ...]
+    triangles: tuple[tuple[int, int, int], ...]
+    areas: tuple[int, ...]
+    adjacency: tuple[tuple[int, int], ...]
+    links: tuple[tuple[Point3, ...], ...]
+
+
 class NavigationAction(str, Enum):
     """Discrete actions supported by the navigation controller."""
 
@@ -86,6 +98,7 @@ class FollowerResult:
 
 __all__ = [
     "FollowerResult",
+    "NavMesh",
     "NavigationAction",
     "Observation",
     "Point3",

@@ -157,17 +157,26 @@ def _segment_key(
     return values[0], values[1]
 
 
-def _door_portal(
+def _door_portals(
     door: dict[str, object],
     wall: dict[str, object],
-) -> tuple[float, float]:
+) -> tuple[tuple[float, float], tuple[float, float]]:
     start, end = _wall_segment(wall)
-    wall_length = math.hypot(end[0] - start[0], end[2] - start[2])
+    direction = (
+        (end[0] - start[0]),
+        (end[2] - start[2]),
+    )
+    wall_length = math.hypot(*direction)
     hole = tuple(_point(point) for point in _records(door["holePolygon"]))
     local_center = (min(point[0] for point in hole) + max(point[0] for point in hole)) * 0.5
+    center = (
+        start[0] + direction[0] * local_center / wall_length,
+        start[2] + direction[1] * local_center / wall_length,
+    )
+    normal = direction[1] / wall_length, -direction[0] / wall_length
     return (
-        start[0] + (end[0] - start[0]) * local_center / wall_length,
-        start[2] + (end[2] - start[2]) * local_center / wall_length,
+        (center[0] + normal[0] * 0.35, center[1] + normal[1] * 0.35),
+        (center[0] - normal[0] * 0.35, center[1] - normal[1] * 0.35),
     )
 
 
@@ -178,15 +187,42 @@ def _portal_edge(
     node_a: str,
     node_b: str,
     kind: ConnectivityKind,
-    portal_xz: tuple[float, float],
+    portal_xz_candidates: tuple[tuple[float, float], ...],
     supporting_entity_id: str,
     evidence_detail: str,
     grid: FloorGrid,
     encoded_by_room: dict[str, int],
     representative_by_room: dict[str, Pose],
 ) -> ConnectivityEdge:
-    pose_a = _nearest_region_pose(grid, encoded_by_room[node_a], portal_xz)
-    pose_b = _nearest_region_pose(grid, encoded_by_room[node_b], portal_xz)
+    def region_pose(region_id: str) -> Pose:
+        candidates = tuple(
+            (
+                _nearest_region_pose(
+                    grid,
+                    encoded_by_room[region_id],
+                    portal_xz,
+                ),
+                portal_xz,
+            )
+            for portal_xz in portal_xz_candidates
+        )
+        return min(
+            candidates,
+            key=lambda candidate: (
+                math.dist(
+                    candidate[0].position,
+                    (
+                        candidate[1][0],
+                        grid.floor_height,
+                        candidate[1][1],
+                    ),
+                ),
+                candidate[0].position,
+            ),
+        )[0]
+
+    pose_a = region_pose(node_a)
+    pose_b = region_pose(node_b)
     yaw = math.atan2(-(pose_b.x - pose_a.x), -(pose_b.z - pose_a.z))
     pose_a = Pose(*pose_a.position, yaw)
     pose_b = Pose(*pose_b.position, yaw)
@@ -235,7 +271,10 @@ def _horizontal_edges(
                 node_a=node_a,
                 node_b=node_b,
                 kind=ConnectivityKind.DOOR,
-                portal_xz=_door_portal(door, wall_by_id[str(door["wall0"])]),
+                portal_xz_candidates=_door_portals(
+                    door,
+                    wall_by_id[str(door["wall0"])],
+                ),
                 supporting_entity_id=door_id,
                 evidence_detail=f"internal door {door_id!r} in generated house description",
                 grid=grid,
@@ -265,9 +304,11 @@ def _horizontal_edges(
                 node_a=node_a,
                 node_b=node_b,
                 kind=ConnectivityKind.ADJACENT,
-                portal_xz=(
-                    (segment[0][0] + segment[1][0]) * 0.5,
-                    (segment[0][1] + segment[1][1]) * 0.5,
+                portal_xz_candidates=(
+                    (
+                        (segment[0][0] + segment[1][0]) * 0.5,
+                        (segment[0][1] + segment[1][1]) * 0.5,
+                    ),
                 ),
                 supporting_entity_id=wall_ids[0],
                 evidence_detail="paired empty walls: " + ", ".join(wall_ids),
@@ -290,7 +331,6 @@ def _landing_center(landing: dict[str, object]) -> tuple[float, float]:
 def _vertical_edges(
     connectors: tuple[dict[str, object], ...],
     grids_by_floor: dict[str, FloorGrid],
-    encoded_by_room: dict[str, int],
 ) -> tuple[ConnectivityEdge, ...]:
     edges: list[ConnectivityEdge] = []
     for connector in connectors:
@@ -302,15 +342,19 @@ def _vertical_edges(
         landings = _records(connector["landingPolygons"])
         lower = next(landing for landing in landings if landing["floorId"] == lower_floor_id)
         upper = next(landing for landing in landings if landing["floorId"] == upper_floor_id)
-        pose_a = _nearest_region_pose(
-            grids_by_floor[lower_floor_id],
-            encoded_by_room[lower_room_id],
-            _landing_center(lower),
+        lower_center = _landing_center(lower)
+        upper_center = _landing_center(upper)
+        pose_a = Pose(
+            lower_center[0],
+            grids_by_floor[lower_floor_id].floor_height,
+            lower_center[1],
+            0.0,
         )
-        pose_b = _nearest_region_pose(
-            grids_by_floor[upper_floor_id],
-            encoded_by_room[upper_room_id],
-            _landing_center(upper),
+        pose_b = Pose(
+            upper_center[0],
+            grids_by_floor[upper_floor_id].floor_height,
+            upper_center[1],
+            0.0,
         )
         yaw = math.atan2(-(pose_b.x - pose_a.x), -(pose_b.z - pose_a.z))
         pose_a = Pose(*pose_a.position, yaw)
@@ -456,7 +500,6 @@ def extract_scene_graph_task(
         _vertical_edges(
             _records(house.get("verticalConnectors", [])),
             grids_by_floor,
-            encoded_by_room,
         )
     )
     graph = SceneGraph(
@@ -520,10 +563,11 @@ def scene_navigation_map(scene_path: Path) -> dict[str, object]:
 
 
 def scene_agent_pose(scene_path: Path, start_room_id: str) -> Pose:
-    """Read the stored agent pose in navigation coordinates."""
+    """Ground the stored agent heading at the requested room's polygon center."""
 
     house = json.loads(scene_path.expanduser().resolve(strict=True).read_text(encoding="utf-8"))
     room = next(room for room in _leaf_rooms(house["rooms"]) if room["id"] == start_room_id)
+    polygon = _room_polygon(room)
     floor_height = (
         next(float(floor["baseY"]) for floor in house["floors"] if floor["id"] == room["floorId"])
         if house["metadata"]["schema"] == "2.0.0"
@@ -531,9 +575,9 @@ def scene_agent_pose(scene_path: Path, start_room_id: str) -> Pose:
     )
     agent = house["metadata"]["agent"]
     return Pose(
-        x=float(agent["position"]["x"]),
+        x=sum(point[0] for point in polygon) / len(polygon),
         y=floor_height,
-        z=float(agent["position"]["z"]),
+        z=sum(point[2] for point in polygon) / len(polygon),
         yaw=native_yaw_to_navigation(float(agent["rotation"]["y"])),
     )
 
@@ -602,6 +646,9 @@ def scene_graph_to_dict(task: SceneGraphTask) -> dict[str, object]:
                     "node_b": edge.node_b,
                     "path": [list(point) for point in edge.path],
                     "cost": edge.cost,
+                    "portal": (
+                        None if edge.portal is None else [list(point) for point in edge.portal]
+                    ),
                 }
                 for edge in graph.traversability_map.edges
             ],

@@ -4,11 +4,16 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from dso_hadr.types.navigation import NavigationAction, Observation, Point3, Pose, ShortestPath
+from dso_hadr.types.navigation import NavigationAction, NavMesh, Observation, Pose
 
 
 class NavigationBackend(ABC):
     """Operations required by symbolic-path execution."""
+
+    @property
+    @abstractmethod
+    def navmesh(self) -> NavMesh:
+        """Return the runtime navmesh exported for the active agent."""
 
     @abstractmethod
     def reset(
@@ -34,19 +39,6 @@ class NavigationBackend(ABC):
     @abstractmethod
     def get_observation(self) -> Observation:
         """Read the current observation without moving."""
-
-    @abstractmethod
-    def sample_navigable_point(self) -> Point3:
-        """Sample a navigable point using the configured seed."""
-
-    @abstractmethod
-    def get_navmesh_path(
-        self,
-        start: Point3,
-        goal: Point3,
-        max_path_length: float,
-    ) -> ShortestPath | None:
-        """Query a bounded ground-truth navmesh path between two points."""
 
     @abstractmethod
     def get_agent_pose(self) -> Pose:

@@ -7,10 +7,12 @@ from pathlib import Path
 import numpy as np
 
 from dso_hadr.controller.waypoint_follower import WaypointFollower
-from dso_hadr.scenes.scene_graph import scene_navigation_map
+from dso_hadr.scenes.scene_graph import scene_agent_pose, scene_navigation_map
 from dso_hadr.simulator.ai2thor_backend import (
     AI2THORNavigationBackend,
     AI2THORNavigationConfig,
+    _door_path,
+    _vertical_connector_paths,
 )
 from dso_hadr.types.navigation import NavigationAction, Observation, Pose
 from dso_hadr.utils.coordinates import (
@@ -20,14 +22,18 @@ from dso_hadr.utils.coordinates import (
 
 
 class FakeEvent:
-    def __init__(self, rotation: float = 180.0) -> None:
+    def __init__(
+        self,
+        rotation: float = 180.0,
+        position: dict[str, float] | None = None,
+    ) -> None:
         self.frame = np.zeros((4, 6, 3), dtype=np.uint8)
         self.depth_frame = np.ones((4, 6), dtype=np.float32)
         self.metadata = {
             "lastActionSuccess": True,
             "errorMessage": "",
             "agent": {
-                "position": {"x": 1.0, "y": 0.9, "z": 2.0},
+                "position": dict(position or {"x": 1.0, "y": 0.9, "z": 2.0}),
                 "rotation": {"x": 0.0, "y": rotation, "z": 0.0},
             },
         }
@@ -37,22 +43,51 @@ class FakeEvent:
 
 
 class FakeSimulator:
-    def __init__(self, *, fail_move: bool = False) -> None:
+    def __init__(self) -> None:
         self.actions: list[dict[str, object]] = []
-        self.fail_move = fail_move
+        self.loaded_paths: list[Path] = []
+        self.position = {"x": 1.0, "y": 0.9, "z": 2.0}
+        self.rotation = 180.0
+
+    def load_scene(self, scene_path: Path) -> FakeEvent:
+        self.loaded_paths.append(scene_path)
+        return FakeEvent(self.rotation, self.position)
 
     def step(self, action: dict[str, object]) -> FakeEvent:
         self.actions.append(action)
-        event = FakeEvent()
-        if action["action"] == "GetShortestPathToPoint":
-            event.metadata["actionReturn"] = {
-                "corners": [
-                    {"x": 1.0, "y": 0.0, "z": 0.0},
-                ]
+        action_name = action["action"]
+        if action_name == "TeleportFull":
+            position = action["position"]
+            rotation = action["rotation"]
+            assert isinstance(position, dict)
+            assert isinstance(rotation, dict)
+            self.position = {
+                "x": float(position["x"]),
+                "y": float(position["y"]),
+                "z": float(position["z"]),
             }
-        elif action["action"] == "MoveAhead" and self.fail_move:
-            event.metadata["lastActionSuccess"] = False
-            event.metadata["errorMessage"] = "blocked"
+            self.rotation = float(rotation["y"])
+        elif action_name == "MoveAhead":
+            magnitude = float(action["moveMagnitude"])
+            radians = math.radians(self.rotation)
+            self.position["x"] += math.sin(radians) * magnitude
+            self.position["z"] += math.cos(radians) * magnitude
+            if "targetY" in action:
+                self.position["y"] = float(action["targetY"])
+
+        event = FakeEvent(self.rotation, self.position)
+        if action_name == "DSOHADRGetNavMeshTriangulation":
+            event.metadata["actionReturn"] = {
+                "agentTypeId": 0,
+                "vertices": [
+                    {"x": 0.0, "y": 0.0, "z": 0.0},
+                    {"x": 1.0, "y": 0.0, "z": 0.0},
+                    {"x": 0.0, "y": 0.0, "z": 1.0},
+                ],
+                "indices": [0, 1, 2],
+                "areas": [0],
+                "adjacency": [],
+            }
         return event
 
     def close(self) -> None:
@@ -66,9 +101,6 @@ def _backend(simulator: FakeSimulator) -> AI2THORNavigationBackend:
         AI2THORNavigationConfig(
             move_magnitude=0.25,
             rotation_degrees=15.0,
-            reachable_grid_size=0.25,
-            path_allowed_error=0.2,
-            navigable_tolerance=0.18,
         ),
     )
     backend._event = FakeEvent()
@@ -79,6 +111,144 @@ def test_ai2thor_yaw_round_trip() -> None:
     assert native_yaw_to_navigation(180.0) == 0.0
     assert native_yaw_to_navigation(270.0) == math.pi / 2.0
     assert navigation_yaw_to_native(math.pi / 2.0) == 270.0
+
+
+def test_scene_agent_pose_uses_the_requested_room_center(tmp_path: Path) -> None:
+    scene_path = tmp_path / "scene.json"
+    scene_path.write_text(
+        json.dumps(
+            {
+                "metadata": {
+                    "schema": "1.0.0",
+                    "agent": {
+                        "position": {"x": 99.0, "y": 0.9, "z": 99.0},
+                        "rotation": {"x": 0.0, "y": 180.0, "z": 0.0},
+                    },
+                },
+                "rooms": [
+                    {
+                        "id": "room|2",
+                        "floorPolygon": [
+                            {"x": 4.0, "y": 3.0, "z": 6.0},
+                            {"x": 8.0, "y": 3.0, "z": 6.0},
+                            {"x": 8.0, "y": 3.0, "z": 10.0},
+                            {"x": 4.0, "y": 3.0, "z": 10.0},
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    pose = scene_agent_pose(scene_path, "room|2")
+
+    assert pose == Pose(6.0, 3.0, 8.0, 0.0)
+
+
+def test_scene_door_path_comes_from_wall_and_hole_geometry() -> None:
+    door: dict[str, object] = {
+        "id": "door|0",
+        "wall0": "wall|0",
+        "holePolygon": [
+            {"x": 1.0, "y": 0.0, "z": 0.0},
+            {"x": 3.0, "y": 2.0, "z": 0.0},
+        ],
+    }
+    walls: dict[str, dict[str, object]] = {
+        "wall|0": {
+            "polygon": [
+                {"x": 0.0, "y": 3.0, "z": 2.0},
+                {"x": 4.0, "y": 3.0, "z": 2.0},
+            ]
+        }
+    }
+
+    assert _door_path(door, walls) == (
+        (2.0, 3.0, 1.65),
+        (2.0, 3.0, 2.35),
+    )
+
+
+def test_scene_vertical_connector_paths_use_one_shared_vertical_edge() -> None:
+    connector: dict[str, object] = {
+        "id": "vertical-connector|0",
+        "position": {"x": 1.0, "y": 0.0, "z": 3.25},
+        "rotation": {"x": 0.0, "y": 0.0, "z": 0.0},
+        "assetContract": {
+            "flightRun": 4.5,
+            "rise": 3.0,
+            "reservedLength": 6.5,
+            "reservedWidth": 1.2,
+        },
+        "lowerFloorId": "floor|0",
+        "upperFloorId": "floor|1",
+        "lowerRoomId": "room|0",
+        "upperRoomId": "room|1",
+        "landingPolygons": [
+            {
+                "floorId": "floor|0",
+                "polygon": [
+                    {"x": 0.4, "y": 0.0, "z": 0.0},
+                    {"x": 1.6, "y": 0.0, "z": 0.0},
+                    {"x": 1.6, "y": 0.0, "z": 1.0},
+                    {"x": 0.4, "y": 0.0, "z": 1.0},
+                ],
+            },
+            {
+                "floorId": "floor|1",
+                "polygon": [
+                    {"x": 0.4, "y": 3.0, "z": 5.5},
+                    {"x": 1.6, "y": 3.0, "z": 5.5},
+                    {"x": 1.6, "y": 3.0, "z": 6.5},
+                    {"x": 0.4, "y": 3.0, "z": 6.5},
+                ],
+            },
+        ],
+    }
+    rooms: dict[str, dict[str, object]] = {
+        "room|0": {
+            "floorPolygon": [
+                {"x": 0.0, "y": 0.0, "z": -1.0},
+                {"x": 2.0, "y": 0.0, "z": -1.0},
+                {"x": 2.0, "y": 0.0, "z": 2.0},
+                {"x": 0.0, "y": 0.0, "z": 2.0},
+            ]
+        },
+        "room|1": {
+            "floorPolygon": [
+                {"x": 0.0, "y": 3.0, "z": 5.0},
+                {"x": 2.0, "y": 3.0, "z": 5.0},
+                {"x": 2.0, "y": 3.0, "z": 6.5},
+                {"x": 0.0, "y": 3.0, "z": 6.5},
+            ]
+        },
+    }
+
+    expected_lower = (
+        (1.0, 0.0, -0.3),
+        (1.0, 0.0, 0.5),
+        (1.0, 0.0, 1.0),
+    )
+    expected_vertical = ((1.0, 0.0, 1.0), (1.0, 3.0, 5.5))
+    expected_upper = (
+        (1.0, 3.0, 5.5),
+        (1.0, 3.0, 6.0),
+        (0.1, 3.0, 6.0),
+    )
+    paths = _vertical_connector_paths(connector, rooms)
+    assert len(paths) == 3
+    assert sum(not math.isclose(path[0][1], path[-1][1]) for path in paths) == 1
+    for actual, expected in (
+        (paths[0], expected_lower),
+        (paths[1], expected_vertical),
+        (paths[2], expected_upper),
+    ):
+        assert len(actual) == len(expected)
+        assert all(
+            math.dist(actual_point, expected_point) < 1e-12
+            for actual_point, expected_point in zip(actual, expected, strict=True)
+        )
 
 
 def test_navigation_turns_are_translated_to_matching_ai2thor_turns() -> None:
@@ -106,36 +276,59 @@ def test_navigation_backend_can_apply_exact_planner_turns() -> None:
     assert math.isclose(float(simulator.actions[1]["degrees"]), 7.5)
 
 
-def test_navmesh_path_query_includes_requested_endpoints() -> None:
+def test_backend_reset_exports_runtime_triangulation_without_sampling(
+    tmp_path: Path,
+) -> None:
+    scene_path = tmp_path / "scene.json"
+    scene_path.write_text(
+        json.dumps(
+            {
+                "metadata": {
+                    "schema": "1.0.0",
+                    "agent": {"horizon": 0.0, "standing": True},
+                },
+                "rooms": [
+                    {
+                        "floorPolygon": [
+                            {"x": 0.0, "y": 0.0, "z": 0.0},
+                            {"x": 1.0, "y": 0.0, "z": 0.0},
+                            {"x": 0.0, "y": 0.0, "z": 1.0},
+                        ]
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     simulator = FakeSimulator()
-    backend = _backend(simulator)
+    backend = AI2THORNavigationBackend(
+        simulator,
+        {"scene": scene_path},
+        AI2THORNavigationConfig(move_magnitude=0.25, rotation_degrees=15.0),
+    )
 
-    path = backend.get_navmesh_path(
+    observation = backend.reset("scene", Pose(0.2, 0.0, 0.2, 0.0), seed=0)
+
+    assert simulator.loaded_paths == [scene_path.resolve()]
+    assert backend.navmesh.agent_type_id == 0
+    assert backend.navmesh.vertices == (
         (0.0, 0.0, 0.0),
-        (2.0, 0.0, 0.0),
-        max_path_length=2.0,
+        (1.0, 0.0, 0.0),
+        (0.0, 0.0, 1.0),
     )
-
-    assert path is not None
-    assert path.points == ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0), (2.0, 0.0, 0.0))
-    assert path.geodesic_distance == 2.0
-    assert any(
-        action["action"] == "TeleportFull" and action.get("forceAction") is True
-        for action in simulator.actions
-    )
-
-
-def test_navmesh_path_query_rejects_a_physically_blocked_edge() -> None:
-    backend = _backend(FakeSimulator(fail_move=True))
-
-    path = backend.get_navmesh_path(
-        (0.0, 0.0, 0.0),
-        (2.0, 0.0, 0.0),
-        max_path_length=2.0,
-    )
-
-    assert path is None
-    assert backend.get_agent_pose() == Pose(1.0, 0.9, 2.0, 0.0)
+    assert backend.navmesh.triangles == ((0, 1, 2),)
+    assert backend.navmesh.areas == (0,)
+    assert backend.navmesh.adjacency == ()
+    assert backend.navmesh.links == ()
+    assert observation.pose.position == (1.0 / 3.0, 0.0, 1.0 / 3.0)
+    assert simulator.actions[0] == {
+        "action": "DSOHADRGetNavMeshTriangulation",
+        "renderImage": False,
+    }
+    action_names = {str(action["action"]) for action in simulator.actions}
+    assert "GetReachablePositions" not in action_names
+    assert "GetShortestPathToPoint" not in action_names
+    assert backend.get_scene_metadata()["navmesh_triangle_count"] == 1
 
 
 def test_waypoint_follower_skips_height_only_intermediate_points() -> None:

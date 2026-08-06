@@ -22,17 +22,8 @@ class NavigationEpisodeConfig:
     goal_room_id: str
     seed: int
     meters_per_pixel: float
-    max_vertical_step: float
-    max_edge_length_ratio: float
-    max_link_path_length_ratio: float
-    max_link_distance: float
-    max_transition_slope_ratio: float
-    transition_height_tolerance: float
-    link_candidate_count: int
     move_magnitude: float
     rotation_degrees: float
-    reachable_grid_size: float
-    path_allowed_error: float
     navigable_tolerance: float
     waypoint_tolerance: float
     heading_tolerance_degrees: float
@@ -82,17 +73,8 @@ def load_navigation_episode_config(path: Path) -> NavigationEpisodeConfig:
         goal_room_id=episode["goal_room_id"],
         seed=episode["seed"],
         meters_per_pixel=scene_graph["meters_per_pixel"],
-        max_vertical_step=traversability_map["max_vertical_step"],
-        max_edge_length_ratio=traversability_map["max_edge_length_ratio"],
-        max_link_path_length_ratio=traversability_map["max_link_path_length_ratio"],
-        max_link_distance=traversability_map["max_link_distance"],
-        max_transition_slope_ratio=traversability_map["max_transition_slope_ratio"],
-        transition_height_tolerance=traversability_map["transition_height_tolerance"],
-        link_candidate_count=traversability_map["link_candidate_count"],
         move_magnitude=controller["move_magnitude"],
         rotation_degrees=controller["rotation_degrees"],
-        reachable_grid_size=traversability_map["reachable_grid_size"],
-        path_allowed_error=traversability_map["path_allowed_error"],
         navigable_tolerance=traversability_map["navigable_tolerance"],
         waypoint_tolerance=controller["waypoint_tolerance"],
         heading_tolerance_degrees=controller["heading_tolerance_degrees"],

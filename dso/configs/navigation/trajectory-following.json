@@ -21,16 +21,7 @@
     "simulator_config": "../simulator/ai2thor.json"
   },
   "traversability_map": {
-    "link_candidate_count": 16,
-    "max_edge_length_ratio": 2.1,
-    "max_link_path_length_ratio": 4.0,
-    "max_link_distance": 6.0,
-    "max_transition_slope_ratio": 0.8,
-    "max_vertical_step": 0.26,
-    "navigable_tolerance": 0.18,
-    "path_allowed_error": 0.2,
-    "reachable_grid_size": 0.25,
-    "transition_height_tolerance": 0.2
+    "navigable_tolerance": 0.18
   },
   "scene_graph": {
     "meters_per_pixel": 0.1

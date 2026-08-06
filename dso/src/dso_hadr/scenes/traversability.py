@@ -1,279 +1,391 @@
-"""Extract a ground-truth traversability map from simulator navmesh data."""
+"""Build traversability directly from the simulator's runtime navmesh."""
 
 from __future__ import annotations
 
-import heapq
 import itertools
 import math
-from collections import deque
-from collections.abc import Callable
 
 from dso_hadr.graph.model import (
+    SceneGraphTask,
     TraversabilityEdge,
     TraversabilityMap,
     TraversabilitySource,
 )
-from dso_hadr.types.navigation import Point3, ShortestPath, as_point3
+from dso_hadr.types.navigation import NavMesh, Point3
 
-NavmeshPathQuery = Callable[[Point3, Point3, float], ShortestPath | None]
+_VERTEX_DIGITS = 5
+_LINK_TRIANGLE_TOLERANCE = 0.6
 
 
-def ground_truth_traversability_nodes(
-    navmesh_samples: tuple[Point3, ...],
+def _path_length(points: tuple[Point3, ...]) -> float:
+    return sum(math.dist(source, target) for source, target in itertools.pairwise(points))
+
+
+def _dense_path(points: tuple[Point3, ...], max_segment_length: float) -> tuple[Point3, ...]:
+    if max_segment_length <= 0.0:
+        raise ValueError("max segment length must be positive")
+    dense: list[Point3] = [points[0]]
+    for source, target in itertools.pairwise(points):
+        distance = math.dist(source, target)
+        steps = max(1, math.ceil(distance / max_segment_length))
+        for step in range(1, steps + 1):
+            fraction = step / steps
+            point = (
+                source[0] + (target[0] - source[0]) * fraction,
+                source[1] + (target[1] - source[1]) * fraction,
+                source[2] + (target[2] - source[2]) * fraction,
+            )
+            if point != dense[-1]:
+                dense.append(point)
+    return tuple(dense)
+
+
+def _canonical_navmesh(
+    navmesh: NavMesh,
+) -> tuple[tuple[Point3, ...], tuple[tuple[int, int, int], ...]]:
+    vertices: list[Point3] = []
+    vertex_by_position: dict[Point3, int] = {}
+    raw_to_canonical: list[int] = []
+    for raw_vertex in navmesh.vertices:
+        position: Point3 = (
+            round(raw_vertex[0], _VERTEX_DIGITS),
+            round(raw_vertex[1], _VERTEX_DIGITS),
+            round(raw_vertex[2], _VERTEX_DIGITS),
+        )
+        vertex = vertex_by_position.get(position)
+        if vertex is None:
+            vertex = len(vertices)
+            vertex_by_position[position] = vertex
+            vertices.append(position)
+        raw_to_canonical.append(vertex)
+
+    triangles: list[tuple[int, int, int]] = []
+    for raw_triangle in navmesh.triangles:
+        triangle = (
+            raw_to_canonical[raw_triangle[0]],
+            raw_to_canonical[raw_triangle[1]],
+            raw_to_canonical[raw_triangle[2]],
+        )
+        if len(set(triangle)) != 3:
+            raise ValueError("runtime navmesh contains a degenerate triangle")
+        triangles.append(triangle)
+    if not triangles:
+        raise ValueError("runtime navmesh contains no triangles")
+    return tuple(vertices), tuple(triangles)
+
+
+def _subtract(first: Point3, second: Point3) -> Point3:
+    return (
+        first[0] - second[0],
+        first[1] - second[1],
+        first[2] - second[2],
+    )
+
+
+def _dot(first: Point3, second: Point3) -> float:
+    return sum(a * b for a, b in zip(first, second, strict=True))
+
+
+def _scaled_add(origin: Point3, direction: Point3, scale: float) -> Point3:
+    return (
+        origin[0] + direction[0] * scale,
+        origin[1] + direction[1] * scale,
+        origin[2] + direction[2] * scale,
+    )
+
+
+def _closest_point_on_triangle(
+    point: Point3,
+    vertex_a: Point3,
+    vertex_b: Point3,
+    vertex_c: Point3,
+) -> Point3:
+    edge_ab = _subtract(vertex_b, vertex_a)
+    edge_ac = _subtract(vertex_c, vertex_a)
+    offset_a = _subtract(point, vertex_a)
+    dot_ab_a = _dot(edge_ab, offset_a)
+    dot_ac_a = _dot(edge_ac, offset_a)
+    if dot_ab_a <= 0.0 and dot_ac_a <= 0.0:
+        return vertex_a
+
+    offset_b = _subtract(point, vertex_b)
+    dot_ab_b = _dot(edge_ab, offset_b)
+    dot_ac_b = _dot(edge_ac, offset_b)
+    if dot_ab_b >= 0.0 and dot_ac_b <= dot_ab_b:
+        return vertex_b
+
+    vertex_c_coordinate = dot_ab_a * dot_ac_b - dot_ab_b * dot_ac_a
+    if vertex_c_coordinate <= 0.0 and dot_ab_a >= 0.0 and dot_ab_b <= 0.0:
+        return _scaled_add(vertex_a, edge_ab, dot_ab_a / (dot_ab_a - dot_ab_b))
+
+    offset_c = _subtract(point, vertex_c)
+    dot_ab_c = _dot(edge_ab, offset_c)
+    dot_ac_c = _dot(edge_ac, offset_c)
+    if dot_ac_c >= 0.0 and dot_ab_c <= dot_ac_c:
+        return vertex_c
+
+    vertex_b_coordinate = dot_ab_c * dot_ac_a - dot_ab_a * dot_ac_c
+    if vertex_b_coordinate <= 0.0 and dot_ac_a >= 0.0 and dot_ac_c <= 0.0:
+        return _scaled_add(vertex_a, edge_ac, dot_ac_a / (dot_ac_a - dot_ac_c))
+
+    vertex_a_coordinate = dot_ab_b * dot_ac_c - dot_ab_c * dot_ac_b
+    if vertex_a_coordinate <= 0.0 and dot_ac_b - dot_ab_b >= 0.0 and dot_ab_c - dot_ac_c >= 0.0:
+        edge_bc = _subtract(vertex_c, vertex_b)
+        scale = (dot_ac_b - dot_ab_b) / (dot_ac_b - dot_ab_b + dot_ab_c - dot_ac_c)
+        return _scaled_add(vertex_b, edge_bc, scale)
+
+    denominator = 1.0 / (vertex_a_coordinate + vertex_b_coordinate + vertex_c_coordinate)
+    scale_ab = vertex_b_coordinate * denominator
+    scale_ac = vertex_c_coordinate * denominator
+    return _scaled_add(_scaled_add(vertex_a, edge_ab, scale_ab), edge_ac, scale_ac)
+
+
+def _nearest_triangle(
+    point: Point3,
+    vertices: tuple[Point3, ...],
+    triangles: tuple[tuple[int, int, int], ...],
+    centroids: tuple[Point3, ...],
+) -> tuple[int, float, Point3]:
+    candidates = (
+        (
+            math.dist(point, closest_point),
+            math.dist(point, centroids[node]),
+            node,
+            closest_point,
+        )
+        for node, triangle in enumerate(triangles)
+        for closest_point in (
+            _closest_point_on_triangle(
+                point,
+                vertices[triangle[0]],
+                vertices[triangle[1]],
+                vertices[triangle[2]],
+            ),
+        )
+    )
+    distance, _centroid_distance, node, closest_point = min(candidates)
+    return node, distance, closest_point
+
+
+def direct_navmesh_traversability(
+    navmesh: NavMesh,
+    *,
+    move_magnitude: float,
 ) -> TraversabilityMap:
-    """Create a ground-truth map whose connectivity has not yet been extracted."""
+    """Convert one runtime triangulation into a dense triangle-adjacency graph."""
+
+    vertices, triangles = _canonical_navmesh(navmesh)
+    triangle_nodes = tuple(
+        (
+            sum(vertices[vertex][0] for vertex in triangle) / 3.0,
+            sum(vertices[vertex][1] for vertex in triangle) / 3.0,
+            sum(vertices[vertex][2] for vertex in triangle) / 3.0,
+        )
+        for triangle in triangles
+    )
+
+    edges: list[TraversabilityEdge] = []
+    for raw_node_a, raw_node_b in navmesh.adjacency:
+        node_a, node_b = min(raw_node_a, raw_node_b), max(raw_node_a, raw_node_b)
+        if node_a < 0 or node_b >= len(triangles) or node_a == node_b:
+            raise ValueError("runtime navmesh adjacency references an invalid triangle")
+        shared_edge = tuple(sorted(set(triangles[node_a]) & set(triangles[node_b])))
+        if len(shared_edge) != 2:
+            raise ValueError("adjacent runtime navmesh triangles do not share one edge")
+        first_vertex, second_vertex = (vertices[index] for index in shared_edge)
+        midpoint = (
+            (first_vertex[0] + second_vertex[0]) * 0.5,
+            (first_vertex[1] + second_vertex[1]) * 0.5,
+            (first_vertex[2] + second_vertex[2]) * 0.5,
+        )
+        path = _dense_path(
+            (triangle_nodes[node_a], midpoint, triangle_nodes[node_b]),
+            move_magnitude,
+        )
+        edges.append(
+            TraversabilityEdge(
+                node_a=node_a,
+                node_b=node_b,
+                path=path,
+                cost=_path_length(path),
+                portal=(first_vertex, second_vertex),
+            )
+        )
+
+    links: list[tuple[Point3, ...]] = []
+    link_endpoints: dict[Point3, tuple[int, Point3]] = {}
+    for raw_link in navmesh.links:
+        if len(raw_link) < 2:
+            raise ValueError("runtime navmesh link must contain at least two points")
+        link: tuple[Point3, ...] = tuple(
+            (
+                round(point[0], _VERTEX_DIGITS),
+                round(point[1], _VERTEX_DIGITS),
+                round(point[2], _VERTEX_DIGITS),
+            )
+            for point in raw_link
+        )
+        start, end = link[0], link[-1]
+        node_a, distance_a, closest_a = _nearest_triangle(
+            start,
+            vertices,
+            triangles,
+            triangle_nodes,
+        )
+        node_b, distance_b, closest_b = _nearest_triangle(
+            end,
+            vertices,
+            triangles,
+            triangle_nodes,
+        )
+        if max(distance_a, distance_b) > _LINK_TRIANGLE_TOLERANCE:
+            raise ValueError(
+                "runtime navmesh link endpoint is not on the exported triangulation: "
+                f"start={start} distance={distance_a}, end={end} distance={distance_b}"
+            )
+        link_endpoints.setdefault(start, (node_a, closest_a))
+        link_endpoints.setdefault(end, (node_b, closest_b))
+        links.append(link)
+
+    endpoint_nodes = {
+        point: len(triangle_nodes) + index for index, point in enumerate(link_endpoints)
+    }
+    nodes = (*triangle_nodes, *endpoint_nodes)
+    for point, endpoint_node in endpoint_nodes.items():
+        triangle_node, closest_point = link_endpoints[point]
+        attachment_points = (
+            (triangle_nodes[triangle_node], point)
+            if closest_point == point
+            else (triangle_nodes[triangle_node], closest_point, point)
+        )
+        path = _dense_path(attachment_points, move_magnitude)
+        edges.append(
+            TraversabilityEdge(
+                node_a=triangle_node,
+                node_b=endpoint_node,
+                path=path,
+                cost=_path_length(path),
+                portal=(point, point),
+            )
+        )
+
+    for link in links:
+        node_a = endpoint_nodes[link[0]]
+        node_b = endpoint_nodes[link[-1]]
+        if node_a == node_b:
+            continue
+        path = _dense_path(link, move_magnitude)
+        if node_a > node_b:
+            node_a, node_b = node_b, node_a
+            path = tuple(reversed(path))
+        edges.append(
+            TraversabilityEdge(
+                node_a=node_a,
+                node_b=node_b,
+                path=path,
+                cost=_path_length(path),
+            )
+        )
 
     return TraversabilityMap(
         source=TraversabilitySource.AI2THOR_NAVMESH_GROUND_TRUTH,
-        nodes=tuple(sorted(set(navmesh_samples))),
-        edges=(),
-    )
-
-
-def extract_ground_truth_traversability(
-    traversability_map: TraversabilityMap,
-    anchors: tuple[Point3, ...],
-    *,
-    grid_size: float,
-    max_vertical_step: float,
-    max_edge_length_ratio: float,
-    max_link_path_length_ratio: float,
-    max_link_distance: float,
-    max_transition_slope_ratio: float,
-    transition_height_tolerance: float,
-    link_candidate_count: int,
-    query_navmesh_path: NavmeshPathQuery,
-) -> TraversabilityMap:
-    """Populate the map with ground-truth edges connecting ordered anchors."""
-
-    nodes = traversability_map.nodes
-    origin_x = min(point[0] for point in nodes)
-    origin_z = min(point[2] for point in nodes)
-
-    def grid_cell(point: Point3) -> tuple[int, int]:
-        return (
-            round((point[0] - origin_x) / grid_size),
-            round((point[2] - origin_z) / grid_size),
-        )
-
-    nodes_by_cell: dict[tuple[int, int], list[int]] = {}
-    for index, point in enumerate(nodes):
-        nodes_by_cell.setdefault(grid_cell(point), []).append(index)
-
-    def local_neighbors(node: int) -> tuple[int, ...]:
-        point = nodes[node]
-        column, row = grid_cell(point)
-        cell_radius = math.ceil(max_edge_length_ratio)
-        max_distance = grid_size * max_edge_length_ratio
-        neighbors: list[int] = []
-        offsets = range(-cell_radius, cell_radius + 1)
-        for column_offset, row_offset in itertools.product(offsets, repeat=2):
-            if column_offset == 0 and row_offset == 0:
-                continue
-            for candidate in nodes_by_cell.get(
-                (column + column_offset, row + row_offset),
-                (),
-            ):
-                candidate_point = nodes[candidate]
-                if (
-                    math.hypot(
-                        candidate_point[0] - point[0],
-                        candidate_point[2] - point[2],
-                    )
-                    <= max_distance
-                    and abs(candidate_point[1] - point[1]) <= max_vertical_step
-                ):
-                    neighbors.append(candidate)
-        return tuple(neighbors)
-
-    unvisited = set(range(len(nodes)))
-    components: list[tuple[int, ...]] = []
-    while unvisited:
-        first = unvisited.pop()
-        component = [first]
-        queue = deque((first,))
-        while queue:
-            current = queue.popleft()
-            for neighbor in local_neighbors(current):
-                if neighbor in unvisited:
-                    unvisited.remove(neighbor)
-                    component.append(neighbor)
-                    queue.append(neighbor)
-        components.append(tuple(component))
-
-    link_neighbors: dict[int, set[int]] = {}
-    for source_component, target_component in itertools.combinations(components, 2):
-        candidates = heapq.nsmallest(
-            link_candidate_count,
-            (
-                edge
-                for edge in itertools.product(source_component, target_component)
-                if math.dist(nodes[edge[0]], nodes[edge[1]]) <= max_link_distance
-                and abs(nodes[edge[1]][1] - nodes[edge[0]][1])
-                <= math.hypot(
-                    nodes[edge[1]][0] - nodes[edge[0]][0],
-                    nodes[edge[1]][2] - nodes[edge[0]][2],
-                )
-                * max_transition_slope_ratio
-                + transition_height_tolerance
-            ),
-            key=lambda edge: math.dist(nodes[edge[0]], nodes[edge[1]]),
-        )
-        for source, target in candidates:
-            link_neighbors.setdefault(source, set()).add(target)
-            link_neighbors.setdefault(target, set()).add(source)
-
-    accepted: dict[tuple[int, int], TraversabilityEdge] = {
-        (edge.node_a, edge.node_b): edge for edge in traversability_map.edges
-    }
-
-    def edge_key(node_a: int, node_b: int) -> tuple[int, int]:
-        return min(node_a, node_b), max(node_a, node_b)
-
-    def neighbors(current: int) -> tuple[int, ...]:
-        candidates = set(local_neighbors(current))
-        candidates.update(link_neighbors.get(current, ()))
-        return tuple(sorted(candidates))
-
-    def nearest_node(point: Point3) -> int:
-        target = as_point3(point)
-        return min(
-            range(len(nodes)),
-            key=lambda node: (math.dist(target, nodes[node]), node),
-        )
-
-    def candidate_route(
-        start_node: int,
-        goal_node: int,
-    ) -> tuple[tuple[int, ...] | None, set[int]]:
-        frontier: list[tuple[float, float, int]] = [
-            (math.dist(nodes[start_node], nodes[goal_node]), 0.0, start_node)
-        ]
-        came_from: dict[int, int] = {}
-        cost_so_far = {start_node: 0.0}
-        while frontier:
-            _priority, current_cost, current = heapq.heappop(frontier)
-            if current_cost != cost_so_far[current]:
-                continue
-            if current == goal_node:
-                break
-            for neighbor in neighbors(current):
-                key = edge_key(current, neighbor)
-                if key in rejected:
-                    continue
-                edge_cost = (
-                    accepted[key].cost
-                    if key in accepted
-                    else math.dist(
-                        nodes[current],
-                        nodes[neighbor],
-                    )
-                )
-                neighbor_cost = current_cost + edge_cost
-                if neighbor_cost >= cost_so_far.get(neighbor, math.inf):
-                    continue
-                cost_so_far[neighbor] = neighbor_cost
-                came_from[neighbor] = current
-                heapq.heappush(
-                    frontier,
-                    (
-                        neighbor_cost + math.dist(nodes[neighbor], nodes[goal_node]),
-                        neighbor_cost,
-                        neighbor,
-                    ),
-                )
-        if goal_node != start_node and goal_node not in came_from:
-            return None, set(cost_so_far)
-        route = [goal_node]
-        while route[-1] != start_node:
-            route.append(came_from[route[-1]])
-        return tuple(reversed(route)), set(cost_so_far)
-
-    anchor_nodes = tuple(nearest_node(anchor) for anchor in anchors)
-    for start_node, goal_node in itertools.pairwise(anchor_nodes):
-        rejected: set[tuple[int, int]] = set()
-        while True:
-            route, reachable = candidate_route(start_node, goal_node)
-            if route is None:
-                bridge_candidates = heapq.nsmallest(
-                    link_candidate_count,
-                    (
-                        (source, target)
-                        for source in reachable
-                        for target in range(len(nodes))
-                        if target not in reachable
-                        and edge_key(source, target) not in rejected
-                        and math.dist(nodes[source], nodes[target]) <= max_link_distance
-                        and abs(nodes[target][1] - nodes[source][1])
-                        <= math.hypot(
-                            nodes[target][0] - nodes[source][0],
-                            nodes[target][2] - nodes[source][2],
-                        )
-                        * max_transition_slope_ratio
-                        + transition_height_tolerance
-                    ),
-                    key=lambda edge: math.dist(nodes[edge[0]], nodes[edge[1]]),
-                )
-                if not bridge_candidates:
-                    raise ValueError(
-                        f"ground-truth traversability extraction could not connect "
-                        f"{nodes[start_node]} to {nodes[goal_node]} after rejecting "
-                        f"{len(rejected)} candidate edges"
-                    )
-                for source, target in bridge_candidates:
-                    link_neighbors.setdefault(source, set()).add(target)
-                    link_neighbors.setdefault(target, set()).add(source)
-                continue
-            unknown = [
-                (source, target)
-                for source, target in itertools.pairwise(route)
-                if edge_key(source, target) not in accepted
-            ]
-            if not unknown:
-                break
-            for source, target in unknown:
-                source_point = nodes[source]
-                target_point = nodes[target]
-                path_length_ratio = (
-                    max_link_path_length_ratio
-                    if target in link_neighbors.get(source, ())
-                    else max_edge_length_ratio
-                )
-                path = query_navmesh_path(
-                    source_point,
-                    target_point,
-                    math.dist(source_point, target_point) * path_length_ratio,
-                )
-                if path is not None and any(
-                    abs(point_b[1] - point_a[1])
-                    > math.hypot(
-                        point_b[0] - point_a[0],
-                        point_b[2] - point_a[2],
-                    )
-                    * max_transition_slope_ratio
-                    + transition_height_tolerance
-                    for point_a, point_b in itertools.pairwise(path.points)
-                ):
-                    path = None
-                key = edge_key(source, target)
-                if path is None:
-                    rejected.add(key)
-                    break
-                accepted[key] = TraversabilityEdge(
-                    node_a=key[0],
-                    node_b=key[1],
-                    path=(path.points if source == key[0] else tuple(reversed(path.points))),
-                    cost=path.geodesic_distance,
-                )
-
-    return TraversabilityMap(
-        source=traversability_map.source,
         nodes=nodes,
-        edges=tuple(accepted[key] for key in sorted(accepted)),
+        edges=tuple(edges),
     )
+
+
+def _primary_component_nodes(traversability_map: TraversabilityMap) -> frozenset[int]:
+    adjacency: list[set[int]] = [set() for _node in traversability_map.nodes]
+    for edge in traversability_map.edges:
+        adjacency[edge.node_a].add(edge.node_b)
+        adjacency[edge.node_b].add(edge.node_a)
+
+    unseen = set(range(len(traversability_map.nodes)))
+    components: list[frozenset[int]] = []
+    while unseen:
+        root = min(unseen)
+        component = {root}
+        frontier = [root]
+        unseen.remove(root)
+        while frontier:
+            current = frontier.pop()
+            for neighbor in adjacency[current]:
+                if neighbor not in unseen:
+                    continue
+                unseen.remove(neighbor)
+                component.add(neighbor)
+                frontier.append(neighbor)
+        components.append(frozenset(component))
+    return max(components, key=lambda component: (len(component), -min(component)))
+
+
+def _region_candidate_nodes(
+    task: SceneGraphTask,
+    region_id: str,
+    navigable_tolerance: float,
+) -> tuple[int, ...]:
+    region = next(region for region in task.graph.regions if region.id == region_id)
+    grid = next(grid for grid in task.floor_grids if grid.floor_id == region.floor_id)
+    candidates: list[int] = []
+    for node, point in enumerate(task.graph.traversability_map.nodes):
+        if abs(point[1] - grid.floor_height) > navigable_tolerance:
+            continue
+        row = math.floor((point[2] - grid.origin_xz[1]) / grid.meters_per_pixel + 0.5 + 1e-9)
+        column = math.floor((point[0] - grid.origin_xz[0]) / grid.meters_per_pixel + 0.5 + 1e-9)
+        if row < 0 or row >= grid.traversable.shape[0]:
+            continue
+        if column < 0 or column >= grid.traversable.shape[1]:
+            continue
+        if grid.semantic_regions[row, column] == region.semantic_region_value:
+            candidates.append(node)
+    if not candidates:
+        raise ValueError(f"runtime navmesh has no triangle centroid in region {region_id!r}")
+    primary_nodes = _primary_component_nodes(task.graph.traversability_map)
+    connected_candidates = tuple(node for node in candidates if node in primary_nodes)
+    if not connected_candidates:
+        raise ValueError(
+            f"runtime navmesh primary component has no triangle centroid in region {region_id!r}"
+        )
+    return connected_candidates
+
+
+def select_region_traversability_node(
+    task: SceneGraphTask,
+    region_id: str,
+    target: Point3,
+    navigable_tolerance: float,
+) -> int:
+    """Select the navmesh triangle centroid nearest a point within one region."""
+
+    candidates = _region_candidate_nodes(task, region_id, navigable_tolerance)
+    return min(
+        candidates,
+        key=lambda node: (
+            math.dist(task.graph.traversability_map.nodes[node], target),
+            node,
+        ),
+    )
+
+
+def select_region_traversability_point(
+    task: SceneGraphTask,
+    region_id: str,
+    target: Point3,
+    navigable_tolerance: float,
+) -> Point3:
+    """Select the navmesh point nearest a target within one semantic region."""
+
+    node = select_region_traversability_node(
+        task,
+        region_id,
+        target,
+        navigable_tolerance,
+    )
+    return task.graph.traversability_map.nodes[node]
 
 
 __all__ = [
-    "extract_ground_truth_traversability",
-    "ground_truth_traversability_nodes",
+    "direct_navmesh_traversability",
+    "select_region_traversability_node",
+    "select_region_traversability_point",
 ]

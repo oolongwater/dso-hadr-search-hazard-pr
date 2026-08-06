@@ -87,6 +87,7 @@ class TraversabilityEdge:
     node_b: int
     path: tuple[Point3, ...]
     cost: float
+    portal: tuple[Point3, Point3] | None = None
 
     def orient(self, source_node: int) -> tuple[int, tuple[Point3, ...]]:
         if source_node == self.node_a:
