@@ -15,17 +15,32 @@ component boundaries, configuration, and recorded artifacts.
 
 ## Runtime Assets
 
-Authenticate GitHub CLI for this private repository, then download and verify
-the exact scene corpus and patched Linux AI2-THOR runtime used by the checked-in
-configuration:
+Download and verify the exact scene corpus from the existing public Dropbox
+folder:
 
 ~~~bash
-gh auth login
-./dso/scripts/download_runtime_assets.sh
+./dso/scripts/download_procthor_scenes.sh
+python3 dso/scripts/verify_runtime_assets.py --skip-build
+~~~
+
+The patched Linux AI2-THOR runtime is compiled from the checked-in Unity project.
+Install and activate Unity 2020.3.25f1, then run from the repository root:
+
+~~~bash
+unity_editor="$HOME/Unity/Hub/Editor/2020.3.25f1/Editor/Unity"
+build_directory="$PWD/../procthor/build/ai2thor/builds/schema2-procedural"
+mkdir -p "$build_directory"
+UNITY_BUILD_NAME="$build_directory/thor-schema2-direct-navmesh-Linux64" \
+  "$unity_editor" -quit -batchmode \
+  -logFile "$build_directory/build.log" \
+  -projectpath "$PWD/unity" \
+  -buildTarget Linux64 \
+  -executeMethod Build.Linux64
 python3 dso/scripts/verify_runtime_assets.py
 ~~~
 
-These commands do not download generated trajectories or videos.
+The build directory matches the checked-in simulator configuration. Generated
+Unity builds, trajectories, and videos remain outside Git.
 
 ## Lightweight Checks
 

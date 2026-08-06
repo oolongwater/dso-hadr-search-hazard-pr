@@ -2,17 +2,16 @@
 set -euo pipefail
 
 project_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
-release_repository="hadr-nav/dso-hadr-search"
-release_tag="dso-runtime-assets-v1"
-asset_name="dso-procthor-levels-1-3-100-v1.zip"
-asset_sha256="3f2c90f3e9c6fc9c02fc7f6494a836397d43dac045c5a89e1fdbcad7f04dbfe0"
+download_url="https://www.dropbox.com/scl/fo/w06xunp6artrgj3rmx8wr/AIWUdXs2eXMqklO5NbPqQtY?rlkey=ata7d2hi970pjb0wyfhedm4d5&dl=1"
 destination=${1:-"$project_root/data/procthor/dso-procthor-levels-1-3-100-v1/scenes"}
 verifier="$project_root/dso/scripts/verify_runtime_assets.py"
 
-if ! command -v gh >/dev/null; then
-    echo "GitHub CLI is required; install it and run: gh auth login" >&2
-    exit 1
-fi
+for command in curl unzip; do
+    if ! command -v "$command" >/dev/null; then
+        echo "$command is required to download the ProcTHOR scene corpus." >&2
+        exit 1
+    fi
+done
 
 if [[ -d "$destination" ]] && [[ -n "$(find "$destination" -mindepth 1 -maxdepth 1 -print -quit)" ]]; then
     if python3 "$verifier" --scenes-directory "$destination" --skip-build; then
@@ -25,12 +24,9 @@ fi
 
 temporary_directory=$(mktemp -d)
 trap 'rm -rf "$temporary_directory"' EXIT
+archive="$temporary_directory/scenes.zip"
 
-gh release download "$release_tag" \
-    --repo "$release_repository" \
-    --pattern "$asset_name" \
-    --dir "$temporary_directory"
-printf '%s  %s\n' "$asset_sha256" "$temporary_directory/$asset_name" | sha256sum -c -
+curl --fail --location --retry 3 --retry-all-errors "$download_url" --output "$archive"
 mkdir -p "$destination"
-unzip -q "$temporary_directory/$asset_name" -d "$destination"
+unzip -qjo "$archive" '*.json' -d "$destination"
 python3 "$verifier" --scenes-directory "$destination" --skip-build

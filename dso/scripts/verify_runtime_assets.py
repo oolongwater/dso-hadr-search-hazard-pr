@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the downloadable scene corpus and patched AI2-THOR Linux runtime."""
+"""Verify the downloadable scene corpus and locally built AI2-THOR runtime."""
 
 from __future__ import annotations
 
@@ -8,7 +8,6 @@ import hashlib
 import json
 from pathlib import Path
 
-_LAUNCHER_SHA256 = "95aa60b3bead39f7f6e86d1189664d420d8323243c63a45766601cd8fadeba88"
 _BUILD_NAME = "thor-schema2-direct-navmesh-Linux64"
 
 
@@ -58,11 +57,6 @@ def _verify_build(build_directory: Path) -> None:
         raise ValueError(f"AI2-THOR runtime is incomplete: {missing}")
     if not launcher.stat().st_mode & 0o111:
         raise ValueError(f"AI2-THOR launcher is not executable: {launcher}")
-    actual_sha256 = _sha256(launcher)
-    if actual_sha256 != _LAUNCHER_SHA256:
-        raise ValueError(
-            f"AI2-THOR launcher hash mismatch: expected {_LAUNCHER_SHA256}, got {actual_sha256}"
-        )
     print(f"Verified patched AI2-THOR runtime in {build_directory}")
 
 
