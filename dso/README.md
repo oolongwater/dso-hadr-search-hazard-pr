@@ -13,6 +13,20 @@ hazards, route validation, or replanning.
 See [the navigation stack](../docs/dso/navigation-stack.md) for the data flow,
 component boundaries, configuration, and recorded artifacts.
 
+## Runtime Assets
+
+Authenticate GitHub CLI for this private repository, then download and verify
+the exact scene corpus and patched Linux AI2-THOR runtime used by the checked-in
+configuration:
+
+~~~bash
+gh auth login
+./dso/scripts/download_runtime_assets.sh
+python3 dso/scripts/verify_runtime_assets.py
+~~~
+
+These commands do not download generated trajectories or videos.
+
 ## Lightweight Checks
 
 From the repository root, use only Pixi:

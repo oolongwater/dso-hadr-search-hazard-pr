@@ -4,9 +4,9 @@ set -euo pipefail
 project_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 release_repository="hadr-nav/dso-hadr-search"
 release_tag="dso-runtime-assets-v1"
-asset_name="dso-procthor-levels-1-3-100-v1.zip"
-asset_sha256="3f2c90f3e9c6fc9c02fc7f6494a836397d43dac045c5a89e1fdbcad7f04dbfe0"
-destination=${1:-"$project_root/data/procthor/dso-procthor-levels-1-3-100-v1/scenes"}
+asset_name="thor-schema2-direct-navmesh-Linux64.tar.gz"
+asset_sha256="ca67b005f968fa59d90debd9edb62b76ecbcc9c418fdd8852b38fcf9964c4a5f"
+destination=${1:-"$project_root/../procthor/build/ai2thor/builds/schema2-procedural"}
 verifier="$project_root/dso/scripts/verify_runtime_assets.py"
 
 if ! command -v gh >/dev/null; then
@@ -14,12 +14,13 @@ if ! command -v gh >/dev/null; then
     exit 1
 fi
 
-if [[ -d "$destination" ]] && [[ -n "$(find "$destination" -mindepth 1 -maxdepth 1 -print -quit)" ]]; then
-    if python3 "$verifier" --scenes-directory "$destination" --skip-build; then
-        echo "ProcTHOR scene corpus is already complete."
+launcher="$destination/thor-schema2-direct-navmesh-Linux64"
+if [[ -e "$launcher" ]]; then
+    if python3 "$verifier" --build-directory "$destination" --skip-scenes; then
+        echo "Patched AI2-THOR runtime is already complete."
         exit 0
     fi
-    echo "Existing scene directory does not match the checked-in manifest: $destination" >&2
+    echo "Existing AI2-THOR runtime does not match the checked-in version: $destination" >&2
     exit 1
 fi
 
@@ -32,5 +33,5 @@ gh release download "$release_tag" \
     --dir "$temporary_directory"
 printf '%s  %s\n' "$asset_sha256" "$temporary_directory/$asset_name" | sha256sum -c -
 mkdir -p "$destination"
-unzip -q "$temporary_directory/$asset_name" -d "$destination"
-python3 "$verifier" --scenes-directory "$destination" --skip-build
+tar -xzf "$temporary_directory/$asset_name" -C "$destination"
+python3 "$verifier" --build-directory "$destination" --skip-scenes
