@@ -10,21 +10,18 @@ Pixi is the environment and task runner for DSO-specific Python work. From the
 repository root:
 
 ~~~bash
-gh auth login
-./dso/scripts/download_runtime_assets.sh
-python3 dso/scripts/verify_runtime_assets.py
+./dso/scripts/download_procthor_scenes.sh
 pixi run test
 pixi run format
 pixi run typecheck
 ~~~
 
-The download command installs the content-locked ProcTHOR scene corpus and the
-patched Linux AI2-THOR runtime required by the checked-in configuration. Release
-access uses GitHub CLI authentication because this repository is private. The
-downloads are checksum-verified and remain outside Git. Generated trajectories,
-videos, and other experiment results are not downloaded.
+The scene downloader installs the content-locked ProcTHOR corpus from Dropbox.
+The patched Linux AI2-THOR runtime is compiled from the checked-in Unity project
+with Unity 2020.3.25f1; see dso/README.md for the exact command. Generated
+builds, trajectories, videos, and other experiment results remain outside Git.
 
-Release: [DSO runtime assets v1](https://github.com/hadr-nav/dso-hadr-search/releases/tag/dso-runtime-assets-v1).
+Scene corpus: [Dropbox](https://www.dropbox.com/scl/fo/w06xunp6artrgj3rmx8wr/AIWUdXs2eXMqklO5NbPqQtY?rlkey=ata7d2hi970pjb0wyfhedm4d5&dl=1).
 
 Do not create a separate pip, Conda, or uv environment for this workspace.
 

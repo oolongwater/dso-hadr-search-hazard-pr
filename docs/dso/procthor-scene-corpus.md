@@ -11,7 +11,7 @@ patched schema-2 AI2-THOR executable.
 Floor counts are randomly selected from 1, 2, and 3 with the configured seed.
 The corpus has 31 one-level schema-1 houses, 34 two-level schema-2 houses, and
 35 three-level schema-2 houses. It was originally generated locally; its exact
-content-locked bytes are now available as a private repository release asset.
+content-locked bytes are available from the public Dropbox folder linked below.
 
 Generated houses remain outside Git under data/procthor/. The checked-in
 dso/configs/scenes/procthor-scenes.json manifest records filenames, SHA-256
@@ -41,18 +41,18 @@ development.
 Run these commands from /media/run/Work/dso-hadr-search:
 
 ~~~bash
-gh auth login
-./dso/scripts/download_runtime_assets.sh
-python3 dso/scripts/verify_runtime_assets.py
+./dso/scripts/download_procthor_scenes.sh
+python3 dso/scripts/verify_runtime_assets.py --skip-build
 pixi run test
 pixi run format
 pixi run typecheck
 ~~~
 
-The download installs the exact scene JSON and patched Linux Unity runtime at
-the paths used by the checked-in configs. GitHub CLI authentication is required
-because the repository is private. The scripts verify archive and content
-hashes. Generated trajectories and videos are intentionally excluded.
+The download installs the exact scene JSON at the path used by the checked-in
+configs. The public Dropbox scene link keeps its existing URL, and the verifier
+checks every downloaded content hash. The patched Unity runtime is compiled from
+the repository as documented in dso/README.md. Generated trajectories and
+videos are intentionally excluded.
 
 Corpus regeneration still uses the local ProcTHOR checkout and Unity
 executable. If a generated house or selection parameter changes, create and
