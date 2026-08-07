@@ -46,11 +46,12 @@ class NavMesh:
     """Agent-specific runtime navmesh exported by the simulator."""
 
     agent_type_id: int
+    agent_radius: float
+    movement_radius: float
     vertices: tuple[Point3, ...]
     triangles: tuple[tuple[int, int, int], ...]
     areas: tuple[int, ...]
     adjacency: tuple[tuple[int, int], ...]
-    links: tuple[tuple[Point3, ...], ...]
 
 
 class NavigationAction(str, Enum):

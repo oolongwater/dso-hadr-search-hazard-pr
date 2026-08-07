@@ -14,7 +14,6 @@ from dso_hadr.graph.model import (
 from dso_hadr.types.navigation import NavMesh, Point3
 
 _VERTEX_DIGITS = 5
-_LINK_TRIANGLE_TOLERANCE = 0.6
 
 
 def _path_length(points: tuple[Point3, ...]) -> float:
@@ -74,100 +73,7 @@ def _canonical_navmesh(
     return tuple(vertices), tuple(triangles)
 
 
-def _subtract(first: Point3, second: Point3) -> Point3:
-    return (
-        first[0] - second[0],
-        first[1] - second[1],
-        first[2] - second[2],
-    )
-
-
-def _dot(first: Point3, second: Point3) -> float:
-    return sum(a * b for a, b in zip(first, second, strict=True))
-
-
-def _scaled_add(origin: Point3, direction: Point3, scale: float) -> Point3:
-    return (
-        origin[0] + direction[0] * scale,
-        origin[1] + direction[1] * scale,
-        origin[2] + direction[2] * scale,
-    )
-
-
-def _closest_point_on_triangle(
-    point: Point3,
-    vertex_a: Point3,
-    vertex_b: Point3,
-    vertex_c: Point3,
-) -> Point3:
-    edge_ab = _subtract(vertex_b, vertex_a)
-    edge_ac = _subtract(vertex_c, vertex_a)
-    offset_a = _subtract(point, vertex_a)
-    dot_ab_a = _dot(edge_ab, offset_a)
-    dot_ac_a = _dot(edge_ac, offset_a)
-    if dot_ab_a <= 0.0 and dot_ac_a <= 0.0:
-        return vertex_a
-
-    offset_b = _subtract(point, vertex_b)
-    dot_ab_b = _dot(edge_ab, offset_b)
-    dot_ac_b = _dot(edge_ac, offset_b)
-    if dot_ab_b >= 0.0 and dot_ac_b <= dot_ab_b:
-        return vertex_b
-
-    vertex_c_coordinate = dot_ab_a * dot_ac_b - dot_ab_b * dot_ac_a
-    if vertex_c_coordinate <= 0.0 and dot_ab_a >= 0.0 and dot_ab_b <= 0.0:
-        return _scaled_add(vertex_a, edge_ab, dot_ab_a / (dot_ab_a - dot_ab_b))
-
-    offset_c = _subtract(point, vertex_c)
-    dot_ab_c = _dot(edge_ab, offset_c)
-    dot_ac_c = _dot(edge_ac, offset_c)
-    if dot_ac_c >= 0.0 and dot_ab_c <= dot_ac_c:
-        return vertex_c
-
-    vertex_b_coordinate = dot_ab_c * dot_ac_a - dot_ab_a * dot_ac_c
-    if vertex_b_coordinate <= 0.0 and dot_ac_a >= 0.0 and dot_ac_c <= 0.0:
-        return _scaled_add(vertex_a, edge_ac, dot_ac_a / (dot_ac_a - dot_ac_c))
-
-    vertex_a_coordinate = dot_ab_b * dot_ac_c - dot_ab_c * dot_ac_b
-    if vertex_a_coordinate <= 0.0 and dot_ac_b - dot_ab_b >= 0.0 and dot_ab_c - dot_ac_c >= 0.0:
-        edge_bc = _subtract(vertex_c, vertex_b)
-        scale = (dot_ac_b - dot_ab_b) / (dot_ac_b - dot_ab_b + dot_ab_c - dot_ac_c)
-        return _scaled_add(vertex_b, edge_bc, scale)
-
-    denominator = 1.0 / (vertex_a_coordinate + vertex_b_coordinate + vertex_c_coordinate)
-    scale_ab = vertex_b_coordinate * denominator
-    scale_ac = vertex_c_coordinate * denominator
-    return _scaled_add(_scaled_add(vertex_a, edge_ab, scale_ab), edge_ac, scale_ac)
-
-
-def _nearest_triangle(
-    point: Point3,
-    vertices: tuple[Point3, ...],
-    triangles: tuple[tuple[int, int, int], ...],
-    centroids: tuple[Point3, ...],
-) -> tuple[int, float, Point3]:
-    candidates = (
-        (
-            math.dist(point, closest_point),
-            math.dist(point, centroids[node]),
-            node,
-            closest_point,
-        )
-        for node, triangle in enumerate(triangles)
-        for closest_point in (
-            _closest_point_on_triangle(
-                point,
-                vertices[triangle[0]],
-                vertices[triangle[1]],
-                vertices[triangle[2]],
-            ),
-        )
-    )
-    distance, _centroid_distance, node, closest_point = min(candidates)
-    return node, distance, closest_point
-
-
-def direct_navmesh_traversability(
+def build_traversability(
     navmesh: NavMesh,
     *,
     move_magnitude: float,
@@ -212,89 +118,20 @@ def direct_navmesh_traversability(
             )
         )
 
-    links: list[tuple[Point3, ...]] = []
-    link_endpoints: dict[Point3, tuple[int, Point3]] = {}
-    for raw_link in navmesh.links:
-        if len(raw_link) < 2:
-            raise ValueError("runtime navmesh link must contain at least two points")
-        link: tuple[Point3, ...] = tuple(
-            (
-                round(point[0], _VERTEX_DIGITS),
-                round(point[1], _VERTEX_DIGITS),
-                round(point[2], _VERTEX_DIGITS),
-            )
-            for point in raw_link
-        )
-        start, end = link[0], link[-1]
-        node_a, distance_a, closest_a = _nearest_triangle(
-            start,
-            vertices,
-            triangles,
-            triangle_nodes,
-        )
-        node_b, distance_b, closest_b = _nearest_triangle(
-            end,
-            vertices,
-            triangles,
-            triangle_nodes,
-        )
-        if max(distance_a, distance_b) > _LINK_TRIANGLE_TOLERANCE:
-            raise ValueError(
-                "runtime navmesh link endpoint is not on the exported triangulation: "
-                f"start={start} distance={distance_a}, end={end} distance={distance_b}"
-            )
-        link_endpoints.setdefault(start, (node_a, closest_a))
-        link_endpoints.setdefault(end, (node_b, closest_b))
-        links.append(link)
-
-    endpoint_nodes = {
-        point: len(triangle_nodes) + index for index, point in enumerate(link_endpoints)
-    }
-    nodes = (*triangle_nodes, *endpoint_nodes)
-    for point, endpoint_node in endpoint_nodes.items():
-        triangle_node, closest_point = link_endpoints[point]
-        attachment_points = (
-            (triangle_nodes[triangle_node], point)
-            if closest_point == point
-            else (triangle_nodes[triangle_node], closest_point, point)
-        )
-        path = _dense_path(attachment_points, move_magnitude)
-        edges.append(
-            TraversabilityEdge(
-                node_a=triangle_node,
-                node_b=endpoint_node,
-                path=path,
-                cost=_path_length(path),
-                portal=(point, point),
-            )
-        )
-
-    for link in links:
-        node_a = endpoint_nodes[link[0]]
-        node_b = endpoint_nodes[link[-1]]
-        if node_a == node_b:
-            continue
-        path = _dense_path(link, move_magnitude)
-        if node_a > node_b:
-            node_a, node_b = node_b, node_a
-            path = tuple(reversed(path))
-        edges.append(
-            TraversabilityEdge(
-                node_a=node_a,
-                node_b=node_b,
-                path=path,
-                cost=_path_length(path),
-            )
-        )
-
-    return TraversabilityMap(
+    traversability_map = TraversabilityMap(
         source=TraversabilitySource.AI2THOR_NAVMESH_GROUND_TRUTH,
-        nodes=nodes,
+        nodes=triangle_nodes,
         edges=tuple(edges),
     )
+    _require_connected(traversability_map)
+    return traversability_map
 
 
-def _primary_component_nodes(traversability_map: TraversabilityMap) -> frozenset[int]:
+def _connected_components(
+    traversability_map: TraversabilityMap,
+) -> tuple[frozenset[int], ...]:
+    """Return every exact connected component in the exported triangle graph."""
+
     adjacency: list[set[int]] = [set() for _node in traversability_map.nodes]
     for edge in traversability_map.edges:
         adjacency[edge.node_a].add(edge.node_b)
@@ -316,10 +153,22 @@ def _primary_component_nodes(traversability_map: TraversabilityMap) -> frozenset
                 component.add(neighbor)
                 frontier.append(neighbor)
         components.append(frozenset(component))
-    return max(components, key=lambda component: (len(component), -min(component)))
+    return tuple(sorted(components, key=lambda component: (-len(component), min(component))))
 
 
-def _region_candidate_nodes(
+def _require_connected(traversability_map: TraversabilityMap) -> None:
+    """Reject a runtime navmesh unless every exported triangle is connected."""
+
+    components = _connected_components(traversability_map)
+    if len(components) != 1:
+        sizes = [len(component) for component in components]
+        raise ValueError(
+            "runtime navmesh triangulation is disconnected: "
+            f"{len(components)} components with triangle counts {sizes}"
+        )
+
+
+def _region_nodes(
     task: SceneGraphTask,
     region_id: str,
     navigable_tolerance: float,
@@ -340,34 +189,10 @@ def _region_candidate_nodes(
             candidates.append(node)
     if not candidates:
         raise ValueError(f"runtime navmesh has no triangle centroid in region {region_id!r}")
-    primary_nodes = _primary_component_nodes(task.graph.traversability_map)
-    connected_candidates = tuple(node for node in candidates if node in primary_nodes)
-    if not connected_candidates:
-        raise ValueError(
-            f"runtime navmesh primary component has no triangle centroid in region {region_id!r}"
-        )
-    return connected_candidates
+    return tuple(candidates)
 
 
-def select_region_traversability_node(
-    task: SceneGraphTask,
-    region_id: str,
-    target: Point3,
-    navigable_tolerance: float,
-) -> int:
-    """Select the navmesh triangle centroid nearest a point within one region."""
-
-    candidates = _region_candidate_nodes(task, region_id, navigable_tolerance)
-    return min(
-        candidates,
-        key=lambda node: (
-            math.dist(task.graph.traversability_map.nodes[node], target),
-            node,
-        ),
-    )
-
-
-def select_region_traversability_point(
+def select_region_point(
     task: SceneGraphTask,
     region_id: str,
     target: Point3,
@@ -375,17 +200,18 @@ def select_region_traversability_point(
 ) -> Point3:
     """Select the navmesh point nearest a target within one semantic region."""
 
-    node = select_region_traversability_node(
-        task,
-        region_id,
-        target,
-        navigable_tolerance,
+    candidates = _region_nodes(task, region_id, navigable_tolerance)
+    node = min(
+        candidates,
+        key=lambda candidate: (
+            math.dist(task.graph.traversability_map.nodes[candidate], target),
+            candidate,
+        ),
     )
     return task.graph.traversability_map.nodes[node]
 
 
 __all__ = [
-    "direct_navmesh_traversability",
-    "select_region_traversability_node",
-    "select_region_traversability_point",
+    "build_traversability",
+    "select_region_point",
 ]

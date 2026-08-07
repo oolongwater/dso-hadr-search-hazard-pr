@@ -1,567 +1,567 @@
 {
-  "dataset_id": "dso-procthor-levels-1-3-100-v1",
+  "dataset_id": "dso-procthor-levels-1-3-100",
   "generator": "ProcTHOR",
   "scene_count": 100,
   "scenes": [
     {
       "filename": "scene_0001.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 44,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb1-u1",
+      "object_count": 47,
+      "room_count": 6,
       "scene_id": "scene_0001",
       "schema": "2.0.0",
-      "sha256": "34fa56576429242430d52756035d77e99076d0c8cee6aefc946e47bb0d1a9cd2"
+      "sha256": "ea455f8e444ffec2b5d60b5a094808f7e280357a77f724df1d02c2d865692e0c"
     },
     {
       "filename": "scene_0002.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 50,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 31,
+      "room_count": 5,
       "scene_id": "scene_0002",
       "schema": "2.0.0",
-      "sha256": "c4212b8f2e3c5cd73a401f71727f6f0ba5af4131513c88ad2e654f2367a835ca"
+      "sha256": "eb1bc3ac9ee4713112fb0e3413567b6822ec8e4b6679aa0dc812720c58cebaee"
     },
     {
       "filename": "scene_0003.json",
       "floor_count": 1,
-      "layout_spec_id": "7-room-3-bed",
-      "object_count": 57,
-      "room_count": 7,
+      "layout_spec_id": "5-room",
+      "object_count": 45,
+      "room_count": 5,
       "scene_id": "scene_0003",
       "schema": "1.0.0",
-      "sha256": "f301825f302654fc486dc7ac848fe8c4154391a8e00c11e33a273147824d4155"
+      "sha256": "16fc9a1ac40204e6bb7e4fe74ac6bcfdc417289522f4a3743e8a5d35b6337cd4"
     },
     {
       "filename": "scene_0004.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u2",
-      "object_count": 43,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 40,
+      "room_count": 5,
       "scene_id": "scene_0004",
       "schema": "2.0.0",
-      "sha256": "29b9ffd130c45dd5fe4f89036af1fd62a0c4960c3cc00b7c1f4a03fc13a739c3"
+      "sha256": "c851f1c2ce14340552f40b721129cdd7348138743f975e5da7c45c33d83a2240"
     },
     {
       "filename": "scene_0005.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 58,
-      "room_count": 8,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
+      "object_count": 78,
+      "room_count": 10,
       "scene_id": "scene_0005",
       "schema": "2.0.0",
-      "sha256": "6209b5173caa9245e9c5e3584ae57f048780a2b2c38afa33a1d45d78c699dfbf"
+      "sha256": "b6ac680966619278bb02417bffac1b61618026a5891dfd82216e0ea28ac0c34e"
     },
     {
       "filename": "scene_0006.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u2",
-      "object_count": 50,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 68,
+      "room_count": 7,
       "scene_id": "scene_0006",
       "schema": "2.0.0",
-      "sha256": "1e7b633c585305e03772c8a94776f7c5122c8801b2a09ddaaaa41403e3bccc7a"
+      "sha256": "5b7e426ec20cd29585472203ad36e4fd4f75e175da1c5cd87e770f8c49b44cbb"
     },
     {
       "filename": "scene_0007.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 44,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb0-u2",
+      "object_count": 43,
+      "room_count": 6,
       "scene_id": "scene_0007",
       "schema": "2.0.0",
-      "sha256": "08f4c111237a656b71de73b5006f9df2703c564cae3116db38201d4077e17efc"
+      "sha256": "c4c2e09b8483a4e3c42243a1b02205649b336ad96e9755e473ce98f7cf861ca9"
     },
     {
       "filename": "scene_0008.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 43,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 47,
+      "room_count": 5,
       "scene_id": "scene_0008",
       "schema": "2.0.0",
-      "sha256": "c5ef416a4288f378750b8effb6889c33a2b123261cbf78e70df3dff12418c056"
+      "sha256": "ae480c463794063858ad34d555c3a4b60c6651a84477e8902fbfd8c994f0cd4c"
     },
     {
       "filename": "scene_0009.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 63,
+      "layout_spec_id": "residential-2-floor-gb0-u2",
+      "object_count": 47,
       "room_count": 6,
       "scene_id": "scene_0009",
       "schema": "2.0.0",
-      "sha256": "0f1b770b837bbd9e83b5355a4e816d8be08c7994bf14c37977cad4ea3b7c1712"
+      "sha256": "0e6cb4cd02912478e4fb168769974c7e77c242e26bc6561e4f5542f5f2a35046"
     },
     {
       "filename": "scene_0010.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u2",
-      "object_count": 49,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 55,
+      "room_count": 7,
       "scene_id": "scene_0010",
       "schema": "2.0.0",
-      "sha256": "674ba7fb55c8edcd2a0e3bcb2c06389e8a1e4043c82dc585e47a3231846b34bb"
+      "sha256": "b67d8ec1bed802bdd00d9eee7063ddbc5d040eb3952d7da1a9e26046c6a84576"
     },
     {
       "filename": "scene_0011.json",
       "floor_count": 3,
       "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 62,
+      "object_count": 43,
       "room_count": 8,
       "scene_id": "scene_0011",
       "schema": "2.0.0",
-      "sha256": "76df4ea2dcc1b9091eb2a0b52fc0b2ae606a6dd831b556fc26fe28e2e94f638f"
+      "sha256": "963f77dfce3e3a34405dbfa75d850c8369f64aa8ae53b57e5779d5680bbcafcc"
     },
     {
       "filename": "scene_0012.json",
       "floor_count": 1,
-      "layout_spec_id": "bedroom",
-      "object_count": 9,
-      "room_count": 1,
+      "layout_spec_id": "kitchen-living-bedroom-room2",
+      "object_count": 23,
+      "room_count": 3,
       "scene_id": "scene_0012",
       "schema": "1.0.0",
-      "sha256": "7313c593cd42254aa8d34c0ce90318d804ee8673cbcee2582a27e39167041eef"
+      "sha256": "c799616c258469bbeb429aa1d513b23bb13ed22726610b4ab6629c42c27e8cb4"
     },
     {
       "filename": "scene_0013.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
-      "object_count": 47,
-      "room_count": 11,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 79,
+      "room_count": 10,
       "scene_id": "scene_0013",
       "schema": "2.0.0",
-      "sha256": "90d360ade60aac5b549929c14654b59bbbed7d1343b58289b45a49fb9d424ce5"
+      "sha256": "efe6a28d201730f5473e6a039767419c1cfe61a889faae5c3af26f2e1a21007f"
     },
     {
       "filename": "scene_0014.json",
       "floor_count": 1,
-      "layout_spec_id": "kitchen-living-room",
-      "object_count": 10,
-      "room_count": 2,
+      "layout_spec_id": "2-bed-1-bath",
+      "object_count": 35,
+      "room_count": 5,
       "scene_id": "scene_0014",
       "schema": "1.0.0",
-      "sha256": "a5820f3b0019099f6e2995ff0e151cae507518e8f556b0ecb6811e59503fbcf5"
+      "sha256": "791828dd265f0982be55237331cd440729a109731065ffa6fa10a0710c499feb"
     },
     {
       "filename": "scene_0015.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 44,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb1-u1",
+      "object_count": 43,
+      "room_count": 6,
       "scene_id": "scene_0015",
       "schema": "2.0.0",
-      "sha256": "a83622341f8914911955ebc00d78771632b4b313cbf4d61d84ed9377c8074937"
+      "sha256": "074655b13f142d58afa1966a54e7d006ca1574647592ade7bd72dec6deb46518"
     },
     {
       "filename": "scene_0016.json",
       "floor_count": 1,
-      "layout_spec_id": "kitchen-living-room",
-      "object_count": 11,
-      "room_count": 2,
+      "layout_spec_id": "4-room",
+      "object_count": 38,
+      "room_count": 4,
       "scene_id": "scene_0016",
       "schema": "1.0.0",
-      "sha256": "5fa97df59a4700f251fdf51b7736a1069052ba72109e6ee2edb91110132639c7"
+      "sha256": "fa9056927fb2f2bcbfabf57475118bad092beaf05941d0b27094451be582692e"
     },
     {
       "filename": "scene_0017.json",
       "floor_count": 1,
-      "layout_spec_id": "2-bed-1-bath",
-      "object_count": 37,
-      "room_count": 5,
+      "layout_spec_id": "4-room",
+      "object_count": 32,
+      "room_count": 4,
       "scene_id": "scene_0017",
       "schema": "1.0.0",
-      "sha256": "dbddca6fb997b8d0e53942611359726fb3cc469a21385d206757bb3dd4491860"
+      "sha256": "b1247dad36f217b2d476c14b589e3c761f6264c26fb96eb8ab22fd2b0fa2abcf"
     },
     {
       "filename": "scene_0018.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 74,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 86,
+      "room_count": 10,
       "scene_id": "scene_0018",
       "schema": "2.0.0",
-      "sha256": "6d4663434c80afb7679ac35d3ffcb8247c456682a51146409e13a5a84f152b0d"
+      "sha256": "b277e14fc59ead0bf8c0a9d37a22d8b31c251091b4c84770c265e0439ba2d743"
     },
     {
       "filename": "scene_0019.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 50,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 64,
+      "room_count": 7,
       "scene_id": "scene_0019",
       "schema": "2.0.0",
-      "sha256": "2f2b84304558ec6e87bc6a40b84b55915456c72f63dc8fad33ba5105eaedc2a9"
+      "sha256": "f60e42ebd217fef1a49f73f99fa5d71c6a8d1232d566a20c039063f42391cd08"
     },
     {
       "filename": "scene_0020.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 65,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u1",
+      "object_count": 85,
       "room_count": 9,
       "scene_id": "scene_0020",
       "schema": "2.0.0",
-      "sha256": "e9cd18091d838d598138afe675240a493ccc85480cdc9b2c59ee9c47c4b1b0f3"
+      "sha256": "5d8a440f2f9d4c211aece8fcbe4a934e888e554a068ef4e7709f7ef7c5562516"
     },
     {
       "filename": "scene_0021.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
-      "object_count": 91,
-      "room_count": 11,
+      "layout_spec_id": "residential-3-floor-gb1-u1-u2",
+      "object_count": 97,
+      "room_count": 10,
       "scene_id": "scene_0021",
       "schema": "2.0.0",
-      "sha256": "c1ae4f75ba11e60bbaec28e30fea978772dc344bbf93b47ba398e4ad0e0b9d4d"
+      "sha256": "de963c09f1cea2c9214d2068cc42583387a8246f2e5f3ba3ed1c1540614a7b8d"
     },
     {
       "filename": "scene_0022.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 71,
+      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
+      "object_count": 74,
       "room_count": 9,
       "scene_id": "scene_0022",
       "schema": "2.0.0",
-      "sha256": "3e5d1ea320f0d4d1821f2b246242fb2a540ad5fa9f38611084ae2077a0f7b3fb"
+      "sha256": "3cc68ce7e4a70f6e8fa7edf696f392dca47324635db02ea6f45348c45ae130dc"
     },
     {
       "filename": "scene_0023.json",
       "floor_count": 1,
-      "layout_spec_id": "8-room-3-bed",
-      "object_count": 74,
-      "room_count": 8,
+      "layout_spec_id": "5-room",
+      "object_count": 41,
+      "room_count": 5,
       "scene_id": "scene_0023",
       "schema": "1.0.0",
-      "sha256": "ba37d2930cc1f7b47054619aacc5d8706541f21d020c3f169b0c0d1b544fc40d"
+      "sha256": "c72a79564edb06b2e9f6720d0d78668f2f7a92445dfc3118dd891ee4e7d7b465"
     },
     {
       "filename": "scene_0024.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 40,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 63,
+      "room_count": 7,
       "scene_id": "scene_0024",
       "schema": "2.0.0",
-      "sha256": "e8794ec2854fd8fa8fd06a4850894d7cef45942a4304b0f71e4e530d0bc77798"
+      "sha256": "83bdae4df96b5b98f5024afd2ac563a0770960e75853e74f4fb91a67bf75c55e"
     },
     {
       "filename": "scene_0025.json",
       "floor_count": 1,
       "layout_spec_id": "4-room",
-      "object_count": 28,
+      "object_count": 27,
       "room_count": 4,
       "scene_id": "scene_0025",
       "schema": "1.0.0",
-      "sha256": "bd77b3a24f9173ad6bd593c0342049648516cb519882a313fbb1e0873961f004"
+      "sha256": "041e9a37833df421676714478d4a1efc273b49b06f52cfa93236f59d10292edc"
     },
     {
       "filename": "scene_0026.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u2",
-      "object_count": 84,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 97,
       "room_count": 10,
       "scene_id": "scene_0026",
       "schema": "2.0.0",
-      "sha256": "f0f4b6edba906b3efe8b3a6931ef276796848de8c591c468080ae30031f4ff6e"
+      "sha256": "962094defeedc86a22a5db3625b1c3cd22829bc7ca84fae8e318a7fe31fe2496"
     },
     {
       "filename": "scene_0027.json",
       "floor_count": 1,
       "layout_spec_id": "4-room",
-      "object_count": 35,
+      "object_count": 40,
       "room_count": 4,
       "scene_id": "scene_0027",
       "schema": "1.0.0",
-      "sha256": "50c6d16026c9e3a9be2a3fde785614f5ae46e555fd03f7044c33ec49c332fdf6"
+      "sha256": "63137e6c6a7a51aeaf85fd53849d00bf0146ba99f6733f6aa15e43d65b0d86a3"
     },
     {
       "filename": "scene_0028.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 76,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 87,
+      "room_count": 10,
       "scene_id": "scene_0028",
       "schema": "2.0.0",
-      "sha256": "f8096ef2d0b891f57fa3c65ebf2db359130a57815b1dae188663e8dcc585b56b"
+      "sha256": "4a79faddf6702bb152687555ac8d3f276cf881fd434e84a941ca41ff45a97284"
     },
     {
       "filename": "scene_0029.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 50,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 43,
+      "room_count": 5,
       "scene_id": "scene_0029",
       "schema": "2.0.0",
-      "sha256": "1522fa58e780df17ab429b681952885d16255eb9e4227bb4f5017d669b642802"
+      "sha256": "e85044408dff71a085ed2b8bd071e21c253268e45e39db6d39468f2425056e63"
     },
     {
       "filename": "scene_0030.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 47,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 62,
+      "room_count": 7,
       "scene_id": "scene_0030",
       "schema": "2.0.0",
-      "sha256": "cf3febb3a7081642b464531827a02b5ee5939d1a03b049e36ef4d2f267df7237"
+      "sha256": "cfad84f60be9c6631ad87fcdec4fa48653cd416db26897eaeb98dbce2875fb30"
     },
     {
       "filename": "scene_0031.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
-      "object_count": 73,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
+      "object_count": 71,
+      "room_count": 10,
       "scene_id": "scene_0031",
       "schema": "2.0.0",
-      "sha256": "7acaa2db697d97f8d80af23d2b3eef06ef934c1ea7e883a662ab610139b8b091"
+      "sha256": "06d00d867abdf92359e349c34d881a10fc2e437a59ff3385a4c0241f3b13ae2b"
     },
     {
       "filename": "scene_0032.json",
       "floor_count": 1,
-      "layout_spec_id": "4-room",
+      "layout_spec_id": "kitchen-living-bedroom-room",
       "object_count": 28,
-      "room_count": 4,
+      "room_count": 3,
       "scene_id": "scene_0032",
       "schema": "1.0.0",
-      "sha256": "b21d22f803070d10b0a5faadc46aab973fd1654de7942aaed8fb3a2a18fe95a0"
+      "sha256": "581c678a78d04921f1c3e676ae25b7adf38acac0759fe46e41ca35790234f891"
     },
     {
       "filename": "scene_0033.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u2",
-      "object_count": 49,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 46,
+      "room_count": 7,
       "scene_id": "scene_0033",
       "schema": "2.0.0",
-      "sha256": "2d61b65cc20736cb14374465a97e221cc4047bef8a55f1930fea520b77bf429f"
+      "sha256": "c352eef7dedbee51c8e5ad19554c99d6a0d2c7f886ac72da71cee9d920881d1b"
     },
     {
       "filename": "scene_0034.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 44,
+      "layout_spec_id": "residential-2-floor-gb0-u2",
+      "object_count": 42,
       "room_count": 6,
       "scene_id": "scene_0034",
       "schema": "2.0.0",
-      "sha256": "5d0b8909250a4b46cc0e4a580b0f3880d436ea11a60fbb431f49cf5436804c73"
+      "sha256": "ab878c4e799ce325fe150b1c3a6440761af3270b5b75ba9e189481e4db0fd236"
     },
     {
       "filename": "scene_0035.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 60,
+      "layout_spec_id": "residential-2-floor-gb0-u2",
+      "object_count": 64,
       "room_count": 6,
       "scene_id": "scene_0035",
       "schema": "2.0.0",
-      "sha256": "1e36ead20343a317734e07f24994736c2bc99769ef8c4df94a8b27d478114390"
+      "sha256": "61d8076ab8b6340b2e5d0268789e3b2664e9b233747e338f1af8717077eaac92"
     },
     {
       "filename": "scene_0036.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u2",
-      "object_count": 88,
-      "room_count": 10,
+      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
+      "object_count": 84,
+      "room_count": 9,
       "scene_id": "scene_0036",
       "schema": "2.0.0",
-      "sha256": "19a8820ec907f68ba5574d9201d3de9fba9addb609fd00aa8a031e1dd3b8b29d"
+      "sha256": "a984a5164b28b7b2902684d393cfae10aed67f188d247aa364854a43902375c4"
     },
     {
       "filename": "scene_0037.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
-      "object_count": 90,
-      "room_count": 10,
+      "layout_spec_id": "residential-3-floor-gb0-u1-u1",
+      "object_count": 64,
+      "room_count": 8,
       "scene_id": "scene_0037",
       "schema": "2.0.0",
-      "sha256": "710178232f1f5722d17dc2ffefd2f7b613cc7832e3a626f382ea6e4de6328166"
+      "sha256": "dad9992cb616749f79c673629bd9050eeeb76a9ffd7e387821d7a8a4c41b793d"
     },
     {
       "filename": "scene_0038.json",
       "floor_count": 1,
-      "layout_spec_id": "bedroom-bathroom",
-      "object_count": 12,
-      "room_count": 2,
+      "layout_spec_id": "4-room",
+      "object_count": 34,
+      "room_count": 4,
       "scene_id": "scene_0038",
       "schema": "1.0.0",
-      "sha256": "199296ca59122acf7b77cc89bc897081ab1919314a074aca282080e3ad232fc2"
+      "sha256": "97ca9bc2921e9b54abb3719f56c3499c9cf1ff9ebaa5bd1b3baa31e8e383f9d0"
     },
     {
       "filename": "scene_0039.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
-      "object_count": 95,
-      "room_count": 10,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u1",
+      "object_count": 68,
+      "room_count": 9,
       "scene_id": "scene_0039",
       "schema": "2.0.0",
-      "sha256": "781e66a9fbde2e62fc7684bdadff8db85672d5358a2a2d2adcb19eb309bb8849"
+      "sha256": "02f227b5c4260f94d6f898b09f04260c55aeed5d6e0dd942a0641460ef9442cd"
     },
     {
       "filename": "scene_0040.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 39,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb0-u2",
+      "object_count": 68,
+      "room_count": 6,
       "scene_id": "scene_0040",
       "schema": "2.0.0",
-      "sha256": "aad4340b58743ef28e5842ea6ffa29343bdf1957ecf9d40fc895965da1935295"
+      "sha256": "b14d2c72fa8ba971263ced78a8198a876bc4066a594b51ca693574d03f27c12d"
     },
     {
       "filename": "scene_0041.json",
       "floor_count": 2,
       "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 63,
+      "object_count": 42,
       "room_count": 6,
       "scene_id": "scene_0041",
       "schema": "2.0.0",
-      "sha256": "eb006c96de03bf91c0fa6aa5583c36edb93ba1bde66c14779f675243522b7533"
+      "sha256": "0281f2a3997904e468738a7ba21199583b05da043169112595eff8b3c1917718"
     },
     {
       "filename": "scene_0042.json",
       "floor_count": 3,
       "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 78,
+      "object_count": 54,
       "room_count": 8,
       "scene_id": "scene_0042",
       "schema": "2.0.0",
-      "sha256": "52ff820b615c5581d38f877d545201efef12589006b3cd39b78f5f0473526204"
+      "sha256": "e091e8d8f349b9244e37dbd9da44cf40c453cdff57d4f5416cf79331aef9e992"
     },
     {
       "filename": "scene_0043.json",
       "floor_count": 2,
       "layout_spec_id": "residential-2-floor-gb0-u2",
-      "object_count": 59,
+      "object_count": 44,
       "room_count": 6,
       "scene_id": "scene_0043",
       "schema": "2.0.0",
-      "sha256": "fa6441a3a55f479c236d5a477c61fca65d6b1a8135e4d649454b53428fe2ccc4"
+      "sha256": "80015be616be27a2e90306587f8ee5b3357d396e48907a22b9d3e0b4b83660e4"
     },
     {
       "filename": "scene_0044.json",
       "floor_count": 1,
-      "layout_spec_id": "12-room",
-      "object_count": 59,
-      "room_count": 10,
+      "layout_spec_id": "2-bed-2-bath",
+      "object_count": 43,
+      "room_count": 6,
       "scene_id": "scene_0044",
       "schema": "1.0.0",
-      "sha256": "7edfbfd5e7277473db653a766764a266d048f80a3c1f03a85460b52aedead956"
+      "sha256": "5947720aeb11b96a77b58de33f1d5d93ef8c0c9b258ec5ed68189cbcf8bfe7e2"
     },
     {
       "filename": "scene_0045.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
-      "object_count": 76,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
+      "object_count": 90,
+      "room_count": 10,
       "scene_id": "scene_0045",
       "schema": "2.0.0",
-      "sha256": "e640e944161cfffbccb8584f8926fcec5986cda9c053d912f588c9d110244ad1"
+      "sha256": "c4c0a1ddb984a22efc5635bcbf0b58cb8558087b51ee1bdc51781aa8b23d4bf0"
     },
     {
       "filename": "scene_0046.json",
       "floor_count": 1,
-      "layout_spec_id": "7-room-3-bed",
-      "object_count": 46,
-      "room_count": 7,
+      "layout_spec_id": "4-room",
+      "object_count": 34,
+      "room_count": 4,
       "scene_id": "scene_0046",
       "schema": "1.0.0",
-      "sha256": "e78d6577a1364da593648fa426c1256d7107c0fbad3a1cc513d7aba59300f858"
+      "sha256": "fa59646bfe11e98b257d0f335668426f535bfd7a942b7de0592050f20d1801dc"
     },
     {
       "filename": "scene_0047.json",
       "floor_count": 1,
-      "layout_spec_id": "bedroom-bathroom",
-      "object_count": 15,
-      "room_count": 2,
+      "layout_spec_id": "kitchen-living-bedroom-room2",
+      "object_count": 27,
+      "room_count": 3,
       "scene_id": "scene_0047",
       "schema": "1.0.0",
-      "sha256": "6fb77bb25be416be145130164d159d7a053381fd9b9b12c5ccd4e14ea9ff565e"
+      "sha256": "e62a7d887152272375d57958cc1185250f349c060a7491d40fc0898e4f042557"
     },
     {
       "filename": "scene_0048.json",
       "floor_count": 3,
       "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 77,
+      "object_count": 66,
       "room_count": 8,
       "scene_id": "scene_0048",
       "schema": "2.0.0",
-      "sha256": "22867c31a808d5509ebea8d3d61b08075455f9046099abb7f64efc811882d334"
+      "sha256": "1c603074592df2f83e33dd1b61d0863fca3ede457795e2020e8d607d072e0bce"
     },
     {
       "filename": "scene_0049.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u2",
-      "object_count": 54,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 36,
+      "room_count": 5,
       "scene_id": "scene_0049",
       "schema": "2.0.0",
-      "sha256": "458d1898d7d1545ec2b2b35bcf2ce120ab69854e9f84b27edda10ec02c61d3a8"
+      "sha256": "bd01b6e2f50691b06e811544d04ed279bb14aa467e11d98e00e4b24fff9fc58f"
     },
     {
       "filename": "scene_0050.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
-      "object_count": 88,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 90,
+      "room_count": 10,
       "scene_id": "scene_0050",
       "schema": "2.0.0",
-      "sha256": "ca5f330fc013e469fb6567b1bb7e9e69f8c329f57dc3ed8f27e76e710ea0a71e"
+      "sha256": "3bc5dd617e778ec0aca28cd96285f3f5f505b27325658dd5c496881c81aca0d2"
     },
     {
       "filename": "scene_0051.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 59,
-      "room_count": 8,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 94,
+      "room_count": 10,
       "scene_id": "scene_0051",
       "schema": "2.0.0",
-      "sha256": "405fd768621003e65a3072f9d24acbe0aa478c89beb83dd2b1c17e86874323ac"
+      "sha256": "eb9385df5cf8ed84403bfd1dc31dde32aef4f08c24714cd2e6d02deaad08b219"
     },
     {
       "filename": "scene_0052.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
-      "object_count": 71,
-      "room_count": 10,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
+      "object_count": 88,
+      "room_count": 11,
       "scene_id": "scene_0052",
       "schema": "2.0.0",
-      "sha256": "ebcfd5a93e46b14e9577393893829f8dceb22f249b4620ba53f2e71f84ad1b62"
+      "sha256": "c3c78ffb3efa93f701d10d6823bd8fa829af3bc9af71b1b018fbdae3a1d1b0ea"
     },
     {
       "filename": "scene_0053.json",
       "floor_count": 1,
-      "layout_spec_id": "kitchen-living-bedroom-room2",
-      "object_count": 21,
-      "room_count": 3,
+      "layout_spec_id": "4-room",
+      "object_count": 36,
+      "room_count": 4,
       "scene_id": "scene_0053",
       "schema": "1.0.0",
-      "sha256": "027a6e0c17b8b2c80d875694d4c14375dc9043756f28dfa48f8a9c4964f24ca3"
+      "sha256": "413b410ca68ccab444f9c6d07a43df92370afaf9ee2e171f4252d462dbf647f9"
     },
     {
       "filename": "scene_0054.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 64,
-      "room_count": 8,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u1",
+      "object_count": 93,
+      "room_count": 9,
       "scene_id": "scene_0054",
       "schema": "2.0.0",
-      "sha256": "75f5207e51d9a4fa48585f6cbb202814fd509d07d7047a6423fe65f32178fa2b"
+      "sha256": "73ed35f342e776d58337adbf025ba087a73be1bb711484a6aaea68ad6004f6a2"
     },
     {
       "filename": "scene_0055.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u2",
-      "object_count": 59,
-      "room_count": 7,
+      "layout_spec_id": "residential-2-floor-gb0-u2",
+      "object_count": 36,
+      "room_count": 6,
       "scene_id": "scene_0055",
       "schema": "2.0.0",
-      "sha256": "0a991aae2a6b6692590fb47654df4ab4ecd248099df7343ce210d759579df944"
+      "sha256": "0c55b69bd332ffe593e7de095e0af19bcd7632980eae16284a5957ab1d125053"
     },
     {
       "filename": "scene_0056.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u2",
-      "object_count": 64,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 46,
+      "room_count": 5,
       "scene_id": "scene_0056",
       "schema": "2.0.0",
-      "sha256": "9b116ebb7ffbab26715d76ecfcf8d7e39934c35b4d72d6bcbffb2301c7f6ff54"
+      "sha256": "d07157e2687aefa7af772384b6e7f97a73348747e64c6d2e06a66d3563a72d6f"
     },
     {
       "filename": "scene_0057.json",
@@ -571,437 +571,437 @@
       "room_count": 5,
       "scene_id": "scene_0057",
       "schema": "1.0.0",
-      "sha256": "51d50c1530b70321324256985d3aded6a32b6d199d724eb2864fb2980b577c5c"
+      "sha256": "612e2f4e63c7cee16347bfc44975ac8a49a2a4221b0cf1fcfe4596e73523d6fc"
     },
     {
       "filename": "scene_0058.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 81,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
+      "object_count": 82,
+      "room_count": 10,
       "scene_id": "scene_0058",
       "schema": "2.0.0",
-      "sha256": "ea9ce0d28c4e256f3aa5b51037b0273124e15dd0e51744156b1694e544f01e3e"
+      "sha256": "f8187cc86a2f06d36d80ccfc347d3aa53671a702a789d8841e2b5e2f9d0783d0"
     },
     {
       "filename": "scene_0059.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 51,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 50,
+      "room_count": 7,
       "scene_id": "scene_0059",
       "schema": "2.0.0",
-      "sha256": "f8a51ea522d426d90241c5cae1b0ea0cdcc751fed4520e24651b948f7eb59438"
+      "sha256": "73e1438ddfaec7dcff7b86804d70a2f1967fbce4685e639c8c999bbf61b2a237"
     },
     {
       "filename": "scene_0060.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u2",
-      "object_count": 87,
-      "room_count": 10,
+      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
+      "object_count": 69,
+      "room_count": 9,
       "scene_id": "scene_0060",
       "schema": "2.0.0",
-      "sha256": "eb16e1cfa066fcc1226c3720ce8dc096307b714e310b4624c8603921907d02cc"
+      "sha256": "3649dcc7b157e270f9de566084658cd31ff9b5f00b87754d2992e1f13b9d2b31"
     },
     {
       "filename": "scene_0061.json",
       "floor_count": 1,
-      "layout_spec_id": "4-room",
-      "object_count": 36,
-      "room_count": 4,
+      "layout_spec_id": "kitchen-living-bedroom-room",
+      "object_count": 33,
+      "room_count": 3,
       "scene_id": "scene_0061",
       "schema": "1.0.0",
-      "sha256": "56bb06d51e4ea0b235c1900003cae2a57a779a49f4c9c49455250e8a87dcd4c4"
+      "sha256": "de4a210c9f4b60d9d4331f53bd2a329b68059c582298aca0477279781afaa303"
     },
     {
       "filename": "scene_0062.json",
       "floor_count": 1,
-      "layout_spec_id": "kitchen-living-room",
-      "object_count": 13,
-      "room_count": 2,
+      "layout_spec_id": "kitchen-living-bedroom-room",
+      "object_count": 24,
+      "room_count": 3,
       "scene_id": "scene_0062",
       "schema": "1.0.0",
-      "sha256": "0393410e371dd14781589bad4787dbb04955f9c911488c8363c1f38182ff3e43"
+      "sha256": "78782d7764270faa496d418a141209a062a2b520c7055b3b03f3709a1aa7c5ec"
     },
     {
       "filename": "scene_0063.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
-      "object_count": 93,
-      "room_count": 10,
+      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
+      "object_count": 82,
+      "room_count": 9,
       "scene_id": "scene_0063",
       "schema": "2.0.0",
-      "sha256": "778b3908382febacc3d97c9a97a78cbd8c108c33b0ccf4807c01d95141068ecf"
+      "sha256": "bd6f33280cd838c1e2c81c07910988707ead276c676192f9cccbb72f0dd7dc05"
     },
     {
       "filename": "scene_0064.json",
       "floor_count": 1,
-      "layout_spec_id": "bedroom",
-      "object_count": 7,
-      "room_count": 1,
+      "layout_spec_id": "4-room",
+      "object_count": 37,
+      "room_count": 4,
       "scene_id": "scene_0064",
       "schema": "1.0.0",
-      "sha256": "74e810501f15816e5deba2b665d48e4a1e706303d6e212c80295b9a52d70894b"
+      "sha256": "e97c202a890f872a670e7e192c83f89d29ff3509d5bcb3da376e127993d25182"
     },
     {
       "filename": "scene_0065.json",
       "floor_count": 1,
       "layout_spec_id": "4-room",
-      "object_count": 33,
+      "object_count": 31,
       "room_count": 4,
       "scene_id": "scene_0065",
       "schema": "1.0.0",
-      "sha256": "91a916c0fc8e5500a7eed4a0f55a71be7ab92cb9ebb70a9b612a3020f4351dc7"
+      "sha256": "ac137793919c260434187412743f0f89d1b3002372f445c95a6394876b027497"
     },
     {
       "filename": "scene_0066.json",
       "floor_count": 1,
-      "layout_spec_id": "kitchen",
-      "object_count": 12,
-      "room_count": 1,
+      "layout_spec_id": "4-room",
+      "object_count": 39,
+      "room_count": 4,
       "scene_id": "scene_0066",
       "schema": "1.0.0",
-      "sha256": "72922f4730b0bb7cb931f8abf7624c1cad322c26a5bcd71bf855cf795e583442"
+      "sha256": "4bd0907967dc83ebe74b09f1cd476f5dd13a05cdb4cef527c848a1b25c0d5011"
     },
     {
       "filename": "scene_0067.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 73,
+      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
+      "object_count": 89,
       "room_count": 9,
       "scene_id": "scene_0067",
       "schema": "2.0.0",
-      "sha256": "19079ec51fd12ad8d0fb1236eabfed67b4d1f63f72f054ba8664d55b6ba015af"
+      "sha256": "33168ca4106c9b9d1460f331594dbec2b9b84a85368f4b7fd3d5748b37d203e3"
     },
     {
       "filename": "scene_0068.json",
       "floor_count": 2,
       "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 48,
+      "object_count": 34,
       "room_count": 5,
       "scene_id": "scene_0068",
       "schema": "2.0.0",
-      "sha256": "9bed6969ed8c0f0a79be114e2459757fe434d6989639f3badeab904d966dbb84"
+      "sha256": "3d2e735abeadeae43112119c31d0e10a9be92073570bd95309bbc544fa760667"
     },
     {
       "filename": "scene_0069.json",
       "floor_count": 1,
-      "layout_spec_id": "kitchen-living-room",
-      "object_count": 18,
-      "room_count": 2,
+      "layout_spec_id": "4-room",
+      "object_count": 36,
+      "room_count": 4,
       "scene_id": "scene_0069",
       "schema": "1.0.0",
-      "sha256": "b7c1ca02effc3d1efd6943bb082d042511365ac7aa7015ee710818881545b9ee"
+      "sha256": "7a064292255d101dbe562044574a75ed143cf2d20b7a590dd060f7b2ac19cd1c"
     },
     {
       "filename": "scene_0070.json",
       "floor_count": 1,
-      "layout_spec_id": "12-room",
-      "object_count": 76,
-      "room_count": 10,
+      "layout_spec_id": "kitchen-living-bedroom-room",
+      "object_count": 34,
+      "room_count": 3,
       "scene_id": "scene_0070",
       "schema": "1.0.0",
-      "sha256": "6ec5e74f19adc14593180d6308a64470d33aaf81741e3de8e33959ef8c8ac966"
+      "sha256": "65eb0670c06b72f8eb88bd63191b2286fbd74170eacc5ec540e5d93bf2def53c"
     },
     {
       "filename": "scene_0071.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 39,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 38,
+      "room_count": 5,
       "scene_id": "scene_0071",
       "schema": "2.0.0",
-      "sha256": "0ce0da65a9b31769f1251a3796ecf13559d70ac0c9b1dd93499dd153d529c3c5"
+      "sha256": "c41cec5c5edc944b668b75860ec8f8f7d50a3892bd787be29444d10ebb5389fd"
     },
     {
       "filename": "scene_0072.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 67,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
+      "object_count": 73,
+      "room_count": 10,
       "scene_id": "scene_0072",
       "schema": "2.0.0",
-      "sha256": "42c02e741acce2febb88209745e647eab85496e58e077423ff07eefc429e41f9"
+      "sha256": "e167933ea00e32fc2aae70f56feff28b935285d63aa0fd2d840e1172b03e7b83"
     },
     {
       "filename": "scene_0073.json",
       "floor_count": 2,
       "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 37,
+      "object_count": 30,
       "room_count": 5,
       "scene_id": "scene_0073",
       "schema": "2.0.0",
-      "sha256": "426f33b4fc723937ee8037479bffe426f2597bcc1cc083188b5cde3da3cf55a8"
+      "sha256": "6d16e08d7a5aaa3c48bb16ae5af95d1b4cbf73a9d8648b40b02bd2fdedfd7d7a"
     },
     {
       "filename": "scene_0074.json",
       "floor_count": 1,
-      "layout_spec_id": "bedroom-bathroom",
-      "object_count": 16,
-      "room_count": 2,
+      "layout_spec_id": "4-room",
+      "object_count": 34,
+      "room_count": 4,
       "scene_id": "scene_0074",
       "schema": "1.0.0",
-      "sha256": "e0bd7e7a5718f30668f312e4e9e48b6346e66b9a392e4a6b9d8d551de3381a2f"
+      "sha256": "3ab406700da6b337d8fb69e7fae22358394621cdbaade4e35a45472f0fb41d06"
     },
     {
       "filename": "scene_0075.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 50,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb0-u1",
+      "object_count": 31,
+      "room_count": 5,
       "scene_id": "scene_0075",
       "schema": "2.0.0",
-      "sha256": "37d38d07f627ac9c6b83a75401cfbba84c6e146af8ebb566d4d407a0b9227732"
+      "sha256": "d448b1807ec6aec566c7f93f330fa3ab58e4a9f24ae99e58557ab5617abef6a7"
     },
     {
       "filename": "scene_0076.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 76,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
+      "object_count": 111,
+      "room_count": 11,
       "scene_id": "scene_0076",
       "schema": "2.0.0",
-      "sha256": "53d3f26c71c4dcacbc89750dbbf4df6f7c5c39c915f1e5f58f9279da876bf846"
+      "sha256": "7d31e845881e089ed649b01cea33696ca3ceac22c068386f52e263ec3a92a94c"
     },
     {
       "filename": "scene_0077.json",
       "floor_count": 2,
       "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 37,
+      "object_count": 45,
       "room_count": 5,
       "scene_id": "scene_0077",
       "schema": "2.0.0",
-      "sha256": "d83df0ac0ad72890ebcdd2a6b9ed90a848cae90c7a04791de1510a1e8e1f71a8"
+      "sha256": "3373a51893410d9cbd6d33cd20b9ab46c2e74d1982b7bea2c80d994b976dc07f"
     },
     {
       "filename": "scene_0078.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 68,
-      "room_count": 8,
+      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
+      "object_count": 70,
+      "room_count": 9,
       "scene_id": "scene_0078",
       "schema": "2.0.0",
-      "sha256": "85a4814f31eb36eb77b5b9bf6099aadf79a40c6bcbfb1181a1f2ab03832d6f05"
+      "sha256": "084d95e4a9e2b9e7f8c3d0b3165614d2387c6f8f71f43cc23b5bfd7a117fd612"
     },
     {
       "filename": "scene_0079.json",
       "floor_count": 1,
-      "layout_spec_id": "bedroom",
-      "object_count": 13,
-      "room_count": 1,
+      "layout_spec_id": "4-room",
+      "object_count": 31,
+      "room_count": 4,
       "scene_id": "scene_0079",
       "schema": "1.0.0",
-      "sha256": "16199c91cf57d4f9605f5a23da11321c2fc365e21e0c6816f6d68250a7c1b600"
+      "sha256": "f54d6a03f17b7f60315f970b7d0b151706135f1399ac58ebd756353bb50d8d61"
     },
     {
       "filename": "scene_0080.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
-      "object_count": 92,
-      "room_count": 10,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
+      "object_count": 88,
+      "room_count": 11,
       "scene_id": "scene_0080",
       "schema": "2.0.0",
-      "sha256": "451caa5f8f1cdc2d8eda8868565596524a8269fce2394f489110059cc2a92de2"
+      "sha256": "befcbbd796252e8a0fb0ab38eb02bef3e398ab46888141dfe6ee416874555abb"
     },
     {
       "filename": "scene_0081.json",
       "floor_count": 2,
       "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 44,
+      "object_count": 42,
       "room_count": 6,
       "scene_id": "scene_0081",
       "schema": "2.0.0",
-      "sha256": "4ac7483c8cd7277103aaa869db93d387c5189c45c496563aa1e039a0a065cc6b"
+      "sha256": "43cd820611159e152960e76782ab7dd6e44e41d8d1c62a86bfb9217fce918087"
     },
     {
       "filename": "scene_0082.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
-      "object_count": 113,
-      "room_count": 11,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
+      "object_count": 63,
+      "room_count": 10,
       "scene_id": "scene_0082",
       "schema": "2.0.0",
-      "sha256": "a1829b69f29befec9648fcf64d8df51a923c2b07ca0c2f595dff046719dcb760"
+      "sha256": "21504c9fd614bcb808644859e870298bb837c3f6f09b2e056d28203e1c4381b8"
     },
     {
       "filename": "scene_0083.json",
       "floor_count": 1,
-      "layout_spec_id": "2-bed-2-bath",
-      "object_count": 50,
-      "room_count": 6,
+      "layout_spec_id": "4-room",
+      "object_count": 31,
+      "room_count": 4,
       "scene_id": "scene_0083",
       "schema": "1.0.0",
-      "sha256": "6caf8d43a444d3946f83f6377fba1ec86ce53a01a601e8037f242133c159ed01"
+      "sha256": "49c9c6a3d3adcb20e8f963566b0e6dd66cafbbc157135d502c336d65ddfe29d6"
     },
     {
       "filename": "scene_0084.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 81,
-      "room_count": 8,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
+      "object_count": 92,
+      "room_count": 10,
       "scene_id": "scene_0084",
       "schema": "2.0.0",
-      "sha256": "fdb395b82aa364be4483ed378cde46f9990ec9c99993ac62875defd115f6cc82"
+      "sha256": "aec97680ba65908af197adbbab4bf991238e91ed3b850155c3768c615ef78f6e"
     },
     {
       "filename": "scene_0085.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u2-u1",
-      "object_count": 95,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u2",
+      "object_count": 85,
       "room_count": 10,
       "scene_id": "scene_0085",
       "schema": "2.0.0",
-      "sha256": "27faa0d21b8d64ea485e99210bd2bfb0e4bfee1cec0459d693dcca5fa56d454f"
+      "sha256": "d188b5881959520951ce133143d52aa4a98cb527e3b5d1be5a70203178d75114"
     },
     {
       "filename": "scene_0086.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u2",
-      "object_count": 74,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
+      "object_count": 78,
+      "room_count": 11,
       "scene_id": "scene_0086",
       "schema": "2.0.0",
-      "sha256": "4da85c10b148ad627c74a35524a85f28e0ee8733492026c7b16fc870c79f38b6"
+      "sha256": "695176754dfffa762dd1a5b8f8b1a2a087de3f13f8d711edab6a8d0b4707b9be"
     },
     {
       "filename": "scene_0087.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 50,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 64,
+      "room_count": 7,
       "scene_id": "scene_0087",
       "schema": "2.0.0",
-      "sha256": "88100e7a4a3c793998a1ec54d0fd43dc883de57623761c6b24ed13b2a17e8dfc"
+      "sha256": "1aa3a59712142a71ee4d042359b20adac52d32cb44a09ad5d5bf054e0ea9522d"
     },
     {
       "filename": "scene_0088.json",
       "floor_count": 2,
       "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 31,
+      "object_count": 34,
       "room_count": 5,
       "scene_id": "scene_0088",
       "schema": "2.0.0",
-      "sha256": "c547af941e9d3e25eb35a64f76352528b9808c5a6d9682fcb4685a74a8abd3e0"
+      "sha256": "1743481ed6778f69e9b40179615a6bf14fc775fedc9cc00035e7e1cc5779ad4a"
     },
     {
       "filename": "scene_0089.json",
       "floor_count": 1,
-      "layout_spec_id": "living-room",
-      "object_count": 9,
-      "room_count": 1,
+      "layout_spec_id": "5-room",
+      "object_count": 41,
+      "room_count": 5,
       "scene_id": "scene_0089",
       "schema": "1.0.0",
-      "sha256": "50956e04e963a0cf676d150793d2a27db404d78d4ee5bdc2e2c37cd81f9c8fde"
+      "sha256": "2864fc2b14f17d0e1d6a2bfbdff993f03923f33fcce018c9cbc1810a160ef663"
     },
     {
       "filename": "scene_0090.json",
       "floor_count": 3,
       "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 72,
+      "object_count": 57,
       "room_count": 8,
       "scene_id": "scene_0090",
       "schema": "2.0.0",
-      "sha256": "a9528296e66de84a7224ee148b6e4502cedb28ba14f591bcbfa846169b8680cd"
+      "sha256": "37f5ed61f89168e4f63dc68cb180b164ac72be37227b84213624bced4faa0912"
     },
     {
       "filename": "scene_0091.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 38,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 59,
+      "room_count": 7,
       "scene_id": "scene_0091",
       "schema": "2.0.0",
-      "sha256": "a4180e0d52a57640c9199093b8f21a83e85b968896d1ee0330969ead5123fa26"
+      "sha256": "97358e88bb322aaa9ebf56e59835f58ff212d44cea5346207f9d56d4b36784ef"
     },
     {
       "filename": "scene_0092.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb0-u1",
-      "object_count": 35,
-      "room_count": 5,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 62,
+      "room_count": 7,
       "scene_id": "scene_0092",
       "schema": "2.0.0",
-      "sha256": "3f0b445be0b4ffef2a5351b7e7ea0c40a6d4e4bd299d747d560900be94b1a3d6"
+      "sha256": "cdebc5cd6303ef807cd21235538e4da1716d5480ce7d297817363cc3df81a38c"
     },
     {
       "filename": "scene_0093.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb0-u1-u1",
-      "object_count": 76,
-      "room_count": 8,
+      "layout_spec_id": "residential-3-floor-gb0-u2-u1",
+      "object_count": 78,
+      "room_count": 9,
       "scene_id": "scene_0093",
       "schema": "2.0.0",
-      "sha256": "a04c6fb0b9ca988190feed5d4cdff657e0f9cb75c1ab04f153ec9d21b21fa5fc"
+      "sha256": "19d5c8e1124c1018f6f807c7855eb8f0acaa5d683d51f3e82d11c9abd91b982b"
     },
     {
       "filename": "scene_0094.json",
       "floor_count": 1,
-      "layout_spec_id": "bedroom-bathroom",
-      "object_count": 11,
-      "room_count": 2,
+      "layout_spec_id": "4-room",
+      "object_count": 29,
+      "room_count": 4,
       "scene_id": "scene_0094",
       "schema": "1.0.0",
-      "sha256": "f9bb5006ccd272c8b5fc0daa3d3fa2a645c98117f82060791bbab3218466614e"
+      "sha256": "9bad8d73278571c4df3a07c9f31786a5daeb0138db0118c057f0fd16dfca6761"
     },
     {
       "filename": "scene_0095.json",
       "floor_count": 2,
-      "layout_spec_id": "residential-2-floor-gb1-u1",
-      "object_count": 41,
-      "room_count": 6,
+      "layout_spec_id": "residential-2-floor-gb1-u2",
+      "object_count": 47,
+      "room_count": 7,
       "scene_id": "scene_0095",
       "schema": "2.0.0",
-      "sha256": "6ec6c8b6d2ac549f451d10852f6acebee8761852eada2660e08ef1c74e6d7f1c"
+      "sha256": "176d7c6614983cae8974d66285ca2660021bbc6e0f6796511b751b588f6026cd"
     },
     {
       "filename": "scene_0096.json",
       "floor_count": 1,
-      "layout_spec_id": "bathroom",
-      "object_count": 4,
-      "room_count": 1,
+      "layout_spec_id": "4-room",
+      "object_count": 26,
+      "room_count": 4,
       "scene_id": "scene_0096",
       "schema": "1.0.0",
-      "sha256": "7d641fb596a33a91824d947f48c5d7a882f5395e6726ee4bca4f7c08ddf77870"
+      "sha256": "2d43735288315460eed827953aaf842537537d7979a940335efd9a27ef0c09ec"
     },
     {
       "filename": "scene_0097.json",
       "floor_count": 1,
       "layout_spec_id": "4-room",
-      "object_count": 41,
+      "object_count": 29,
       "room_count": 4,
       "scene_id": "scene_0097",
       "schema": "1.0.0",
-      "sha256": "71c865b24400ba3854c14a70a68b44d3307ee3eac91ba3307d43c028720acbbf"
+      "sha256": "c82bec7e5dd2c74d55326bc4ab78a64440abfe0cf5b64920b5c5667384846597"
     },
     {
       "filename": "scene_0098.json",
       "floor_count": 1,
-      "layout_spec_id": "4-room",
-      "object_count": 40,
-      "room_count": 4,
+      "layout_spec_id": "5-room",
+      "object_count": 37,
+      "room_count": 5,
       "scene_id": "scene_0098",
       "schema": "1.0.0",
-      "sha256": "b24509a640d040b1ae3edaab2510c4cc98808a20a1fc096eddd43210f5ecea8d"
+      "sha256": "a3dc163d9773fa27ec04b98d1ded503276b18e4f32a7001cc21192760409a34d"
     },
     {
       "filename": "scene_0099.json",
       "floor_count": 1,
       "layout_spec_id": "4-room",
-      "object_count": 34,
+      "object_count": 40,
       "room_count": 4,
       "scene_id": "scene_0099",
       "schema": "1.0.0",
-      "sha256": "1042576e2c8e5bd67a3e976c9e9203b366e421a7d649f6f3f43428d365f79668"
+      "sha256": "35d64b6dbd878204b3c45c51d65ce75dc3eab4f5c4d72cb79b644b70de9d3828"
     },
     {
       "filename": "scene_0100.json",
       "floor_count": 3,
-      "layout_spec_id": "residential-3-floor-gb1-u1-u1",
-      "object_count": 77,
-      "room_count": 9,
+      "layout_spec_id": "residential-3-floor-gb1-u2-u2",
+      "object_count": 91,
+      "room_count": 11,
       "scene_id": "scene_0100",
       "schema": "2.0.0",
-      "sha256": "1a24a83d806c9e6aa25f3f060dc6edd64c14e86637900ce3df5bd37e73a680cb"
+      "sha256": "50f11c2baa217eaf83372ad23b90476668226081ff2402b75b99975f9c9f7ea4"
     }
   ],
   "visualization_test_scene_ids": [

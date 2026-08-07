@@ -6,12 +6,13 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from dso_hadr.types.navigation import Point3, as_point3
+
 
 @dataclass(frozen=True)
 class NavigationEpisodeConfig:
     """All file, scene, graph, controller, and recording parameters for one run."""
 
-    config_path: Path
     corpus_config_path: Path
     scene_manifest_path: Path
     scenes_directory: Path
@@ -20,11 +21,12 @@ class NavigationEpisodeConfig:
     scene_id: str
     start_room_id: str
     goal_room_id: str
-    seed: int
+    start_position: Point3
+    goal_position: Point3
+    expected_geodesic_distance: float
     meters_per_pixel: float
     move_magnitude: float
     rotation_degrees: float
-    navigable_tolerance: float
     waypoint_tolerance: float
     heading_tolerance_degrees: float
     success_distance: float
@@ -43,10 +45,8 @@ def load_navigation_episode_config(path: Path) -> NavigationEpisodeConfig:
     paths = document["paths"]
     episode = document["episode"]
     scene_graph = document["scene_graph"]
-    traversability_map = document["traversability_map"]
     controller = document["controller"]
     return NavigationEpisodeConfig(
-        config_path=config_path,
         corpus_config_path=_resolve(config_path, paths["corpus_config"], strict=True),
         scene_manifest_path=_resolve(
             config_path,
@@ -71,11 +71,12 @@ def load_navigation_episode_config(path: Path) -> NavigationEpisodeConfig:
         scene_id=episode["scene_id"],
         start_room_id=episode["start_room_id"],
         goal_room_id=episode["goal_room_id"],
-        seed=episode["seed"],
+        start_position=as_point3(episode["start_position"]),
+        goal_position=as_point3(episode["goal_position"]),
+        expected_geodesic_distance=float(episode["geodesic_distance"]),
         meters_per_pixel=scene_graph["meters_per_pixel"],
         move_magnitude=controller["move_magnitude"],
         rotation_degrees=controller["rotation_degrees"],
-        navigable_tolerance=traversability_map["navigable_tolerance"],
         waypoint_tolerance=controller["waypoint_tolerance"],
         heading_tolerance_degrees=controller["heading_tolerance_degrees"],
         success_distance=controller["success_distance"],

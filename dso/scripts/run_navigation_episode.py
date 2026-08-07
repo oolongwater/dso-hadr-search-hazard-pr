@@ -6,7 +6,6 @@ from pathlib import Path
 
 from dso_hadr.config.nav_config import load_navigation_episode_config
 from dso_hadr.controller.waypoint_follower import WaypointFollower
-from dso_hadr.planner.grounding import select_goal_point
 from dso_hadr.planner.motion.astar import astar_search
 from dso_hadr.planner.symbolic.dijkstra import dijkstra_search
 from dso_hadr.scenes.procthor import load_corpus_config, load_manifest
@@ -16,7 +15,7 @@ from dso_hadr.scenes.scene_graph import (
     scene_graph_to_dict,
     symbolic_plan_to_dict,
 )
-from dso_hadr.scenes.traversability import direct_navmesh_traversability
+from dso_hadr.scenes.traversability import build_traversability
 from dso_hadr.simulator.ai2thor import ProcTHORSimulator, load_simulator_config
 from dso_hadr.simulator.ai2thor_backend import (
     AI2THORNavigationBackend,
@@ -25,6 +24,7 @@ from dso_hadr.simulator.ai2thor_backend import (
 from dso_hadr.types.navigation import (
     NavigationAction,
     Observation,
+    Pose,
 )
 from dso_hadr.utils.record_utils.navigation_episode import (
     prepare_navigation_episode_output,
@@ -52,14 +52,14 @@ backend = AI2THORNavigationBackend(
     ),
 )
 with backend:
+    stored_pose = scene_agent_pose(scene_paths[config.scene_id], config.start_room_id)
     initial_observation = backend.reset(
         config.scene_id,
-        scene_agent_pose(scene_paths[config.scene_id], config.start_room_id),
-        seed=config.seed,
+        Pose(*config.start_position, stored_pose.yaw),
     )
     task = extract_scene_graph_task(
         scene_paths[config.scene_id],
-        direct_navmesh_traversability(
+        build_traversability(
             backend.navmesh,
             move_magnitude=config.move_magnitude,
         ),
@@ -69,11 +69,7 @@ with backend:
         navigation_map_path=output_directory / "navigation-map.geojson",
     )
     plan = dijkstra_search(task.graph, task.start_region_id, task.goal_region_id)
-    goal_point = select_goal_point(
-        task,
-        plan.subgoals[-1].target_pose.position,
-        config.navigable_tolerance,
-    )
+    goal_point = config.goal_position
     write_json(output_directory / "scene-graph.json", scene_graph_to_dict(task))
     record_observation(
         output_directory=output_directory,
@@ -90,6 +86,11 @@ with backend:
     )
     waypoints = motion_plan.points
     motion_distance = motion_plan.geodesic_distance
+    if abs(motion_distance - config.expected_geodesic_distance) > 1e-6:
+        raise ValueError(
+            "runtime motion plan does not match the configured long-horizon distance: "
+            f"{motion_distance} != {config.expected_geodesic_distance}"
+        )
     write_json(
         output_directory / "plan.json",
         {

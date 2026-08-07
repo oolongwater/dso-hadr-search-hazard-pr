@@ -8,20 +8,27 @@
     "waypoint_tolerance": 0.001
   },
   "episode": {
-    "goal_room_id": "room|6",
+    "geodesic_distance": 29.102454966827878,
+    "goal_position": [
+      1.6177799999999998,
+      3.0323000000000007,
+      8.555556666666668
+    ],
+    "goal_room_id": "room|8",
     "scene_id": "scene_0019",
-    "seed": 0,
-    "start_room_id": "room|2"
+    "start_position": [
+      0.9955533333333332,
+      0.04563,
+      4.1066666666666665
+    ],
+    "start_room_id": "room|4"
   },
   "paths": {
     "corpus_config": "../scenes/procthor-corpus.json",
     "output_directory": "../../../data/navigation/all-scenes/scene_0019",
     "scene_manifest": "../scenes/procthor-scenes.json",
-    "scenes_directory": "../../../data/procthor/dso-procthor-levels-1-3-100-v1/scenes",
+    "scenes_directory": "../../../data/procthor/dso-procthor-levels-1-3-100/scenes",
     "simulator_config": "../simulator/ai2thor.json"
-  },
-  "traversability_map": {
-    "navigable_tolerance": 0.18
   },
   "scene_graph": {
     "meters_per_pixel": 0.1

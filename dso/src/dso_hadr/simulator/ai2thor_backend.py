@@ -41,160 +41,6 @@ def _point_document(point: Point3) -> dict[str, float]:
     return {"x": point[0], "y": point[1], "z": point[2]}
 
 
-def _polygon_center(polygon: list[dict[str, float]]) -> Point3:
-    if not polygon:
-        raise ValueError("a connector landing polygon cannot be empty")
-    return (
-        sum(float(point["x"]) for point in polygon) / len(polygon),
-        sum(float(point["y"]) for point in polygon) / len(polygon),
-        sum(float(point["z"]) for point in polygon) / len(polygon),
-    )
-
-
-def _point_in_polygon(point: tuple[float, float], polygon: list[dict[str, float]]) -> bool:
-    """Return whether an XZ point lies inside or on a scene polygon."""
-
-    if len(polygon) < 3:
-        return False
-    point_x, point_z = point
-    inside = False
-    for start, end in zip(polygon, polygon[1:] + polygon[:1], strict=True):
-        start_x, start_z = float(start["x"]), float(start["z"])
-        end_x, end_z = float(end["x"]), float(end["z"])
-        cross = (point_x - start_x) * (end_z - start_z) - (point_z - start_z) * (end_x - start_x)
-        if (
-            abs(cross) <= 1e-8
-            and min(start_x, end_x) - 1e-8 <= point_x <= max(start_x, end_x) + 1e-8
-            and min(start_z, end_z) - 1e-8 <= point_z <= max(start_z, end_z) + 1e-8
-        ):
-            return True
-        if (start_z > point_z) != (end_z > point_z):
-            crossing_x = start_x + (point_z - start_z) * (end_x - start_x) / (end_z - start_z)
-            if point_x < crossing_x:
-                inside = not inside
-    return inside
-
-
-def _door_path(
-    door: dict[str, object],
-    walls_by_id: dict[str, dict[str, object]],
-) -> tuple[Point3, Point3]:
-    """Derive the two room-side doorway anchors from schema geometry."""
-
-    wall = walls_by_id[str(door["wall0"])]
-    raw_wall_polygon = wall["polygon"]
-    raw_hole_polygon = door["holePolygon"]
-    if not isinstance(raw_wall_polygon, list) or not isinstance(raw_hole_polygon, list):
-        raise TypeError("door and wall polygons must be lists")
-    wall_start = _point(raw_wall_polygon[0])
-    wall_end = _point(raw_wall_polygon[1])
-    direction_x = wall_end[0] - wall_start[0]
-    direction_z = wall_end[2] - wall_start[2]
-    wall_length = math.hypot(direction_x, direction_z)
-    if wall_length <= 0.0:
-        raise ValueError(f"door {door['id']!r} belongs to a zero-length wall")
-    hole = tuple(_point(point) for point in raw_hole_polygon)
-    local_center = (min(point[0] for point in hole) + max(point[0] for point in hole)) / 2.0
-    center_x = wall_start[0] + direction_x * local_center / wall_length
-    center_z = wall_start[2] + direction_z * local_center / wall_length
-    normal_x, normal_z = direction_z / wall_length, -direction_x / wall_length
-    return (
-        (center_x + normal_x * 0.35, wall_start[1], center_z + normal_z * 0.35),
-        (center_x - normal_x * 0.35, wall_start[1], center_z - normal_z * 0.35),
-    )
-
-
-def _vertical_connector_paths(
-    connector: dict[str, object],
-    rooms_by_id: dict[str, dict[str, object]],
-) -> tuple[tuple[Point3, ...], ...]:
-    """Derive continuous room-to-room stair paths from schema-2 geometry."""
-
-    position = connector["position"]
-    rotation = connector["rotation"]
-    asset_contract = connector["assetContract"]
-    landing_records = connector["landingPolygons"]
-    if not isinstance(position, dict) or not isinstance(rotation, dict):
-        raise TypeError("vertical connector position and rotation must be records")
-    if not isinstance(asset_contract, dict) or not isinstance(landing_records, list):
-        raise TypeError("vertical connector geometry is incomplete")
-
-    base = _point(position)
-    yaw = math.radians(float(rotation["y"]))
-    forward = math.sin(yaw), math.cos(yaw)
-    right = math.cos(yaw), -math.sin(yaw)
-    flight_run = float(asset_contract["flightRun"])
-    rise = float(asset_contract["rise"])
-    landing_depth = (float(asset_contract["reservedLength"]) - flight_run) / 2.0
-    half_width = float(asset_contract["reservedWidth"]) / 2.0
-    room_anchor_offset = 0.3
-
-    landings_by_floor: dict[str, dict[str, object]] = {}
-    for raw_landing in landing_records:
-        if not isinstance(raw_landing, dict):
-            raise TypeError("vertical connector landing must be a record")
-        landings_by_floor[str(raw_landing["floorId"])] = raw_landing
-
-    def landing_and_room_anchors(*, upper: bool) -> tuple[Point3, tuple[Point3, ...]]:
-        floor_key = "upperFloorId" if upper else "lowerFloorId"
-        room_key = "upperRoomId" if upper else "lowerRoomId"
-        floor_id = str(connector[floor_key])
-        room_id = str(connector[room_key])
-        raw_landing_polygon = landings_by_floor[floor_id]["polygon"]
-        raw_room_polygon = rooms_by_id[room_id]["floorPolygon"]
-        if not isinstance(raw_landing_polygon, list) or not isinstance(raw_room_polygon, list):
-            raise TypeError("vertical connector landing and room polygons must be lists")
-        center = _polygon_center(raw_landing_polygon)
-        floor_direction = 1.0 if upper else -1.0
-        candidates = (
-            (
-                center[0]
-                + forward[0] * floor_direction * (landing_depth / 2.0 + room_anchor_offset),
-                center[2]
-                + forward[1] * floor_direction * (landing_depth / 2.0 + room_anchor_offset),
-            ),
-            (
-                center[0] - right[0] * (half_width + room_anchor_offset),
-                center[2] - right[1] * (half_width + room_anchor_offset),
-            ),
-            (
-                center[0] + right[0] * (half_width + room_anchor_offset),
-                center[2] + right[1] * (half_width + room_anchor_offset),
-            ),
-        )
-        anchor = next(
-            (
-                (candidate[0], center[1], candidate[1])
-                for candidate in candidates
-                if _point_in_polygon(candidate, raw_room_polygon)
-            ),
-            None,
-        )
-        if anchor is None:
-            raise ValueError(
-                f"vertical connector {connector['id']!r} has no room-side landing egress"
-            )
-        return center, (anchor,)
-
-    lower_landing, lower_rooms = landing_and_room_anchors(upper=False)
-    upper_landing, upper_rooms = landing_and_room_anchors(upper=True)
-    half_run = flight_run / 2.0
-    lower_ramp = (
-        base[0] - forward[0] * half_run,
-        base[1],
-        base[2] - forward[1] * half_run,
-    )
-    upper_ramp = (
-        base[0] + forward[0] * half_run,
-        base[1] + rise,
-        base[2] + forward[1] * half_run,
-    )
-    lower_paths = tuple((lower_room, lower_landing, lower_ramp) for lower_room in lower_rooms)
-    upper_paths = tuple((upper_ramp, upper_landing, upper_room) for upper_room in upper_rooms)
-    vertical_path = ((lower_ramp, upper_ramp),)
-    return lower_paths + vertical_path + upper_paths
-
-
 def _triangle_centroid(navmesh: NavMesh, triangle_id: int) -> Point3:
     triangle = navmesh.triangles[triangle_id]
     vertices = tuple(navmesh.vertices[index] for index in triangle)
@@ -209,6 +55,83 @@ def _nearest_triangle_centroid(navmesh: NavMesh, target: Point3) -> Point3:
     return min(
         (_triangle_centroid(navmesh, index) for index in range(len(navmesh.triangles))),
         key=lambda point: (math.dist(target, point), point),
+    )
+
+
+def parse_navmesh(document: dict[str, object]) -> NavMesh:
+    """Parse and validate one physical Unity navmesh export."""
+
+    raw_vertices = document["vertices"]
+    raw_indices = document["indices"]
+    raw_areas = document["areas"]
+    raw_adjacency = document["adjacency"]
+    if not isinstance(raw_vertices, list):
+        raise TypeError("runtime navmesh vertices must be a list")
+    if not isinstance(raw_indices, list) or not isinstance(raw_areas, list):
+        raise TypeError("runtime navmesh indices and areas must be lists")
+    if not isinstance(raw_adjacency, list):
+        raise TypeError("runtime navmesh adjacency must be a list")
+    vertices = tuple(_point(point) for point in raw_vertices)
+    indices = tuple(int(index) for index in raw_indices)
+    areas = tuple(int(area) for area in raw_areas)
+    adjacency_indices = tuple(int(index) for index in raw_adjacency)
+    if len(indices) % 3 != 0:
+        raise ValueError("runtime navmesh returned an incomplete triangle index list")
+    triangles = tuple(
+        (indices[offset], indices[offset + 1], indices[offset + 2])
+        for offset in range(0, len(indices), 3)
+    )
+    if not vertices or not triangles:
+        raise ValueError("runtime navmesh triangulation is empty")
+    if len(areas) != len(triangles):
+        raise ValueError("runtime navmesh area count does not match its triangles")
+    if any(index < 0 or index >= len(vertices) for triangle in triangles for index in triangle):
+        raise ValueError("runtime navmesh triangle references an invalid vertex")
+    if len(adjacency_indices) % 2 != 0:
+        raise ValueError("runtime navmesh returned an incomplete adjacency index list")
+    adjacency = tuple(
+        (adjacency_indices[offset], adjacency_indices[offset + 1])
+        for offset in range(0, len(adjacency_indices), 2)
+    )
+    if any(
+        node_a < 0
+        or node_a >= len(triangles)
+        or node_b < 0
+        or node_b >= len(triangles)
+        or node_a == node_b
+        for node_a, node_b in adjacency
+    ):
+        raise ValueError("runtime navmesh adjacency references an invalid triangle")
+    agent_type_id = document["agentTypeId"]
+    if isinstance(agent_type_id, bool) or not isinstance(agent_type_id, int):
+        raise TypeError("runtime navmesh agentTypeId must be an integer")
+    agent_radius = document["agentRadius"]
+    movement_radius = document["movementRadius"]
+    if (
+        isinstance(agent_radius, bool)
+        or not isinstance(agent_radius, (int, float))
+        or float(agent_radius) <= 0.0
+    ):
+        raise TypeError("runtime navmesh agentRadius must be a positive number")
+    if (
+        isinstance(movement_radius, bool)
+        or not isinstance(movement_radius, (int, float))
+        or float(movement_radius) <= 0.0
+    ):
+        raise TypeError("runtime navmesh movementRadius must be a positive number")
+    if float(agent_radius) + 1e-6 < float(movement_radius):
+        raise ValueError(
+            "runtime navmesh clearance is smaller than the movement collision "
+            f"footprint: {float(agent_radius)} < {float(movement_radius)}"
+        )
+    return NavMesh(
+        agent_type_id=agent_type_id,
+        agent_radius=float(agent_radius),
+        movement_radius=float(movement_radius),
+        vertices=vertices,
+        triangles=triangles,
+        areas=areas,
+        adjacency=adjacency,
     )
 
 
@@ -227,7 +150,6 @@ class AI2THORNavigationBackend(NavigationBackend):
         self._scene_id: str | None = None
         self._event: Event | None = None
         self._floor_heights: tuple[float, ...] = ()
-        self._scene_links: tuple[tuple[Point3, ...], ...] = ()
         self._stored_horizon = 0.0
         self._stored_standing = True
         self._agent_y_offset = 0.0
@@ -248,25 +170,11 @@ class AI2THORNavigationBackend(NavigationBackend):
         self._stored_horizon = float(stored_agent["horizon"])
         self._stored_standing = bool(stored_agent["standing"])
 
-        walls_by_id = {str(wall["id"]): wall for wall in house.get("walls", ())}
-        door_paths = tuple(
-            _door_path(door, walls_by_id)
-            for door in house.get("doors", ())
-            if door.get("room1") and door.get("room0") != door.get("room1")
-        )
         if metadata["schema"] == "2.0.0":
             self._floor_heights = tuple(float(floor["baseY"]) for floor in house["floors"])
-            rooms_by_id = {str(room["id"]): room for room in house["rooms"]}
-            connector_paths = tuple(
-                path
-                for connector in house.get("verticalConnectors", ())
-                for path in _vertical_connector_paths(connector, rooms_by_id)
-            )
         else:
             room = house["rooms"][0]
             self._floor_heights = (float(room["floorPolygon"][0]["y"]),)
-            connector_paths = ()
-        self._scene_links = door_paths + connector_paths
 
     def _current_event(self) -> Event:
         if self._event is None:
@@ -319,55 +227,12 @@ class AI2THORNavigationBackend(NavigationBackend):
         if not triangulated:
             raise RuntimeError(triangulated.metadata["errorMessage"])
         document = triangulated.metadata["actionReturn"]
-        vertices = tuple(_point(point) for point in document["vertices"])
-        indices = tuple(int(index) for index in document["indices"])
-        areas = tuple(int(area) for area in document["areas"])
-        adjacency_indices = tuple(int(index) for index in document["adjacency"])
-        if len(indices) % 3 != 0:
-            raise ValueError("runtime navmesh returned an incomplete triangle index list")
-        triangles = tuple(
-            (
-                indices[offset],
-                indices[offset + 1],
-                indices[offset + 2],
-            )
-            for offset in range(0, len(indices), 3)
-        )
-        if not vertices or not triangles:
-            raise ValueError("runtime navmesh triangulation is empty")
-        if len(areas) != len(triangles):
-            raise ValueError("runtime navmesh area count does not match its triangles")
-        if any(index < 0 or index >= len(vertices) for triangle in triangles for index in triangle):
-            raise ValueError("runtime navmesh triangle references an invalid vertex")
-        if len(adjacency_indices) % 2 != 0:
-            raise ValueError("runtime navmesh returned an incomplete adjacency index list")
-        adjacency = tuple(
-            (
-                adjacency_indices[offset],
-                adjacency_indices[offset + 1],
-            )
-            for offset in range(0, len(adjacency_indices), 2)
-        )
-        if any(
-            node_a < 0
-            or node_a >= len(triangles)
-            or node_b < 0
-            or node_b >= len(triangles)
-            or node_a == node_b
-            for node_a, node_b in adjacency
-        ):
-            raise ValueError("runtime navmesh adjacency references an invalid triangle")
-        self._navmesh = NavMesh(
-            agent_type_id=int(document["agentTypeId"]),
-            vertices=vertices,
-            triangles=triangles,
-            areas=areas,
-            adjacency=adjacency,
-            links=self._scene_links,
-        )
+        if not isinstance(document, dict):
+            raise TypeError("runtime navmesh action return must be a JSON object")
+        self._navmesh = parse_navmesh(document)
 
         if start_pose is None:
-            triangle_id = self._random.randrange(len(triangles))
+            triangle_id = self._random.randrange(len(self.navmesh.triangles))
             start_point = _triangle_centroid(self.navmesh, triangle_id)
             pose = Pose(*start_point, 0.0)
         else:
@@ -426,10 +291,11 @@ class AI2THORNavigationBackend(NavigationBackend):
         return {
             "scene_id": self._scene_id,
             "navmesh_agent_type_id": self.navmesh.agent_type_id,
+            "navmesh_agent_radius": self.navmesh.agent_radius,
+            "movement_collision_radius": self.navmesh.movement_radius,
             "navmesh_vertex_count": len(self.navmesh.vertices),
             "navmesh_triangle_count": len(self.navmesh.triangles),
             "navmesh_adjacency_count": len(self.navmesh.adjacency),
-            "navmesh_link_count": len(self.navmesh.links),
             "agent_y_offset": self._agent_y_offset,
         }
 
@@ -439,4 +305,8 @@ class AI2THORNavigationBackend(NavigationBackend):
             self._closed = True
 
 
-__all__ = ["AI2THORNavigationBackend", "AI2THORNavigationConfig"]
+__all__ = [
+    "AI2THORNavigationBackend",
+    "AI2THORNavigationConfig",
+    "parse_navmesh",
+]

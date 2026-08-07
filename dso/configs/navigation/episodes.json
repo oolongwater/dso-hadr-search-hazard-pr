@@ -1,0 +1,1705 @@
+{
+  "episode_config": "navigation.json",
+  "episodes": [
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 27.537405475170086,
+      "goal_position": [
+        1.3688866666666666,
+        3.0313199999999996,
+        6.719996666666667
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0001",
+      "start_position": [
+        7.124446666666667,
+        0.04465,
+        9.022219999999999
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 24.997570365004837,
+      "goal_position": [
+        7.6222199999999996,
+        3.0323000000000007,
+        5.973333333333334
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0002",
+      "start_position": [
+        6.844443333333333,
+        0.04563,
+        2.3333366666666664
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 19.36592845920245,
+      "goal_position": [
+        8.4,
+        0.02667,
+        3.9822233333333337
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0003",
+      "start_position": [
+        8.866666666666665,
+        0.02667,
+        8.213336666666667
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 30.790665713461443,
+      "goal_position": [
+        0.9955566666666668,
+        3.0323000000000007,
+        4.791113333333333
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0004",
+      "start_position": [
+        2.955553333333333,
+        0.04563,
+        4.324443333333334
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 37.21807869926718,
+      "goal_position": [
+        2.986666666666667,
+        6.02,
+        0.8400033333333333
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0005",
+      "start_position": [
+        3.11111,
+        0.04667000000000001,
+        4.0755566666666665
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 32.617870838178796,
+      "goal_position": [
+        9.426666666666668,
+        3.03328,
+        2.3333333333333335
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0006",
+      "start_position": [
+        9.27111,
+        0.046610000000000006,
+        3.733333333333334
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 26.653460847355255,
+      "goal_position": [
+        7.871109999999999,
+        3.0323000000000007,
+        2.8311100000000002
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0007",
+      "start_position": [
+        8.4,
+        0.04563,
+        5.07111
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 19.11598709263251,
+      "goal_position": [
+        3.2044433333333338,
+        3.0315099999999995,
+        4.759999999999999
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0008",
+      "start_position": [
+        3.577776666666667,
+        0.04485,
+        6.93778
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 27.59047255040216,
+      "goal_position": [
+        4.697776666666667,
+        3.03332,
+        11.915556666666665
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0009",
+      "start_position": [
+        8.12,
+        0.04665,
+        8.866666666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 28.9047039773635,
+      "goal_position": [
+        9.582223333333333,
+        3.0313199999999996,
+        6.875556666666667
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0010",
+      "start_position": [
+        4.4799999999999995,
+        0.04465,
+        12.04
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 34.07309745726414,
+      "goal_position": [
+        4.386666666666667,
+        6.01996,
+        8.306666666666667
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0011",
+      "start_position": [
+        4.293333333333333,
+        0.04662,
+        6.657776666666667
+      ],
+      "start_room_id": "room|3"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 12.8689230050675,
+      "goal_position": [
+        1.3066666666666666,
+        0.02667,
+        3.1422233333333334
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0012",
+      "start_position": [
+        3.671113333333333,
+        0.02667,
+        8.306663333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 34.06835263232863,
+      "goal_position": [
+        2.02222,
+        6.01847,
+        3.764443333333334
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0013",
+      "start_position": [
+        1.0888866666666668,
+        0.04513999999999999,
+        4.23111
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 17.645216974968353,
+      "goal_position": [
+        3.29778,
+        0.02667,
+        2.924443333333333
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0014",
+      "start_position": [
+        11.791110000000002,
+        0.02667,
+        4.82222
+      ],
+      "start_room_id": "room|3"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 26.7824132658985,
+      "goal_position": [
+        2.0844433333333336,
+        3.0313199999999996,
+        2.0533333333333332
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0015",
+      "start_position": [
+        6.937776666666667,
+        0.04465,
+        0.7777766666666667
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 15.473116553290724,
+      "goal_position": [
+        6.968886666666667,
+        0.02667,
+        9.799999999999999
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0016",
+      "start_position": [
+        5.444443333333333,
+        0.02667,
+        2.27111
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 22.790624997660064,
+      "goal_position": [
+        6.875556666666665,
+        0.02667,
+        7.9955533333333335
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0017",
+      "start_position": [
+        0.5599966666666666,
+        0.02667,
+        6.377776666666667
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 36.31932597987252,
+      "goal_position": [
+        4.137776666666666,
+        6.01999,
+        9.115553333333333
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0018",
+      "start_position": [
+        10.54667,
+        0.04666,
+        7.342223333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 29.102454966827878,
+      "goal_position": [
+        1.6177799999999998,
+        3.0323000000000007,
+        8.555556666666668
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0019",
+      "start_position": [
+        0.9955533333333332,
+        0.04563,
+        4.1066666666666665
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 56.04355367805331,
+      "goal_position": [
+        3.1422233333333334,
+        6.01896,
+        12.662223333333335
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0020",
+      "start_position": [
+        4.79111,
+        0.04563,
+        9.737776666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 36.67687529420107,
+      "goal_position": [
+        3.8577766666666666,
+        6.01709,
+        3.297776666666666
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0021",
+      "start_position": [
+        10.266666666666667,
+        0.04376,
+        3.32889
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 35.003914512167334,
+      "goal_position": [
+        3.0800033333333334,
+        6.02,
+        8.08889
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0022",
+      "start_position": [
+        7.622223333333333,
+        0.04667000000000001,
+        8.617776666666666
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 18.129854101949142,
+      "goal_position": [
+        3.60889,
+        0.02667,
+        1.6799999999999997
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0023",
+      "start_position": [
+        6.595553333333334,
+        0.02667,
+        7.777776666666665
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 34.21159799364276,
+      "goal_position": [
+        8.680000000000001,
+        3.03181,
+        11.355556666666667
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0024",
+      "start_position": [
+        9.24,
+        0.04513999999999999,
+        5.662223333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 17.6695572170344,
+      "goal_position": [
+        1.5555566666666667,
+        0.02667,
+        11.977776666666665
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0025",
+      "start_position": [
+        4.635553333333333,
+        0.02667,
+        3.1422233333333334
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 35.40869628589565,
+      "goal_position": [
+        13.346666666666666,
+        6.019949999999999,
+        7.093333333333334
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0026",
+      "start_position": [
+        14.248890000000001,
+        0.04662,
+        6.066666666666666
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 15.940261217275525,
+      "goal_position": [
+        1.92889,
+        0.02667,
+        4.542223333333333
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0027",
+      "start_position": [
+        8.897776666666667,
+        0.02667,
+        5.568890000000001
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 40.33255230676387,
+      "goal_position": [
+        11.293336666666667,
+        6.01709,
+        8.773333333333333
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0028",
+      "start_position": [
+        3.1733366666666663,
+        0.04376,
+        11.791113333333334
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 28.869335673578668,
+      "goal_position": [
+        4.946666666666666,
+        3.0323000000000007,
+        1.7422200000000003
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0029",
+      "start_position": [
+        8.057776666666667,
+        0.04563,
+        8.05778
+      ],
+      "start_room_id": "room|3"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 41.83767133004178,
+      "goal_position": [
+        7.746666666666666,
+        3.0313199999999996,
+        5.195553333333334
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0030",
+      "start_position": [
+        1.6799966666666668,
+        0.04465,
+        7.560003333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 50.401096728422026,
+      "goal_position": [
+        3.9822233333333337,
+        6.02,
+        3.484443333333333
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0031",
+      "start_position": [
+        4.635553333333334,
+        0.04666,
+        4.542223333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 12.689640809684898,
+      "goal_position": [
+        1.68,
+        0.02667,
+        6.937776666666667
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0032",
+      "start_position": [
+        10.453333333333333,
+        0.02667,
+        7.840000000000001
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 25.768365015197592,
+      "goal_position": [
+        7.280003333333333,
+        3.03181,
+        3.29778
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0033",
+      "start_position": [
+        9.177776666666666,
+        0.04513999999999999,
+        7.964446666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 22.552757999971337,
+      "goal_position": [
+        1.1200033333333332,
+        3.0323000000000007,
+        6.377776666666667
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0034",
+      "start_position": [
+        8.120003333333335,
+        0.04563,
+        1.71111
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 24.303876487461757,
+      "goal_position": [
+        10.173333333333334,
+        3.03229,
+        1.92889
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0035",
+      "start_position": [
+        5.04,
+        0.04563,
+        8.586666666666666
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 47.13294403197669,
+      "goal_position": [
+        7.2177766666666665,
+        6.01896,
+        1.8666633333333333
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0036",
+      "start_position": [
+        11.666666666666666,
+        0.04563,
+        7.622223333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 30.423699312573667,
+      "goal_position": [
+        9.364443333333334,
+        6.01992,
+        3.1733333333333333
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0037",
+      "start_position": [
+        2.0222233333333333,
+        0.04659,
+        6.657776666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 13.765098245317247,
+      "goal_position": [
+        7.124446666666667,
+        0.02667,
+        7.28
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0038",
+      "start_position": [
+        3.67111,
+        0.02667,
+        0.6222233333333334
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 33.7407509960708,
+      "goal_position": [
+        9.893333333333333,
+        6.01997,
+        4.355556666666667
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0039",
+      "start_position": [
+        3.0800033333333334,
+        0.046639999999999994,
+        6.4711099999999995
+      ],
+      "start_room_id": "room|3"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 33.846224209065404,
+      "goal_position": [
+        3.577776666666667,
+        3.0313199999999996,
+        9.426666666666668
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0040",
+      "start_position": [
+        8.088890000000001,
+        0.04465,
+        10.67111
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 25.09607787917139,
+      "goal_position": [
+        0.7777766666666667,
+        3.0313199999999996,
+        2.24
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0041",
+      "start_position": [
+        6.346666666666667,
+        0.04465,
+        2.7688900000000003
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 30.324232717972528,
+      "goal_position": [
+        4.573333333333333,
+        6.01999,
+        6.7511133333333335
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0042",
+      "start_position": [
+        2.27111,
+        0.04665,
+        6.7822233333333335
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 19.36970911885847,
+      "goal_position": [
+        8.68,
+        3.0304300000000004,
+        7.280003333333333
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0043",
+      "start_position": [
+        6.7822233333333335,
+        0.04376,
+        5.04
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 15.018454812234708,
+      "goal_position": [
+        1.2755566666666667,
+        0.02667,
+        1.7422199999999999
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0044",
+      "start_position": [
+        9.333333333333334,
+        0.02667,
+        1.9911133333333335
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 35.05174131788051,
+      "goal_position": [
+        3.359996666666666,
+        6.01709,
+        9.488886666666666
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0045",
+      "start_position": [
+        9.364446666666666,
+        0.04376,
+        7.777776666666665
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 22.56345078359839,
+      "goal_position": [
+        8.89778,
+        0.02667,
+        4.9466633333333325
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0046",
+      "start_position": [
+        1.6177766666666666,
+        0.02667,
+        3.7333366666666667
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 17.675195378165817,
+      "goal_position": [
+        6.968889999999999,
+        0.02667,
+        8.92889
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0047",
+      "start_position": [
+        2.48889,
+        0.02667,
+        7.031113333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 25.861359288707714,
+      "goal_position": [
+        1.1511133333333332,
+        6.01999,
+        1.8044466666666665
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0048",
+      "start_position": [
+        5.973333333333334,
+        0.04666,
+        5.320003333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 21.00323528893573,
+      "goal_position": [
+        4.697776666666667,
+        3.03333,
+        2.8311100000000002
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0049",
+      "start_position": [
+        5.537776666666666,
+        0.04666,
+        3.702223333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 47.09694645228292,
+      "goal_position": [
+        2.4266666666666667,
+        6.01896,
+        6.284446666666667
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0050",
+      "start_position": [
+        1.43111,
+        0.04563,
+        4.200003333333334
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 36.93425471516154,
+      "goal_position": [
+        3.515556666666667,
+        6.01997,
+        11.604443333333334
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0051",
+      "start_position": [
+        1.3066699999999998,
+        0.046639999999999994,
+        9.52
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 34.98574970383833,
+      "goal_position": [
+        3.1733333333333333,
+        6.01709,
+        8.026666666666666
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0052",
+      "start_position": [
+        2.208886666666667,
+        0.04376,
+        6.688890000000001
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 17.254657589574663,
+      "goal_position": [
+        8.92889,
+        0.02667,
+        10.328890000000001
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0053",
+      "start_position": [
+        8.275553333333335,
+        0.02667,
+        3.04889
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 43.744517707659725,
+      "goal_position": [
+        6.937776666666667,
+        6.01896,
+        1.1200033333333332
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0054",
+      "start_position": [
+        5.226666666666667,
+        0.04563,
+        5.226666666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 20.069070779653128,
+      "goal_position": [
+        1.4000000000000001,
+        3.0313199999999996,
+        5.662223333333333
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0055",
+      "start_position": [
+        9.24,
+        0.04465,
+        2.5822233333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 25.79435741440228,
+      "goal_position": [
+        6.533333333333334,
+        3.03181,
+        3.0799999999999996
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0056",
+      "start_position": [
+        8.306669999999999,
+        0.04513999999999999,
+        4.884446666666666
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 12.198896879726464,
+      "goal_position": [
+        5.382223333333333,
+        0.02667,
+        4.386663333333334
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0057",
+      "start_position": [
+        11.355556666666667,
+        0.02667,
+        2.831113333333333
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 40.61181946308739,
+      "goal_position": [
+        2.45778,
+        6.01997,
+        2.55111
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0058",
+      "start_position": [
+        4.666666666666667,
+        3.0333,
+        1.15111
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 29.55538276231692,
+      "goal_position": [
+        2.20889,
+        3.03333,
+        2.737776666666667
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0059",
+      "start_position": [
+        6.066669999999999,
+        0.04666,
+        9.675556666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 35.10562695486647,
+      "goal_position": [
+        2.4266666666666667,
+        6.019949999999999,
+        5.28889
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0060",
+      "start_position": [
+        6.377776666666667,
+        0.04662,
+        0.7466633333333332
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 12.035783558505065,
+      "goal_position": [
+        3.702223333333333,
+        0.02667,
+        1.7733366666666666
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0061",
+      "start_position": [
+        2.0222233333333333,
+        0.02667,
+        4.604443333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 14.828335621362571,
+      "goal_position": [
+        5.00889,
+        0.02667,
+        2.1155566666666665
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0062",
+      "start_position": [
+        2.6133333333333333,
+        0.02667,
+        4.728886666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 50.246815280053255,
+      "goal_position": [
+        7.124443333333333,
+        6.01847,
+        8.493333333333332
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0063",
+      "start_position": [
+        2.2399966666666664,
+        0.04513999999999999,
+        7.062223333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 17.783131744329733,
+      "goal_position": [
+        3.32889,
+        0.02667,
+        5.133333333333334
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0064",
+      "start_position": [
+        9.302223333333332,
+        0.02667,
+        7.746666666666667
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 10.774689755275553,
+      "goal_position": [
+        7.933333333333334,
+        0.02667,
+        1.3688866666666666
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0065",
+      "start_position": [
+        1.68,
+        0.02667,
+        5.00889
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 18.683894278221835,
+      "goal_position": [
+        2.4266666666666667,
+        0.02667,
+        8.586666666666666
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0066",
+      "start_position": [
+        11.853336666666669,
+        0.02667,
+        7.031110000000001
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 32.71228428352706,
+      "goal_position": [
+        3.4533333333333336,
+        6.01818,
+        0.9644466666666666
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0067",
+      "start_position": [
+        9.084443333333333,
+        0.04485,
+        11.106670000000001
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 17.318338068226694,
+      "goal_position": [
+        1.8977766666666664,
+        3.0315099999999995,
+        7.559996666666666
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0068",
+      "start_position": [
+        3.32889,
+        0.04485,
+        5.911110000000001
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 19.469209442873314,
+      "goal_position": [
+        2.768886666666667,
+        0.02667,
+        9.86222
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0069",
+      "start_position": [
+        9.333336666666668,
+        0.02667,
+        9.737776666666667
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 15.860767851669591,
+      "goal_position": [
+        2.177776666666667,
+        0.02667,
+        4.480003333333333
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0070",
+      "start_position": [
+        7.746666666666666,
+        0.02667,
+        5.942223333333334
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 19.31257988466078,
+      "goal_position": [
+        3.515556666666667,
+        3.03333,
+        0.9333333333333335
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0071",
+      "start_position": [
+        7.124443333333333,
+        0.04667000000000001,
+        4.48
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 38.99042571798563,
+      "goal_position": [
+        6.937776666666667,
+        6.01896,
+        10.764443333333332
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0072",
+      "start_position": [
+        11.293333333333335,
+        0.04563,
+        11.324446666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 24.23484545548684,
+      "goal_position": [
+        11.106670000000001,
+        3.03229,
+        2.862223333333333
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0073",
+      "start_position": [
+        9.146663333333334,
+        0.04563,
+        3.173336666666667
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 23.401323571319505,
+      "goal_position": [
+        11.44889,
+        0.02667,
+        8.835556666666667
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0074",
+      "start_position": [
+        1.1511133333333332,
+        0.02667,
+        6.315556666666667
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 18.65841380889156,
+      "goal_position": [
+        1.6177766666666666,
+        3.03229,
+        4.79111
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0075",
+      "start_position": [
+        1.7422233333333335,
+        0.04563,
+        6.502223333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 43.97929823971326,
+      "goal_position": [
+        4.417776666666668,
+        6.01896,
+        3.39111
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0076",
+      "start_position": [
+        2.6444433333333333,
+        0.04563,
+        3.2044433333333338
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 27.540138891744807,
+      "goal_position": [
+        9.706666666666665,
+        3.0323000000000007,
+        1.1199966666666665
+      ],
+      "goal_room_id": "room|5",
+      "scene_id": "scene_0077",
+      "start_position": [
+        8.617776666666666,
+        0.04563,
+        3.0488866666666663
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 37.157602061414416,
+      "goal_position": [
+        8.244443333333333,
+        6.01709,
+        1.3066633333333335
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0078",
+      "start_position": [
+        10.577776666666667,
+        3.0304300000000004,
+        3.67111
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 19.7830119284617,
+      "goal_position": [
+        2.084443333333333,
+        0.02667,
+        3.702223333333334
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0079",
+      "start_position": [
+        7.49778,
+        0.02667,
+        3.9511100000000003
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 38.804382576433994,
+      "goal_position": [
+        5.071113333333333,
+        6.01896,
+        7.31111
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0080",
+      "start_position": [
+        9.271113333333332,
+        0.04563,
+        8.617779999999998
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 27.12622883153526,
+      "goal_position": [
+        10.577776666666667,
+        3.0323000000000007,
+        5.2577766666666665
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0081",
+      "start_position": [
+        10.857776666666666,
+        0.04563,
+        4.604443333333333
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 35.664608508519905,
+      "goal_position": [
+        2.48889,
+        6.017979999999999,
+        3.36
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0082",
+      "start_position": [
+        1.8355566666666665,
+        0.04465,
+        0.6222199999999999
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 13.297368027802388,
+      "goal_position": [
+        4.44889,
+        0.02667,
+        2.2711099999999997
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0083",
+      "start_position": [
+        9.955556666666666,
+        0.02667,
+        2.0222233333333333
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 30.33051586735666,
+      "goal_position": [
+        5.257776666666667,
+        6.01896,
+        12.102223333333333
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0084",
+      "start_position": [
+        1.18222,
+        3.0323000000000007,
+        3.8266633333333337
+      ],
+      "start_room_id": "room|7"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 40.52232844864941,
+      "goal_position": [
+        4.231113333333333,
+        6.01847,
+        3.95111
+      ],
+      "goal_room_id": "room|11",
+      "scene_id": "scene_0085",
+      "start_position": [
+        9.395556666666666,
+        0.04513999999999999,
+        8.151113333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 37.18140535326307,
+      "goal_position": [
+        12.568886666666666,
+        3.0332500000000002,
+        4.946666666666666
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0086",
+      "start_position": [
+        11.262223333333333,
+        0.04659,
+        11.075556666666666
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 31.917439914092117,
+      "goal_position": [
+        1.15111,
+        3.0313199999999996,
+        5.2888866666666665
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0087",
+      "start_position": [
+        3.235556666666667,
+        0.04465,
+        4.29333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 29.40007786001723,
+      "goal_position": [
+        9.737776666666667,
+        3.0333,
+        3.67111
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0088",
+      "start_position": [
+        5.81778,
+        0.04663,
+        9.24
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 24.073179095276643,
+      "goal_position": [
+        9.457776666666666,
+        0.02667,
+        2.831113333333333
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0089",
+      "start_position": [
+        9.831113333333334,
+        0.02667,
+        9.146666666666667
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 32.40849565666856,
+      "goal_position": [
+        8.08889,
+        6.01896,
+        5.382223333333333
+      ],
+      "goal_room_id": "room|9",
+      "scene_id": "scene_0090",
+      "start_position": [
+        6.7200033333333336,
+        0.04563,
+        7.2799966666666664
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 29.189232687409692,
+      "goal_position": [
+        9.053336666666667,
+        3.0315099999999995,
+        8.36889
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0091",
+      "start_position": [
+        6.906666666666666,
+        0.04485,
+        10.671113333333333
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 37.55214362057774,
+      "goal_position": [
+        9.302223333333332,
+        3.03333,
+        8.99111
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0092",
+      "start_position": [
+        8.928886666666667,
+        0.04666,
+        6.657776666666666
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 39.935610597131515,
+      "goal_position": [
+        5.475553333333333,
+        6.01818,
+        3.17333
+      ],
+      "goal_room_id": "room|10",
+      "scene_id": "scene_0093",
+      "start_position": [
+        3.1733333333333333,
+        0.04485,
+        10.733333333333334
+      ],
+      "start_room_id": "room|2"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 14.803408476079104,
+      "goal_position": [
+        1.18222,
+        0.02667,
+        7.560003333333334
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0094",
+      "start_position": [
+        6.937776666666667,
+        0.02667,
+        4.915553333333333
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 28.018051402041063,
+      "goal_position": [
+        6.7822233333333335,
+        3.0315099999999995,
+        10.951113333333334
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0095",
+      "start_position": [
+        6.09778,
+        0.04485,
+        7.746666666666666
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 15.330215354587875,
+      "goal_position": [
+        2.8933366666666664,
+        0.02667,
+        1.89778
+      ],
+      "goal_room_id": "room|6",
+      "scene_id": "scene_0096",
+      "start_position": [
+        4.044443333333333,
+        0.02667,
+        7.715556666666665
+      ],
+      "start_room_id": "room|4"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 11.362492493681986,
+      "goal_position": [
+        0.9644466666666668,
+        0.02667,
+        3.1733333333333333
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0097",
+      "start_position": [
+        9.271113333333332,
+        0.02667,
+        3.266666666666667
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 15.418810087112538,
+      "goal_position": [
+        2.3644433333333335,
+        0.02667,
+        2.115553333333333
+      ],
+      "goal_room_id": "room|8",
+      "scene_id": "scene_0098",
+      "start_position": [
+        8.835556666666667,
+        0.02667,
+        2.6755533333333332
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": false,
+      "geodesic_distance": 16.922717902268975,
+      "goal_position": [
+        7.5911133333333325,
+        0.02667,
+        7.093333333333334
+      ],
+      "goal_room_id": "room|7",
+      "scene_id": "scene_0099",
+      "start_position": [
+        3.266666666666667,
+        0.02667,
+        1.92889
+      ],
+      "start_room_id": "room|5"
+    },
+    {
+      "crosses_floors": true,
+      "geodesic_distance": 45.25514319947234,
+      "goal_position": [
+        8.835553333333333,
+        6.017979999999999,
+        3.5777766666666664
+      ],
+      "goal_room_id": "room|12",
+      "scene_id": "scene_0100",
+      "start_position": [
+        6.3777800000000004,
+        0.04465,
+        6.191109999999999
+      ],
+      "start_room_id": "room|4"
+    }
+  ]
+}

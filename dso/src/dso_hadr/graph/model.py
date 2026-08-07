@@ -87,14 +87,14 @@ class TraversabilityEdge:
     node_b: int
     path: tuple[Point3, ...]
     cost: float
-    portal: tuple[Point3, Point3] | None = None
+    portal: tuple[Point3, Point3]
 
-    def orient(self, source_node: int) -> tuple[int, tuple[Point3, ...]]:
-        if source_node == self.node_a:
-            return self.node_b, self.path
-        if source_node == self.node_b:
-            return self.node_a, tuple(reversed(self.path))
-        raise ValueError(f"node {source_node} is not connected by this edge")
+    def neighbor(self, node: int) -> int:
+        if node == self.node_a:
+            return self.node_b
+        if node == self.node_b:
+            return self.node_a
+        raise ValueError(f"node {node} is not connected by this edge")
 
 
 @dataclass(frozen=True)

@@ -1,5 +1,5 @@
 {
-  "dataset_id": "dso-procthor-levels-1-3-100-v1",
+  "dataset_id": "dso-procthor-levels-1-3-100",
   "generation": {
     "floor_count_choices": [
       1,
@@ -9,15 +9,19 @@
     "floor_count_seed": 0,
     "fullscreen": false,
     "height": 300,
-    "headless": false,
     "local_executable_path": "../../../../procthor/build/ai2thor/builds/schema2-procedural/thor-schema2-direct-navmesh-Linux64",
-    "output_directory": "../../../data/procthor/dso-procthor-levels-1-3-100-v1/scenes",
+    "max_attempts_per_scene": 200,
     "quality": "Low",
     "seed_start": 0,
     "snap_to_grid": false,
     "split": "train",
     "width": 300,
     "worker_count": 6
+  },
+  "navigation": {
+    "meters_per_pixel": 0.1,
+    "move_magnitude": 0.25,
+    "navigable_tolerance": 0.18
   },
   "scene_selection": {
     "count": 100,
@@ -27,7 +31,9 @@
   "source": {
     "generator": "ProcTHOR",
     "repository": "../../../../procthor",
-    "revision": "ec164a9b951213884841143fa69792370823d291"
+    "integration_patch_sha256": "251d4100f66dee013bb695d610e5a09acd4dab082139f8007dde26259c14e64f",
+    "integration_version": "1.2.0",
+    "revision": "d572cdf85d955fa7e9a35093e7a23e2e2c597646"
   },
   "split": {
     "visualization_test_count": 20,
@@ -65,6 +71,8 @@
       "1": "1.0.0",
       "2": "2.0.0",
       "3": "2.0.0"
-    }
+    },
+    "minimum_geodesic_distance": 10.0,
+    "navmesh_clearance_radius": 0.28
   }
 }

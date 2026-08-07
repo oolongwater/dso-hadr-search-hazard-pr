@@ -13,27 +13,42 @@ hazards, route validation, or replanning.
 See [the navigation stack](../docs/dso/navigation-stack.md) for the data flow,
 component boundaries, configuration, and recorded artifacts.
 
-## Runtime Assets
+## Data And Demos
 
-Download and verify the exact scene corpus from the existing public Dropbox
-folder:
+Download the human-readable JSON data, the 100 per-scene demos, or both:
 
 ~~~bash
-./dso/scripts/download_procthor_scenes.sh
+python3 dso/scripts/download_assets.py data
+python3 dso/scripts/download_assets.py demo
+python3 dso/scripts/download_assets.py all
 python3 dso/scripts/verify_runtime_assets.py --skip-build
 ~~~
 
-The patched Linux AI2-THOR runtime is compiled from the checked-in Unity project.
+The downloader mirrors `Projects/HADR Navigation/data` or `demo` with rclone.
+The data tree contains only JSON and GeoJSON. Each demo scene contains its MP4,
+trajectory JSON, RGB PNGs, and a depth NumPy tensor. No archive extraction or
+download configuration is involved.
+
+Corpus regeneration remains available through
+`dso/scripts/generate_procthor_corpus.py` when changing the dataset itself.
+
+## Unity Runtime
+
+The patched Linux AI2-THOR runtime is compiled from the integrated AI2-THOR
+source under `../procthor/build/ai2thor/unity`.
 Install and activate Unity 2020.3.25f1, then run from the repository root:
 
 ~~~bash
 unity_editor="$HOME/Unity/Hub/Editor/2020.3.25f1/Editor/Unity"
+ai2thor_project="$PWD/../procthor/build/ai2thor/unity"
 build_directory="$PWD/../procthor/build/ai2thor/builds/schema2-procedural"
 mkdir -p "$build_directory"
+DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 \
+LD_LIBRARY_PATH="$PWD/../procthor/build/unity-compat/.pixi/envs/default/lib" \
 UNITY_BUILD_NAME="$build_directory/thor-schema2-direct-navmesh-Linux64" \
   "$unity_editor" -quit -batchmode \
   -logFile "$build_directory/build.log" \
-  -projectpath "$PWD/unity" \
+  -projectPath "$ai2thor_project" \
   -buildTarget Linux64 \
   -executeMethod Build.Linux64
 python3 dso/scripts/verify_runtime_assets.py
@@ -52,8 +67,8 @@ pixi run format
 pixi run typecheck
 ~~~
 
-The locally generated JSON houses stay under the ignored data/ directory. The
-checked-in configs/scenes/procthor-corpus.json file owns generation parameters
+The locally generated JSON houses and demos stay under the ignored data/
+directory. The checked-in configs/scenes/procthor-corpus.json file owns generation parameters
 and the explicit 80/20 split. The separate configs/scenes/procthor-scenes.json
 manifest locks the files by content hash. configs/simulator/ai2thor.json points
 to the local schema-2-capable Unity executable and owns rendering parameters.

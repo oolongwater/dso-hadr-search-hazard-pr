@@ -11,8 +11,7 @@ from dso_hadr.scenes.scene_graph import scene_agent_pose, scene_navigation_map
 from dso_hadr.simulator.ai2thor_backend import (
     AI2THORNavigationBackend,
     AI2THORNavigationConfig,
-    _door_path,
-    _vertical_connector_paths,
+    parse_navmesh,
 )
 from dso_hadr.types.navigation import NavigationAction, Observation, Pose
 from dso_hadr.utils.coordinates import (
@@ -79,6 +78,8 @@ class FakeSimulator:
         if action_name == "DSOHADRGetNavMeshTriangulation":
             event.metadata["actionReturn"] = {
                 "agentTypeId": 0,
+                "agentRadius": 0.28,
+                "movementRadius": 0.28,
                 "vertices": [
                     {"x": 0.0, "y": 0.0, "z": 0.0},
                     {"x": 1.0, "y": 0.0, "z": 0.0},
@@ -146,111 +147,6 @@ def test_scene_agent_pose_uses_the_requested_room_center(tmp_path: Path) -> None
     assert pose == Pose(6.0, 3.0, 8.0, 0.0)
 
 
-def test_scene_door_path_comes_from_wall_and_hole_geometry() -> None:
-    door: dict[str, object] = {
-        "id": "door|0",
-        "wall0": "wall|0",
-        "holePolygon": [
-            {"x": 1.0, "y": 0.0, "z": 0.0},
-            {"x": 3.0, "y": 2.0, "z": 0.0},
-        ],
-    }
-    walls: dict[str, dict[str, object]] = {
-        "wall|0": {
-            "polygon": [
-                {"x": 0.0, "y": 3.0, "z": 2.0},
-                {"x": 4.0, "y": 3.0, "z": 2.0},
-            ]
-        }
-    }
-
-    assert _door_path(door, walls) == (
-        (2.0, 3.0, 1.65),
-        (2.0, 3.0, 2.35),
-    )
-
-
-def test_scene_vertical_connector_paths_use_one_shared_vertical_edge() -> None:
-    connector: dict[str, object] = {
-        "id": "vertical-connector|0",
-        "position": {"x": 1.0, "y": 0.0, "z": 3.25},
-        "rotation": {"x": 0.0, "y": 0.0, "z": 0.0},
-        "assetContract": {
-            "flightRun": 4.5,
-            "rise": 3.0,
-            "reservedLength": 6.5,
-            "reservedWidth": 1.2,
-        },
-        "lowerFloorId": "floor|0",
-        "upperFloorId": "floor|1",
-        "lowerRoomId": "room|0",
-        "upperRoomId": "room|1",
-        "landingPolygons": [
-            {
-                "floorId": "floor|0",
-                "polygon": [
-                    {"x": 0.4, "y": 0.0, "z": 0.0},
-                    {"x": 1.6, "y": 0.0, "z": 0.0},
-                    {"x": 1.6, "y": 0.0, "z": 1.0},
-                    {"x": 0.4, "y": 0.0, "z": 1.0},
-                ],
-            },
-            {
-                "floorId": "floor|1",
-                "polygon": [
-                    {"x": 0.4, "y": 3.0, "z": 5.5},
-                    {"x": 1.6, "y": 3.0, "z": 5.5},
-                    {"x": 1.6, "y": 3.0, "z": 6.5},
-                    {"x": 0.4, "y": 3.0, "z": 6.5},
-                ],
-            },
-        ],
-    }
-    rooms: dict[str, dict[str, object]] = {
-        "room|0": {
-            "floorPolygon": [
-                {"x": 0.0, "y": 0.0, "z": -1.0},
-                {"x": 2.0, "y": 0.0, "z": -1.0},
-                {"x": 2.0, "y": 0.0, "z": 2.0},
-                {"x": 0.0, "y": 0.0, "z": 2.0},
-            ]
-        },
-        "room|1": {
-            "floorPolygon": [
-                {"x": 0.0, "y": 3.0, "z": 5.0},
-                {"x": 2.0, "y": 3.0, "z": 5.0},
-                {"x": 2.0, "y": 3.0, "z": 6.5},
-                {"x": 0.0, "y": 3.0, "z": 6.5},
-            ]
-        },
-    }
-
-    expected_lower = (
-        (1.0, 0.0, -0.3),
-        (1.0, 0.0, 0.5),
-        (1.0, 0.0, 1.0),
-    )
-    expected_vertical = ((1.0, 0.0, 1.0), (1.0, 3.0, 5.5))
-    expected_upper = (
-        (1.0, 3.0, 5.5),
-        (1.0, 3.0, 6.0),
-        (0.1, 3.0, 6.0),
-    )
-    paths = _vertical_connector_paths(connector, rooms)
-    assert len(paths) == 3
-    assert sum(not math.isclose(path[0][1], path[-1][1]) for path in paths) == 1
-    for actual, expected in (
-        (paths[0], expected_lower),
-        (paths[1], expected_vertical),
-        (paths[2], expected_upper),
-    ):
-        assert len(actual) == len(expected)
-        assert all(
-            math.dist(actual_point, expected_point) < 1e-12
-            for actual_point, expected_point in zip(actual, expected, strict=True)
-        )
-
-
 def test_navigation_turns_are_translated_to_matching_ai2thor_turns() -> None:
     simulator = FakeSimulator()
     backend = _backend(simulator)
@@ -311,6 +207,8 @@ def test_backend_reset_exports_runtime_triangulation_without_sampling(
 
     assert simulator.loaded_paths == [scene_path.resolve()]
     assert backend.navmesh.agent_type_id == 0
+    assert backend.navmesh.agent_radius == 0.28
+    assert backend.navmesh.movement_radius == 0.28
     assert backend.navmesh.vertices == (
         (0.0, 0.0, 0.0),
         (1.0, 0.0, 0.0),
@@ -319,7 +217,6 @@ def test_backend_reset_exports_runtime_triangulation_without_sampling(
     assert backend.navmesh.triangles == ((0, 1, 2),)
     assert backend.navmesh.areas == (0,)
     assert backend.navmesh.adjacency == ()
-    assert backend.navmesh.links == ()
     assert observation.pose.position == (1.0 / 3.0, 0.0, 1.0 / 3.0)
     assert simulator.actions[0] == {
         "action": "DSOHADRGetNavMeshTriangulation",
@@ -329,6 +226,29 @@ def test_backend_reset_exports_runtime_triangulation_without_sampling(
     assert "GetReachablePositions" not in action_names
     assert "GetShortestPathToPoint" not in action_names
     assert backend.get_scene_metadata()["navmesh_triangle_count"] == 1
+
+
+def test_navmesh_export_rejects_clearance_smaller_than_the_movement_capsule() -> None:
+    document = {
+        "agentTypeId": 0,
+        "agentRadius": 0.2,
+        "movementRadius": 0.28,
+        "vertices": [
+            {"x": 0.0, "y": 0.0, "z": 0.0},
+            {"x": 1.0, "y": 0.0, "z": 0.0},
+            {"x": 0.0, "y": 0.0, "z": 1.0},
+        ],
+        "indices": [0, 1, 2],
+        "areas": [0],
+        "adjacency": [],
+    }
+
+    try:
+        parse_navmesh(document)
+    except ValueError as error:
+        assert "0.2 < 0.28" in str(error)
+    else:
+        raise AssertionError("undersized navmesh clearance was accepted")
 
 
 def test_waypoint_follower_skips_height_only_intermediate_points() -> None:
