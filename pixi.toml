@@ -6,7 +6,7 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks]
-test = { cmd = "python -m pytest", cwd = "dso" }
+test = { cmd = "python -m pytest tests/unit", cwd = "dso" }
 format = { cmd = "ruff format --check src tests scripts && ruff check src tests scripts", cwd = "dso" }
 typecheck = { cmd = "mypy src", cwd = "dso" }
 

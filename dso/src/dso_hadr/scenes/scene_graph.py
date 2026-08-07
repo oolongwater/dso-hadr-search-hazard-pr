@@ -646,9 +646,7 @@ def scene_graph_to_dict(task: SceneGraphTask) -> dict[str, object]:
                     "node_b": edge.node_b,
                     "path": [list(point) for point in edge.path],
                     "cost": edge.cost,
-                    "portal": (
-                        None if edge.portal is None else [list(point) for point in edge.portal]
-                    ),
+                    "portal": ([list(point) for point in edge.portal]),
                 }
                 for edge in graph.traversability_map.edges
             ],

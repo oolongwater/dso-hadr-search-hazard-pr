@@ -1,5 +1,8 @@
 name: DSO Python Checks
 
+permissions:
+  contents: read
+
 on:
   push:
     paths:
@@ -20,6 +23,10 @@ jobs:
       - uses: prefix-dev/setup-pixi@v0.10.0
         with:
           pixi-version: v0.76.1
-      - run: pixi run format
-      - run: pixi run typecheck
-      - run: pixi run test
+      - name: Check formatting and lint
+        run: pixi run format
+      - name: Check types
+        run: pixi run typecheck
+      - name: Run local unit tests only
+        # Generated-asset and simulator integration checks are intentionally local-only.
+        run: pixi run test

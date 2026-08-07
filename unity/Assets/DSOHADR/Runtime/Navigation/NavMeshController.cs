@@ -7,33 +7,35 @@ using UnityEngine.AI;
 
 namespace UnityStandardAssets.Characters.FirstPerson {
     [Serializable]
-    public class DSOHADRNavMeshTriangulation {
+    public class NavMeshExport {
         public int agentTypeId;
+        public float agentRadius;
+        public float movementRadius;
         public Vector3[] vertices;
         public int[] indices;
         public int[] areas;
         public int[] adjacency;
     }
 
-    internal struct DSOHADRQuantizedVertex : IEquatable<DSOHADRQuantizedVertex> {
+    internal struct QuantizedVertex : IEquatable<QuantizedVertex> {
         private const float Scale = 100000.0f;
         private readonly int x;
         private readonly int y;
         private readonly int z;
 
-        public DSOHADRQuantizedVertex(Vector3 value) {
+        public QuantizedVertex(Vector3 value) {
             x = Mathf.RoundToInt(value.x * Scale);
             y = Mathf.RoundToInt(value.y * Scale);
             z = Mathf.RoundToInt(value.z * Scale);
         }
 
-        public bool Equals(DSOHADRQuantizedVertex other) {
+        public bool Equals(QuantizedVertex other) {
             return x == other.x && y == other.y && z == other.z;
         }
 
         public override bool Equals(object value) {
-            return value is DSOHADRQuantizedVertex
-                && Equals((DSOHADRQuantizedVertex)value);
+            return value is QuantizedVertex
+                && Equals((QuantizedVertex)value);
         }
 
         public override int GetHashCode() {
@@ -47,22 +49,22 @@ namespace UnityStandardAssets.Characters.FirstPerson {
         }
     }
 
-    internal struct DSOHADRNavMeshEdge : IEquatable<DSOHADRNavMeshEdge> {
+    internal struct NavMeshEdge : IEquatable<NavMeshEdge> {
         private readonly int first;
         private readonly int second;
 
-        public DSOHADRNavMeshEdge(int vertexA, int vertexB) {
+        public NavMeshEdge(int vertexA, int vertexB) {
             first = Math.Min(vertexA, vertexB);
             second = Math.Max(vertexA, vertexB);
         }
 
-        public bool Equals(DSOHADRNavMeshEdge other) {
+        public bool Equals(NavMeshEdge other) {
             return first == other.first && second == other.second;
         }
 
         public override bool Equals(object value) {
-            return value is DSOHADRNavMeshEdge
-                && Equals((DSOHADRNavMeshEdge)value);
+            return value is NavMeshEdge
+                && Equals((NavMeshEdge)value);
         }
 
         public override int GetHashCode() {
@@ -73,15 +75,14 @@ namespace UnityStandardAssets.Characters.FirstPerson {
     }
 
     public partial class PhysicsRemoteFPSAgentController : BaseFPSAgentController {
-        private static int[] DSOHADRNavMeshAdjacency(
-            NavMeshTriangulation triangulation,
-            int agentTypeId
+        private static int[] NavMeshAdjacency(
+            NavMeshTriangulation triangulation
         ) {
             var canonicalByPosition =
-                new Dictionary<DSOHADRQuantizedVertex, int>();
+                new Dictionary<QuantizedVertex, int>();
             var canonicalByRawVertex = new int[triangulation.vertices.Length];
             for (var rawVertex = 0; rawVertex < triangulation.vertices.Length; rawVertex++) {
-                var position = new DSOHADRQuantizedVertex(
+                var position = new QuantizedVertex(
                     triangulation.vertices[rawVertex]
                 );
                 int canonicalVertex;
@@ -92,7 +93,7 @@ namespace UnityStandardAssets.Characters.FirstPerson {
                 canonicalByRawVertex[rawVertex] = canonicalVertex;
             }
 
-            var trianglesByEdge = new Dictionary<DSOHADRNavMeshEdge, List<int>>();
+            var trianglesByEdge = new Dictionary<NavMeshEdge, List<int>>();
             var triangleCount = triangulation.indices.Length / 3;
             for (var triangle = 0; triangle < triangleCount; triangle++) {
                 var offset = triangle * 3;
@@ -102,7 +103,7 @@ namespace UnityStandardAssets.Characters.FirstPerson {
                     canonicalByRawVertex[triangulation.indices[offset + 2]]
                 };
                 for (var edge = 0; edge < 3; edge++) {
-                    var key = new DSOHADRNavMeshEdge(
+                    var key = new NavMeshEdge(
                         vertices[edge],
                         vertices[(edge + 1) % 3]
                     );
@@ -115,10 +116,6 @@ namespace UnityStandardAssets.Characters.FirstPerson {
                 }
             }
 
-            var queryFilter = new NavMeshQueryFilter() {
-                agentTypeID = agentTypeId,
-                areaMask = NavMesh.AllAreas
-            };
             var accepted = new List<int[]>();
             var seen = new HashSet<long>();
             foreach (var triangles in trianglesByEdge.Values) {
@@ -130,55 +127,7 @@ namespace UnityStandardAssets.Characters.FirstPerson {
                         if (!seen.Add(pairKey)) {
                             continue;
                         }
-                        var offsetA = triangleA * 3;
-                        var offsetB = triangleB * 3;
-                        var centroidA = (
-                            triangulation.vertices[triangulation.indices[offsetA]]
-                            + triangulation.vertices[triangulation.indices[offsetA + 1]]
-                            + triangulation.vertices[triangulation.indices[offsetA + 2]]
-                        ) / 3.0f;
-                        var centroidB = (
-                            triangulation.vertices[triangulation.indices[offsetB]]
-                            + triangulation.vertices[triangulation.indices[offsetB + 1]]
-                            + triangulation.vertices[triangulation.indices[offsetB + 2]]
-                        ) / 3.0f;
-                        var normalA = Vector3.Cross(
-                            triangulation.vertices[triangulation.indices[offsetA + 1]]
-                                - triangulation.vertices[triangulation.indices[offsetA]],
-                            triangulation.vertices[triangulation.indices[offsetA + 2]]
-                                - triangulation.vertices[triangulation.indices[offsetA]]
-                        ).normalized;
-                        var normalB = Vector3.Cross(
-                            triangulation.vertices[triangulation.indices[offsetB + 1]]
-                                - triangulation.vertices[triangulation.indices[offsetB]],
-                            triangulation.vertices[triangulation.indices[offsetB + 2]]
-                                - triangulation.vertices[triangulation.indices[offsetB]]
-                        ).normalized;
-                        if (
-                            (Mathf.Abs(normalA.y) >= 0.999f)
-                            != (Mathf.Abs(normalB.y) >= 0.999f)
-                        ) {
-                            continue;
-                        }
-                        var horizontalDistance = Vector2.Distance(
-                            new Vector2(centroidA.x, centroidA.z),
-                            new Vector2(centroidB.x, centroidB.z)
-                        );
-                        if (
-                            Mathf.Abs(centroidB.y - centroidA.y)
-                                > horizontalDistance * 0.8f + 0.05f
-                        ) {
-                            continue;
-                        }
-                        NavMeshHit hit;
-                        if (!NavMesh.Raycast(
-                            centroidA,
-                            centroidB,
-                            out hit,
-                            queryFilter
-                        )) {
-                            accepted.Add(new[] { triangleA, triangleB });
-                        }
+                        accepted.Add(new[] { triangleA, triangleB });
                     }
                 }
             }
@@ -214,17 +163,25 @@ namespace UnityStandardAssets.Characters.FirstPerson {
                     );
                     return;
                 }
+                var capsuleCollider = GetComponent<CapsuleCollider>();
+                var characterController = GetComponent<CharacterController>();
+                if (capsuleCollider == null || characterController == null) {
+                    actionFinishedEmit(
+                        success: false,
+                        errorMessage: "The active agent has no movement capsule."
+                    );
+                    return;
+                }
                 actionFinishedEmit(
                     success: true,
-                    actionReturn: new DSOHADRNavMeshTriangulation {
+                    actionReturn: new NavMeshExport {
                         agentTypeId = selectedSurface.agentTypeID,
+                        agentRadius = selectedSurface.buildSettings.agentRadius,
+                        movementRadius = capsuleCollider.radius + characterController.skinWidth,
                         vertices = triangulation.vertices,
                         indices = triangulation.indices,
                         areas = triangulation.areas,
-                        adjacency = DSOHADRNavMeshAdjacency(
-                            triangulation,
-                            selectedSurface.agentTypeID
-                        ),
+                        adjacency = NavMeshAdjacency(triangulation),
                     }
                 );
             } catch (Exception exception) {

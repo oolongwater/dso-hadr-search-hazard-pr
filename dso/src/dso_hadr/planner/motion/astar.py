@@ -18,20 +18,6 @@ def _nearest_node(target: Point3, traversability_map: TraversabilityMap) -> int:
     )
 
 
-def remove_immediate_backtracks(points: tuple[Point3, ...]) -> tuple[Point3, ...]:
-    """Remove exact A-B-A spikes without smoothing valid corners."""
-
-    simplified: list[Point3] = []
-    for point in points:
-        if simplified and point == simplified[-1]:
-            continue
-        if len(simplified) >= 2 and point == simplified[-2]:
-            simplified.pop()
-        else:
-            simplified.append(point)
-    return tuple(simplified)
-
-
 def _area_xz(apex: Point3, first: Point3, second: Point3) -> float:
     return (first[0] - apex[0]) * (second[2] - apex[2]) - (first[2] - apex[2]) * (
         second[0] - apex[0]
@@ -162,46 +148,16 @@ def _expand_steps(
     steps: tuple[tuple[int, int, TraversabilityEdge], ...],
     nodes: tuple[Point3, ...],
 ) -> tuple[Point3, ...]:
-    points: list[Point3] = [nodes[steps[0][0]]]
-    index = 0
-    while index < len(steps):
-        source, target, edge = steps[index]
-        if edge.portal is None:
-            _neighbor, edge_path = edge.orient(source)
-            points.extend(point for point in edge_path if point != points[-1])
-            index += 1
-            continue
-
-        corridor_portals: list[tuple[Point3, Point3]] = []
-        corridor_edges: list[TraversabilityEdge] = []
-        corridor_goal = target
-        while index < len(steps):
-            corridor_source, corridor_target, corridor_edge = steps[index]
-            if corridor_edge.portal is None:
-                break
-            oriented_portal = _orient_portal(
-                nodes[corridor_source],
-                nodes[corridor_target],
-                corridor_edge.portal,
-            )
-            corridor_portals.append(
-                _inset_portal(
-                    oriented_portal,
-                    margin=0.5 * _edge_resolution(corridor_edge),
-                )
-            )
-            corridor_edges.append(corridor_edge)
-            corridor_goal = corridor_target
-            index += 1
-        pulled = _string_pull(
-            points[-1],
-            nodes[corridor_goal],
-            tuple(corridor_portals),
+    portals = tuple(
+        _inset_portal(
+            _orient_portal(nodes[source], nodes[target], edge.portal),
+            margin=0.5 * _edge_resolution(edge),
         )
-        resolution = max(_edge_resolution(item) for item in corridor_edges)
-        dense = _densify(pulled, resolution)
-        points.extend(point for point in dense[1:] if point != points[-1])
-    return remove_immediate_backtracks(tuple(points))
+        for source, target, edge in steps
+    )
+    pulled = _string_pull(nodes[steps[0][0]], nodes[steps[-1][1]], portals)
+    resolution = max(_edge_resolution(edge) for _source, _target, edge in steps)
+    return _densify(pulled, resolution)
 
 
 def astar_search(
@@ -235,7 +191,7 @@ def astar_search(
         if current == goal_node:
             break
         for edge in adjacency.get(current, ()):
-            neighbor, _path = edge.orient(current)
+            neighbor = edge.neighbor(current)
             neighbor_cost = current_cost + edge.cost
             if neighbor_cost >= cost_so_far.get(neighbor, math.inf):
                 continue
@@ -269,4 +225,4 @@ def astar_search(
     return ShortestPath(points=points, geodesic_distance=distance)
 
 
-__all__ = ["astar_search", "remove_immediate_backtracks"]
+__all__ = ["astar_search"]
