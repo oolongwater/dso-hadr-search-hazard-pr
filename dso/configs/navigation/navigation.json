@@ -27,7 +27,7 @@
     "corpus_config": "../scenes/procthor-corpus.json",
     "output_directory": "../../../data/navigation/all-scenes/scene_0019",
     "scene_manifest": "../scenes/procthor-scenes.json",
-    "scenes_directory": "../../../data/procthor/dso-procthor-levels-1-3-100-v3/scenes",
+    "scenes_directory": "../../../data/procthor/dso-procthor-levels-1-3-100/scenes",
     "simulator_config": "../simulator/ai2thor.json"
   },
   "scene_graph": {

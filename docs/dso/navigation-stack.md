@@ -182,12 +182,12 @@ The encoder refuses failed, colliding, off-navmesh, missing, or noncontiguous
 trajectories. It verifies every output's codec, pixel format, frame rate, and
 frame count, then writes `video-report.json` at the batch root.
 
-To install the already validated video batch over ordinary HTTPS, without
-rclone or rerunning navigation:
+To download the 100 complete demo folders without rerunning navigation:
 
 ~~~bash
-python3 dso/scripts/download_assets.py demos
+python3 dso/scripts/download_assets.py demo
 ~~~
 
-Use the `full-rgbd` profile only when RGB frames and NumPy depth arrays are
-required; it is a separate, substantially larger archive.
+Each demo folder contains `video.mp4`, `trajectory.json`, `rgb/*.png`, and
+`depth/*.npy`. The `data` selection separately mirrors the 107 human-readable
+corpus and report JSON/GeoJSON files.

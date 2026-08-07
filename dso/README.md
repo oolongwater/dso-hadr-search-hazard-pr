@@ -13,29 +13,26 @@ hazards, route validation, or replanning.
 See [the navigation stack](../docs/dso/navigation-stack.md) for the data flow,
 component boundaries, configuration, and recorded artifacts.
 
-## Runtime Assets
+## Data And Demos
 
-Download and verify the exact connected v3 scene corpus and Linux runtime over
-HTTPS from the versioned Dropbox release:
-
-~~~bash
-python3 dso/scripts/download_assets.py core
-python3 dso/scripts/verify_runtime_assets.py
-~~~
-
-The downloader uses `curl` and `tar`, not rclone. It validates the exact byte
-count and SHA-256 checksum before extracting an archive. Additional profiles
-are available for the 100 videos and lightweight records (`demos`) and the
-complete RGB-D trajectories (`full-rgbd`):
+Download the human-readable JSON data, the 100 per-scene demos, or both:
 
 ~~~bash
-python3 dso/scripts/download_assets.py --list
-python3 dso/scripts/download_assets.py demos
-python3 dso/scripts/download_assets.py full-rgbd
+python3 dso/scripts/download_assets.py data
+python3 dso/scripts/download_assets.py demo
+python3 dso/scripts/download_assets.py all
+python3 dso/scripts/verify_runtime_assets.py --skip-build
 ~~~
+
+The downloader mirrors `Projects/HADR Navigation/data` or `demo` with rclone.
+The data tree contains only JSON and GeoJSON. Each demo scene contains its MP4,
+trajectory JSON, RGB PNGs, and depth NumPy arrays. No archive extraction or
+download configuration is involved.
 
 Corpus regeneration remains available through
 `dso/scripts/generate_procthor_corpus.py` when changing the dataset itself.
+
+## Unity Runtime
 
 The patched Linux AI2-THOR runtime is compiled from the integrated AI2-THOR
 source under `../procthor/build/ai2thor/unity`.

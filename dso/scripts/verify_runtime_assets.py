@@ -66,7 +66,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--scenes-directory",
         type=Path,
-        default=project_root / "data/procthor/dso-procthor-levels-1-3-100-v3/scenes",
+        default=project_root / "data/procthor/dso-procthor-levels-1-3-100/scenes",
     )
     parser.add_argument(
         "--build-directory",

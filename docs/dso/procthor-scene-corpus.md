@@ -2,7 +2,7 @@
 
 ## Current outcome
 
-The current corpus is `dso-procthor-levels-1-3-100-v3`. Its complete
+The current corpus is `dso-procthor-levels-1-3-100`. Its complete
 generation contract lives in
 `dso/configs/scenes/procthor-corpus.json`. It pins the ProcTHOR source
 revision, AI2-THOR integration version and patch hash, generation seeds,
@@ -34,7 +34,7 @@ episodes cross floors.
 ## Artifacts and fixed split
 
 Generated houses remain outside Git under
-`data/procthor/dso-procthor-levels-1-3-100-v3/scenes/`. The checked-in
+`data/procthor/dso-procthor-levels-1-3-100/scenes/`. The checked-in
 `dso/configs/scenes/procthor-scenes.json` manifest records every filename,
 SHA-256 hash, schema, floor count, layout specification, and room/object
 count. A changed, missing, malformed, or substituted house fails validation.
@@ -50,18 +50,19 @@ later experiments remain comparable.
 
 ## Download
 
-For a normal checkout, download the pinned scenes and runtime without rclone:
+For a normal checkout, mirror the human-readable data tree and validate the
+scene bytes:
 
 ~~~bash
-python3 dso/scripts/download_assets.py core
-python3 dso/scripts/verify_runtime_assets.py
+python3 dso/scripts/download_assets.py data
+python3 dso/scripts/verify_runtime_assets.py --skip-build
 ~~~
 
-The installer uses ordinary Dropbox HTTPS links, verifies archive size and
-SHA-256, and extracts into the paths owned by the checked-in configuration.
-Download the validated videos with the `demos` profile, or the complete RGB-D
-records with `full-rgbd`. These downloads are never invoked by
-the GitHub unit-test workflow.
+The downloader uses rclone to copy plain JSON and GeoJSON files from
+`Projects/HADR Navigation/data`. Download the 100 per-scene video,
+trajectory, RGB, and depth folders with
+`python3 dso/scripts/download_assets.py demo`. GitHub unit tests never invoke
+the downloader.
 
 ## Regeneration from source
 
@@ -72,7 +73,7 @@ Build the integrated AI2-THOR player first, then run this from
 env PYTHONPATH="$PWD/dso/src" ../procthor/.venv/bin/python \
   dso/scripts/generate_procthor_corpus.py \
   dso/configs/scenes/procthor-corpus.json \
-  --output-directory data/procthor/dso-procthor-levels-1-3-100-v3/scenes \
+  --output-directory data/procthor/dso-procthor-levels-1-3-100/scenes \
   --manifest-output /tmp/scenes.json \
   --episodes-output /tmp/episodes.json
 ~~~
@@ -103,7 +104,7 @@ pixi run format
 pixi run typecheck
 ~~~
 
-The v3 batch completed all 100 configured episodes in one run: 100 succeeded,
+The batch completed all 100 configured episodes in one run: 100 succeeded,
 all 100 recorded trajectories stayed on the navmesh, and the total collision
 count was zero. Executed distances range from `10.7746953369 m` to
 `56.0478967807 m`, with a mean of `27.7010294769 m` across 18,796 primitive

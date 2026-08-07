@@ -10,17 +10,17 @@ Pixi is the environment and task runner for DSO-specific Python work. From the
 repository root:
 
 ~~~bash
-python3 dso/scripts/download_assets.py core
-python3 dso/scripts/verify_runtime_assets.py
+python3 dso/scripts/download_assets.py data
+python3 dso/scripts/verify_runtime_assets.py --skip-build
 pixi run test
 pixi run format
 pixi run typecheck
 ~~~
 
-The connected v3 ProcTHOR corpus and matching Linux runtime are available as
-versioned, checksum-pinned Dropbox downloads over ordinary HTTPS. The installer
-uses `curl`, never rclone. See dso/README.md for core, demo-video, full RGB-D,
-local regeneration, and Unity build commands. Generated builds, scenes,
+The connected ProcTHOR corpus and 100 navigation demos are stored as plain
+JSON, MP4, PNG, and NumPy files under `Projects/HADR Navigation`. Uploads
+and downloads use rclone. The Unity runtime is built locally; see dso/README.md for data, demo,
+regeneration, and build commands. Generated builds, scenes,
 trajectories, videos, and other experiment results remain outside Git.
 
 Do not create a separate pip, Conda, or uv environment for this workspace.
