@@ -188,6 +188,6 @@ To download the 100 complete demo folders without rerunning navigation:
 python3 dso/scripts/download_assets.py demo
 ~~~
 
-Each demo folder contains `video.mp4`, `trajectory.json`, `rgb/*.png`, and
-`depth/*.npy`. The `data` selection separately mirrors the 107 human-readable
-corpus and report JSON/GeoJSON files.
+Each demo folder contains `video.mp4`, `trajectory.json`, `rgb/*.png`, and an
+uncompressed `depth.npy` tensor aligned with the trajectory. The `data`
+selection separately mirrors the 107 human-readable corpus and report JSON/GeoJSON files.

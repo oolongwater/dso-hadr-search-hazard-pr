@@ -60,7 +60,7 @@ python3 dso/scripts/verify_runtime_assets.py --skip-build
 
 The downloader uses rclone to copy plain JSON and GeoJSON files from
 `Projects/HADR Navigation/data`. Download the 100 per-scene video,
-trajectory, RGB, and depth folders with
+trajectory, RGB, and depth tensor files with
 `python3 dso/scripts/download_assets.py demo`. GitHub unit tests never invoke
 the downloader.
 

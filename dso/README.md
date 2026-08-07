@@ -26,7 +26,7 @@ python3 dso/scripts/verify_runtime_assets.py --skip-build
 
 The downloader mirrors `Projects/HADR Navigation/data` or `demo` with rclone.
 The data tree contains only JSON and GeoJSON. Each demo scene contains its MP4,
-trajectory JSON, RGB PNGs, and depth NumPy arrays. No archive extraction or
+trajectory JSON, RGB PNGs, and a depth NumPy tensor. No archive extraction or
 download configuration is involved.
 
 Corpus regeneration remains available through
