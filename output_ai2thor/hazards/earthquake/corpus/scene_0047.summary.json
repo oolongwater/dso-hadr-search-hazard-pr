@@ -1,0 +1,24 @@
+{
+  "label": "scene_0047",
+  "seed": 47,
+  "severity": 0.85,
+  "room_spec": null,
+  "num_floors": null,
+  "house_schema": "1.0.0",
+  "floor_count": 1,
+  "room_count": 3,
+  "peak_num_moving": 79,
+  "objects_fallen": 13,
+  "visible_fallable_at_viewpoint": 16,
+  "fallen_visible_from_viewpoint": 3,
+  "max_fall_m": 13.871,
+  "num_state_changes": 70,
+  "video": "/Users/a65945/unity_scene_generation/output_ai2thor/hazards/earthquake/corpus/scene_0047.mp4",
+  "house_json": "/Users/a65945/Downloads/scenes/scene_0047.json",
+  "rank_metrics": {
+    "cone": 15,
+    "ground_fallable": 61,
+    "all_fallable": 61,
+    "score": 0.748
+  }
+}

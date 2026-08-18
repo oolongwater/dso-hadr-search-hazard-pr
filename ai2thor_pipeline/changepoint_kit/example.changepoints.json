@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "label": "scene_0040_cp",
+  "house_json": "/Users/a65945/dso-hadr-search/data/procthor/dso-procthor-levels-1-3-100-v1/scenes/scene_0040.json",
+  "updated_utc": "2026-08-16T07:26:23.558037+00:00",
+  "count": 1,
+  "changepoints": [
+    {
+      "id": "cp_0",
+      "world": {
+        "x": 3.787,
+        "y": 0.901,
+        "z": 1.77
+      },
+      "heading_deg": 90.0,
+      "source": "doorway",
+      "door_id": "door|floor-0|2|3",
+      "room_ids": [
+        "room|2",
+        "room|3"
+      ],
+      "passage_width_m": 0.993,
+      "clutter_score": 2.533,
+      "block_score": 0.797,
+      "cluster_object_ids": [
+        "2|4|1",
+        "5|4",
+        "3|5|1",
+        "3|6",
+        "2|3",
+        "6|2",
+        "small|5|11",
+        "5|1"
+      ],
+      "cluster_object_types": [
+        "Chair",
+        "Dresser",
+        "FloorLamp",
+        "GarbageBag",
+        "GarbageCan",
+        "HousePlant",
+        "Plunger"
+      ],
+      "cluster_type_summary": "2x FloorLamp, Chair, Dresser, GarbageBag, GarbageCan, HousePlant",
+      "connectivity": "connects room|2 <-> room|3 via door|floor-0|2|3; 0 traversable exit(s); cluster: 2x FloorLamp, Chair, Dresser, GarbageBag, GarbageCan, HousePlant",
+      "decision": "backtrack",
+      "decision_frame": "backtrack: -180 deg in node frame / world yaw 90",
+      "blocked": true,
+      "exits": [
+        {
+          "src": "cp_0",
+          "dst": "dest_start",
+          "behaviour": "turn-left",
+          "traversable": false,
+          "clearance_m": 0.0,
+          "safety": 0.0,
+          "visibility": 0.0
+        },
+        {
+          "src": "dest_start",
+          "dst": "cp_0",
+          "behaviour": "turn-right",
+          "traversable": false,
+          "clearance_m": 0.0,
+          "safety": 0.0,
+          "visibility": 0.724
+        }
+      ],
+      "visit_index": 0,
+      "phase": "arrival",
+      "agent": {
+        "x": 3.7555885314941406,
+        "y": 0.9009993672370911,
+        "z": 1.7569464445114136,
+        "yaw": 153.59120178222656
+      },
+      "agent_path_m": 6.9,
+      "quake_active": true,
+      "shake_elapsed_s": 15.0,
+      "motion": "",
+      "clip": "/Users/a65945/unity_scene_generation/output_ai2thor/hazards/earthquake/sam/scene_0040_cp_cp_clip.mp4",
+      "payload_png": "/Users/a65945/unity_scene_generation/output_ai2thor/hazards/earthquake/sam/scene_0040_cp_payload.png",
+      "views": [
+        "/Users/a65945/unity_scene_generation/output_ai2thor/hazards/earthquake/sam/scene_0040_cp_view_0.png",
+        "/Users/a65945/unity_scene_generation/output_ai2thor/hazards/earthquake/sam/scene_0040_cp_view_90.png",
+        "/Users/a65945/unity_scene_generation/output_ai2thor/hazards/earthquake/sam/scene_0040_cp_view_180.png",
+        "/Users/a65945/unity_scene_generation/output_ai2thor/hazards/earthquake/sam/scene_0040_cp_view_270.png"
+      ]
+    }
+  ]
+}
