@@ -1,0 +1,46 @@
+# SIM-01 environment lockfile — install with:
+#   python3 -m venv .venv-ai2thor && source .venv-ai2thor/bin/activate
+#   pip install -r ai2thor_pipeline/requirements.lock.txt
+#
+# Python: 3.12.3
+# ai2thor: 5.0.0
+# Unity build COMMIT_ID: f0825767cd50d69f666c7f282e54abfe58f1e917
+# Unity release tag: thor-OSXIntel64-f0825767cd50d69f666c7f282e54abfe58f1e917
+# Locked on: Darwin arm64 (macOS; Unity build runs via Rosetta as OSXIntel64)
+#
+ai2thor==5.0.0
+aws-requests-auth==0.4.3
+blinker==1.9.0
+botocore==1.43.50
+certifi==2026.6.17
+charset-normalizer==3.4.9
+click==8.4.2
+contourpy==1.3.3
+cycler==0.12.1
+Flask==3.1.3
+fonttools==4.63.0
+idna==3.18
+itsdangerous==2.2.0
+Jinja2==3.1.6
+jmespath==1.1.0
+kiwisolver==1.5.0
+MarkupSafe==3.0.3
+matplotlib==3.11.0
+msgpack==1.2.1
+networkx==3.6.1
+numpy==2.5.1
+opencv-python==5.0.0.93
+packaging==26.2
+pillow==12.3.0
+progressbar2==4.5.0
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+python-utils==4.0.0
+python-xlib==0.33
+pydantic==2.12.5
+PyYAML==6.0.3
+requests==2.34.2
+six==1.17.0
+typing_extensions==4.16.0
+urllib3==2.7.0
+Werkzeug==3.1.8

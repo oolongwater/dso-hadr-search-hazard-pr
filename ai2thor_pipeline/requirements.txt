@@ -1,0 +1,8 @@
+ai2thor==5.0.0
+numpy==2.5.1
+opencv-python==5.0.0.93
+matplotlib==3.11.0
+networkx==3.6.1
+pydantic==2.12.5
+procthor @ git+https://github.com/hadr-nav/procthor.git@main
+prior
